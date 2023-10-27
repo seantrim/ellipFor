@@ -1,0 +1,13 @@
+SOURCE_FILES="elliptic.f90 elliptic_test_driver.f90 xelbdj2_all_routines.f90 xgscd_routines.f90"
+OBJECT_FILES="elliptic.o elliptic_test_driver.o xelbdj2_all_routines.o xgscd_routines.o"
+
+#Optimized for speed
+#gfortran -fopenmp -flto -O3 -c $SOURCE_FILES #complile object files
+#gfortran -fopenmp -flto -O3 $OBJECT_FILES -o exact_solution_code #link object files
+
+#For debugging
+gfortran -Og -ffpe-trap=invalid,zero,overflow,underflow -ggdb3 -c $SOURCE_FILES #complile object files
+gfortran -Og -ffpe-trap=invalid,zero,overflow,underflow -ggdb3 $OBJECT_FILES -o elliptic_test_driver #link object files
+
+##Clean up object files
+rm -f *.o *.mod
