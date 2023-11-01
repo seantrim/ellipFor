@@ -94,16 +94,6 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
 * gfortran 11.3.0 was used  
 
-### [Python](/Python)
-[create_library.sh](/Python/create_library.sh)
-* script used to create a Python library from the [Fortran](/Fortran) routines 
-
-[flib.cpython-310-x86_64-linux-gnu.so](/Python/flib.cpython-310-x86_64-linux-gnu.so)
-* sample library file produced using [create_library.sh](/Python/create_library.sh)
-
-[example.py](/Python/example.py)
-* Python script with examples on how to use functions in the [Fortran](/Fortran) routines within Python
-
 ### [Data](/Data)
 [entrainment_sample_1_401x401.dat](/Data/entrainment_sample_1_401x401.dat)
 * $E$ time series data for temporally periodic case in "Sample Results" section 
@@ -117,30 +107,25 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 ## How to Use the Fortran Routines
 
 ### Standalone
-<?
-Can be used to generate data for $C$, $T$, $H$, $v_{RMS}$, and $E$ from the exact solution.
 
-1. Specify $f(t)$, $df/dt$, and $\int f dt$ in [input_functions.f90](/Fortran/input_functions.f90)
-    * Both cases from the "Sample Results" section are shown as examples in [input_functions.f90](/Fortran/input_functions.f90)
-2. Specify physical parameters (e.g., aspect ratio, Rayleigh numbers, etc.) in [exact_solution_main.f90](/Fortran/exact_solution_main.f90)
-    * Search for "!!Input Parameters" in the comments
-    * Both cases from the "Sample Results" section are shown as examples
-3. Compile the code by running [compile_script](/Fortran/compile_script) from the command line.
-    * Linux: `$ source compile_script`
-        * This produces the executable [exact_solution_code](/Fortran/exact_solution_code)
+Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ using the driver program [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90).
+
+1. Specify the desired $m$, $\phi$, and $u$ in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
+    * Examples are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
+2. Compile the code by running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
+    * set the driver file shell variable in the first line of [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
+    * Linux: `$ source compile_script.sh`
+        * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
     * gfortran 11.3.0 or later is recommended
     * Other compilers may be possible but results should be tested
-4. Run [exact_solution_code](/Fortran/exact_solution_code) from the command line
-    * Linux: `$ ./exact_solution_code`
-    * This will produce data for snapshots of $C$, $T$, and $H$
-    * This will also produce data for a time series of $E$
-    * Example routine calls for several quantities are shown in [exact_solution_main.f90](/Fortran/exact_solution_main.f90)
-    * Modifying the examples in [exact_solution_main.f90](/Fortran/exact_solution_main.f90) can be done to customize the output
-?>
+3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
+    * Linux: `$ ./ellipFor_test_driver`
+    * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
+    * Example subroutine calls are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 
 ### With Another Code
 
-Can be used to calculate Legendre elliptic integrals and Jacobi elliptic functions from within another code. These instructions presume that the other code is written in Fortran. The following steps are guidelines only. The precise procedure may depend on the particular code used.
+Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ from within another code. These instructions presume that the other code is written in Fortran. The following steps are guidelines only. The precise procedure may depend on the particular code used.
 
 #### Fortran
 
