@@ -20,22 +20,16 @@ This repository contains files and data supporting the article "A Fortran softwa
 functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Computer algebra scripts for the exact solution are provided in SageMath and Maple. Symbolic computation of the internal heating rate is performed using Maple, which has been translated into Fortran. The Fortran routines can be used to calculate quantities from the exact solution both independently and within an existing convection code. ?>
 
 ## Variable Definitions
-<?
-* $\lambda$ = aspect ratio
-* $x$ = horizontal position ( $x \in (-\lambda/2,3 \lambda/2)$ )
-* $z$ = vertical position ( $z \in (-1,2)$ , increasing upward)
-* $t$ = time
-* $C$ = composition
-* $T$ = temperature
-* $H$ = internal heating rate
-* $v_{RMS}$ = root-mean-square velocity
-* $E$ = entrainment
-* $f(t)$ = time dependence of the stream function
-* $k$ =  parameter that controls the initial thickness of the compositional interface
-* $z_{I}$ = initial vertical position of the compositional interface
-* $Ra_T$ = thermal Rayleigh number
-* $Ra_C$ = compositional Rayleigh number
-?>
+* $m$ = parameter
+* $\phi$ = Jacobi amplitude
+* $u$ = first argument of Jacobi elliptic functions
+* $K(m)$ = complete Legendre elliptic integral of the first kind
+* $E(m)$ = complete Legendre elliptic integral of the second kind
+* $F(\phi|m)$ = incomplete Legendre elliptic integral of the first kind
+* $E(\phi|m)$ = incomplete Legendre elliptic integral of the second kind
+* $\text{sn}(u|m)$ = elliptic sine Jacobi elliptic function
+* $\text{cn}(u|m)$ = elliptic cosine Jacobi elliptic function
+* $\text{dn}(u|m)$ = delta amplitude Jacobi elliptic function
 
 ## File Description
 
