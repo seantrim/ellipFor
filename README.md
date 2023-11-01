@@ -145,46 +145,24 @@ Can be used to generate data for $C$, $T$, $H$, $v_{RMS}$, and $E$ from the exac
 ?>
 
 ### With Another Code
-<?
-Can be used to calculate $H(x,z,t)$ from within a convection code. These instructions presume that the convection code is written in Fortran or Python. However, options for other programming languages are under development. The following steps are guidelines only. The precise procedure may depend on the particular convection code used.
+
+Can be used to calculate Legendre elliptic integrals and Jacobi elliptic functions from within another code. These instructions presume that the other code is written in Fortran. The following steps are guidelines only. The precise procedure may depend on the particular code used.
 
 #### Fortran
 
-1. Specify $f(t)$, $df/dt$, and $\int f dt$ in [input_functions.f90](/Fortran/input_functions.f90)
-    * Both cases from the "Sample Results" section are shown as examples in [input_functions.f90](/Fortran/input_functions.f90)
-2. Insert calls to the subroutine `compute_H_func`, which returns the value of $H(x,z,t)$, within the source of the convection code where necessary
-    * It is presumed that the convection code can accept an internal heating rate that varies in space and time
-    * An example of how to call `compute_H_func` is shown in [exact_solution_main.f90](/Fortran/exact_solution_main.f90)
+1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code where necessary
+    * Examples of how to call the subroutines are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
         * The H value is returned in the rightmost argument  
-4. Link all f90 files from the [Fortran](/Fortran) folder except [exact_solution_main.f90](/Fortran/exact_solution_main.f90) to the source for the convection code
-    * Example: `gfortran -flto -O3 convection_code_source.f90 exact_solution_routines.f90 elliptic.f90 H_helper_routines.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 H_func.f90 input_functions.f90 -o convection_code`
-    * In the above example, the source for the convection code is `convection_code_source.f90` and the resulting executable is `convection_code`
+2. Link the f90 files from the [Fortran](/Fortran) folder named [elliptic.f90](/Fortran/elliptic.f90), [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90), and [xgscd_routines.f90](/Fortran/xgscd_routines.f90) to the source for the other code
+    * Example: `gfortran -flto -O3 other_code.f90 elliptic.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 -o other_code`
+    * In the above example, the source for the other code is `other_code.f90` and the resulting executable is `other_code`
         * Modify these names as needed
     * gfortran 11.3.0 or later is recommended
     * Other compilers (and compiler options) may be possible but results should be tested
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
-        * Verify that the arguments of `compute_H_func` correspond to the correct values and data types 
-5. Run the convection code execuatable as usual
-
-#### Python
-
-1. Specify $f(t)$, $df/dt$, and $\int f dt$ in [input_functions.f90](/Fortran/input_functions.f90)
-    * Both cases from the "Sample Results" section are shown as examples in [input_functions.f90](/Fortran/input_functions.f90)
-2. Run [create_library.sh](/Python/create_library.sh) from the terminal
-    * Linux: `source create_library`
-    * Creates flib Python library using f2py3 (included in NumPy library)
-    * gfortran 11.3.0 or later is recommended for the Fortran compiler used by f2py3
-3. Move flib library file (e.g., [flib.cpython-310-x86_64-linux-gnu.so](/Python/flib.cpython-310-x86_64-linux-gnu.so) or similar) to the same directory as the convection code source
-4. Add `import flib` to the convection code Python environment
-    * functions defined in the [Fortran](/Fortran) routines can now be called in Python
-    * See [example.py](/Python/example.py) for an example
-5. Insert calls to the function `flib.h_python`, which returns the value of $H(x,z,t)$, within the source of the convection code where necessary
-    * `flib.h_python` takes $x$, $z$, $t$, $\lambda$, $k$, $z_{I}$, $Ra_T$, and $Ra_C$ as input arguments (in that order)
-    * See [example.py](/Python/example.py) for an example
-    * It is presumed that the convection code can accept an internal heating rate that varies in space and time
-6. Run the convection code as usual
-?>
+        * Verify that the arguments of subroutine calls correspond to the correct values and data types 
+3. Run the code execuatable as usual
 
 ## Legal
 
