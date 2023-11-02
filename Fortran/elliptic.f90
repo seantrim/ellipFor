@@ -1,9 +1,9 @@
 module kind_parameters
- use iso_fortran_env, only : int32,int64 
+ use iso_fortran_env, only : int32,int64,real32,real64,real128 
 implicit none
-integer, parameter :: sp = kind(0.0e0)
-integer, parameter :: dp = kind(0.0d0)
-integer, parameter :: qp = kind(0.0q0)
+integer, parameter :: sp = real32 
+integer, parameter :: dp = real64 
+integer, parameter :: qp = real128
 integer, parameter :: isp = int32
 integer, parameter :: idp = int64
 end module kind_parameters
@@ -66,7 +66,7 @@ real(dp) :: m_dp !!double precision value of m
 if (u%IM.ne.0.d0) then !!complex argument
  m_dp=real(m,dp)
  k=sqrt(m_dp)
- mc=1.q0-m
+ mc=1.0_qp-m
  !mc=(1.d0+k)*(1.d0-k)
  u_temp_c=u%IM
  !write(*,*) "JEFCargSParam: u,m=",u,m
@@ -82,14 +82,14 @@ if (u%IM.ne.0.d0) then !!complex argument
 
  sn_temp_dn_temp_c=sn_temp*dn_temp_c; cn_temp_cn_temp_c=cn_temp*cn_temp_c; dn_temp_cn_temp_c=dn_temp*cn_temp_c
 
- sn=complex(sn_temp_dn_temp_c,sn_temp_c*cn_temp_cn_temp_c*dn_temp)/delta
- cn=complex(cn_temp_cn_temp_c,-sn_temp_dn_temp_c*dn_temp*sn_temp_c)/delta
- dn=complex(dn_temp_cn_temp_c*dn_temp_c,-m_dp*sn_temp*cn_temp*sn_temp_c)/delta
+ sn=cmplx(sn_temp_dn_temp_c,sn_temp_c*cn_temp_cn_temp_c*dn_temp,dp)/delta
+ cn=cmplx(cn_temp_cn_temp_c,-sn_temp_dn_temp_c*dn_temp*sn_temp_c,dp)/delta
+ dn=cmplx(dn_temp_cn_temp_c*dn_temp_c,-m_dp*sn_temp*cn_temp*sn_temp_c,dp)/delta
 
 else !!real argument
  u_temp=u%RE
  call Jacobi_elliptic_functions_standard_input_range(u_temp,m,sn_temp,cn_temp,dn_temp)
- sn=complex(sn_temp,0.d0); cn=complex(cn_temp,0.d0); dn=complex(dn_temp,0.d0)
+ sn=cmplx(sn_temp,0.d0,dp); cn=cmplx(cn_temp,0.d0,dp); dn=cmplx(dn_temp,0.d0,dp)
 end if
 end subroutine Jacobi_elliptic_functions_complex_argument_standard_parameter
 
@@ -113,7 +113,7 @@ real(qp) :: mc !!compliment of elliptic parameter
 
 !k=sqrt(m)
 !mc=(1.d0+k)*(1.d0-k)
-mc=1.q0-m
+mc=1.0_qp-m
 call gscd(u,mc,sn,cn,dn)
 end subroutine Jacobi_elliptic_functions_standard_input_range
 
@@ -144,13 +144,13 @@ n=0.d0 !!arbitrary characteristic value -- integrals of the third kind are not u
 if (m.gt.1.d0) then
  k=sqrt(m)
  !mc=1.d0-m; mr=1.d0/m; mrc=1.d0-mr
- m_qp=real(m,qp); mr_qp=real(1.d0/m,qp); mrc_qp=1.q0-mr_qp; mc_qp=1.q0-m_qp; mc=real(mc_qp,dp)
+ m_qp=real(m,qp); mr_qp=real(1.d0/m,qp); mrc_qp=1.0_qp-mr_qp; mc_qp=1.0_qp-m_qp; mc=real(mc_qp,dp)
  call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_r,Ec_r,Pc_r)
  call complete_elliptic_integrals_standard_input_range(n,mrc_qp,Fc_rc,Ec_rc,Pc_rc)
- Fc=complex(Fc_r,-Fc_rc)/k; Ec=complex(m*Ec_r+mc*Fc_r,-Fc_rc+m*Ec_rc)/k !!OG -- cancellation error possible for real part of Ec
+ Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(m*Ec_r+mc*Fc_r,-Fc_rc+m*Ec_rc,dp)/k !!OG -- cancellation error possible for real part of Ec
 else
  call complete_elliptic_integrals_standard_input_range(n,real(m,qp),Fc_temp,Ec_temp,Pc_temp)
- Fc=complex(Fc_temp,0.d0); Ec=complex(Ec_temp,0.d0)
+ Fc=cmplx(Fc_temp,0.d0,dp); Ec=cmplx(Ec_temp,0.d0,dp)
 end if
 end subroutine complete_elliptic_integrals
 
@@ -178,7 +178,7 @@ zero=0.d0
 piio2=pii/2.d0
 
 !mc=1.d0-m !!complimentary parameter
-mc=1.q0-m
+mc=1.0_qp-m
 !k=sqrt(m); mc=(1.d0+k)*(1.d0-k)
 call elbdj2(piio2,zero,n,mc,bc,dc,jc) !!returns the associate complete elliptic integrals
 Fc=bc+dc; Ec=bc+real(mc,dp)*dc; Pc=Fc+n*jc !!build standard elliptic integrals from associate elliptic integrals
@@ -210,7 +210,7 @@ piio2=pii/2.d0
 phic=piio2-phi;
 !k=sqrt(m); mc=(1.d0+k)*(1.d0-k)
 !mc=1.d0-m
-mc=1.q0-m
+mc=1.0_qp-m
 call elbdj2(phi,phic,n,mc,b,d,j) !!associate incomplete elliptic integrals
 F=b+d; E=b+real(mc,dp)*d; P=F+n*j !!build standard elliptic integrals from associate elliptic integrals
 end subroutine incomplete_elliptic_integrals_standard_input_range
@@ -230,7 +230,7 @@ complex(dp),intent(out) :: F,E !!incomplete elliptic integrals of the first and 
 
 !!internal variables
 real(dp), parameter :: pii=3.1415926535897932d0
-real(qp), parameter :: pii_qp=3.14159265358979323846264338327950288q0
+real(qp), parameter :: pii_qp=3.14159265358979323846264338327950288_qp
 real(dp) :: piio2 !!constants
 real(dp) :: phic,mc    !!complimentary variables
 real(dp) :: phi_temp,phic_temp,b_temp,d_temp,j_temp !!temporary variables
@@ -256,31 +256,31 @@ else !!0<=phi<pi/2
  if (m.gt.1.d0) then !!large parameter m>1
   k=sqrt(m)
   !mc=1.d0-m; mr=1.d0/m !!OG
-  mc=real(1.q0-real(m,qp),dp); mr_qp=1.q0/real(m,qp)
+  mc=real(1.0_qp-real(m,qp),dp); mr_qp=1.0_qp/real(m,qp)
   !u=k*sin(phi) !!argument of arcsine
   u_qp=real(k,qp)*sin(real(phi,qp))
-  if (u_qp.le.1.q0) then
+  if (u_qp.le.1.0_qp) then
    !amp=asin(u)
    amp=real(asin(u_qp),dp)
    call incomplete_elliptic_integrals_standard_input_range(amp,n,mr_qp,F_temp,E_temp,P_temp)
-   F=complex(F_temp/k,0.d0); E=complex(k*E_temp+mc*F%RE,0.d0)
+   F=cmplx(F_temp/k,0.d0,dp); E=cmplx(k*E_temp+mc*F%RE,0.d0,dp)
   else
    !mrc=1.d0-mr; !!OG
-   mrc_qp=1.q0-mr_qp; mrc=real(mrc_qp,dp)
+   mrc_qp=1.0_qp-mr_qp; mrc=real(mrc_qp,dp)
    !sin_amp=(sqrt(u**2.d0-1.d0))/(u*sqrt(mrc))
-   sin_amp_qp=(sqrt(u_qp**2-1.q0))/(u_qp*sqrt(mrc_qp))
+   sin_amp_qp=(sqrt(u_qp**2-1.0_qp))/(u_qp*sqrt(mrc_qp))
    !amp=asin(min(sin_amp,1.d0)) !!it is possible for sin_amp to be slightly greater than unity due to round off error
-   amp_qp=asin(min(sin_amp_qp,1.q0)); amp=real(amp_qp,dp) !!it may be possible for sin_amp to be slightly greater than unity due to round off error
+   amp_qp=asin(min(sin_amp_qp,1.0_qp)); amp=real(amp_qp,dp) !!it may be possible for sin_amp to be slightly greater than unity due to round off error
    call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_temp,Ec_temp,Pc_temp)
    call incomplete_elliptic_integrals_standard_input_range(amp,n,mrc_qp,F_temp,E_temp,P_temp)
-   F=complex(Fc_temp,-F_temp)/k
-   E=complex(m*Ec_temp+mc*Fc_temp,&
-     &-F_temp+m*E_temp+real(((1.q0-m)*sin_amp_qp*cos(amp_qp))/sqrt(1.q0-mrc_qp*sin_amp_qp**2),dp))/k
+   F=cmplx(Fc_temp,-F_temp,dp)/k
+   E=cmplx(m*Ec_temp+mc*Fc_temp,&
+     &-F_temp+m*E_temp+real(((1.0_qp-m)*sin_amp_qp*cos(amp_qp))/sqrt(1.0_qp-mrc_qp*sin_amp_qp**2),dp),dp)/k
   end if
  else !!standard input ranges
   m_qp=real(m,qp)
   call incomplete_elliptic_integrals_standard_input_range(phi,n,m_qp,F_temp,E_temp,P_temp)
-  F=complex(F_temp,0.d0); E=complex(E_temp,0.d0)
+  F=cmplx(F_temp,0.d0,dp); E=cmplx(E_temp,0.d0,dp)
  end if
 end if
 
@@ -353,15 +353,15 @@ integer(isp) :: Nindex !!index counter
 
 dtheta=phi/real(Ntheta-1,qp)
 
-F=(0.q0,0.q0)
-theta=0.q0
+F=(0.0_qp,0.0_qp)
+theta=0.0_qp
 
 do Nindex=1,Ntheta-1
  theta=real(Nindex-1,qp)*dtheta
- !F=F+dtheta*(integrand(theta,k)+integrand(theta+dtheta,k))/2.q0
- !F=F+dtheta*(integrand(theta,k)+4.q0*integrand(theta+dtheta/2.q0,k)+integrand(theta+dtheta,k))/6.q0
- F=F+dtheta*(integrand(theta,k)+3.q0*integrand(theta+dtheta/3.q0,k)+3.q0*integrand(theta+dtheta*2.q0/3.q0,k)&
-            &+integrand(theta+dtheta,k))/8.d0
+ !F=F+dtheta*(integrand(theta,k)+integrand(theta+dtheta,k))/2.0_qp
+ !F=F+dtheta*(integrand(theta,k)+4.0_qp*integrand(theta+dtheta/2.0_qp,k)+integrand(theta+dtheta,k))/6.0_qp
+ F=F+dtheta*(integrand(theta,k)+3.0_qp*integrand(theta+dtheta/3.0_qp,k)+3.0_qp*integrand(theta+dtheta*2.0_qp/3.0_qp,k)&
+            &+integrand(theta+dtheta,k))/8.0_qp
  !write(*,*) theta,theta+dtheta
  !write(*,*) integrand(theta,m),integrand(theta+dtheta,m)
 end do
@@ -372,7 +372,7 @@ contains
  complex(qp) function integrand(theta,k)
  implicit none
  real(qp),intent(in) :: theta,k
-  integrand=(1.q0,0.q0)/sqrt(complex(1.q0-(k*sin(theta))**2,0.q0))
+  integrand=(1.0_qp,0.0_qp)/sqrt(cmplx(1.0_qp-(k*sin(theta))**2,0.0_qp,qp))
  end function integrand
 
 end subroutine incomplete_elliptic_integral_trapezoidal_rule

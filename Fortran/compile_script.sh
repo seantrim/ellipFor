@@ -11,8 +11,8 @@ OBJECT_FILES=( $(basename -s .f90 $(basename -a $SOURCE_FILES)) )
 OBJECT_FILES="${OBJECT_FILES[@]/%/.o}" 
 
 #Optimized for speed
-gfortran -flto -O3 -c $SOURCE_FILES #complile object files
-gfortran -flto -O3 $OBJECT_FILES -o $(basename -s .f90 ${DRIVER_FILE}) #link object files
+gfortran -flto -O3 -std=f2018 -c $SOURCE_FILES #complile object files
+gfortran -flto -O3 -std=f2018 $OBJECT_FILES -o $(basename -s .f90 ${DRIVER_FILE}) #link object files
 
 ##Clean up object files
 rm -f *.o *.mod
