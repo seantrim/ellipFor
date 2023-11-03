@@ -113,10 +113,12 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
 1. Specify the desired $m$, $\phi$, and $u$ in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
     * Examples are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 2. Compile the code by running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
-    * set the driver file shell variable in the first line of [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
+    * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
+    * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
     * Linux: `$ source compile_script.sh`
         * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
     * gfortran 11.3.0 or later is recommended
+    * for Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (tested with version 2023.2.1-16 for Linux)
     * Other compilers may be possible but results should be tested
 3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
     * Linux: `$ ./ellipFor_test_driver`
@@ -130,8 +132,7 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
 #### Fortran
 
 1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code where necessary
-    * Examples of how to call the subroutines are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-        * The H value is returned in the rightmost argument  
+    * Examples of how to call the subroutines are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)  
 2. Link the f90 files from the [Fortran](/Fortran) folder named [elliptic.f90](/Fortran/elliptic.f90), [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90), and [xgscd_routines.f90](/Fortran/xgscd_routines.f90) to the source for the other code
     * Example: `gfortran -flto -O3 other_code.f90 elliptic.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 -o other_code`
     * In the above example, the source for the other code is `other_code.f90` and the resulting executable is `other_code`
