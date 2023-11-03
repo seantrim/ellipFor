@@ -115,13 +115,13 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
 2. Compile the code by running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
     * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
     * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
-    * Linux: `$ source compile_script.sh`
+    * Linux/Mac: `$ source compile_script.sh`
         * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
     * gfortran 11.3.0 or later is recommended
     * for Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (tested with version 2023.2.1-16 for Linux)
     * Other compilers may be possible but results should be tested
 3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
-    * Linux: `$ ./ellipFor_test_driver`
+    * Linux/Mac: `$ ./ellipFor_test_driver`
     * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
     * Example subroutine calls are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 
