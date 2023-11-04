@@ -8,7 +8,6 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 3. [File Description](#file-description)
     1. [Fortran](#fortran)
     2. [SageMath](#sagemath)
-    3. [Data](#data)
 4. [How to Use the Fortran Routines](#how-to-use-the-fortran-routines)
     1. [Standalone](#standalone)
     2. [With Another Code](#with-another-code)
@@ -16,7 +15,7 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 
 ## Background
 
-This repository contains files and data supporting the article "A Fortran software library for Legendre elliptic integrals and Jacobi elliptic
+This repository contains files and data for the ellipFor library supporting the article "A Fortran software library for Legendre elliptic integrals and Jacobi elliptic
 functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Computer algebra scripts for the exact solution are provided in SageMath and Maple. Symbolic computation of the internal heating rate is performed using Maple, which has been translated into Fortran. The Fortran routines can be used to calculate quantities from the exact solution both independently and within an existing convection code. ?>
 
 ## Variable Definitions
@@ -34,27 +33,6 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 ## File Description
 
 <?
-### [SageMath](/SageMath)
-[exact_solution.sage](/SageMath/exact_solution.sage)
-* SageMath script that can be used to:
-    * symbolically compute the formulas for $T$ and $v_{RMS}$
-    * generate data and plots for $C$ and $T$
-    * note: does not calculate $H$ (see [Maple](/Maple))
-
-### [Maple](/Maple)
-[maple_analytic_solution_include_exterior.mw](/Maple/maple_analytic_solution_include_exterior.mw)
-* Maple worksheet for symbolic computation of $H$ (everywhere except at the domain boundaries)
-* Results stored in [foo_exterior.m](/Maple/foo_exterior.m) 
-
-[foo_exterior.m](/Maple/foo_exterior.m)
-* Results from running [maple_analytic_solution_include_exterior.mw](/Maple/maple_analytic_solution_include_exterior.mw)
-* Once loaded into a Maple worksheet, functions such as $C(x,z,t)$, $T(x,z,t)$, and $H(x,z,t)$ become available
-    * Saves time compared to rerunning [maple_analytic_solution_include_exterior.mw](/Maple/maple_analytic_solution_include_exterior.mw) 
-
-[Fortran_code_generation.mw](/Maple/Fortran_code_generation.mw)
-* Maple worksheet for translating Maple's $H$ formula into Fortran 77 code
-* The result was adapted to free form Fortran for use in [H_func.f90](/Fortran/H_func.f90)
-
 ### [Fortran](/Fortran)
 [exact_solution_main.f90](/Fortran/exact_solution_main.f90)
 * Main program for [standalone](#standalone) version of the Fortran routines
@@ -86,23 +64,34 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
-[compile_script](/Fortran/compile_script)
+[compile_script.sh](/Fortran/compile_script.sh)
 * Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran
 
 [exact_solution_code](/Fortran/exact_solution_code)
 * Sample exexcutable for the [standalone](#standalone) version of the Fortran routines
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
-* gfortran 11.3.0 was used  
-
-### [Data](/Data)
-[entrainment_sample_1_401x401.dat](/Data/entrainment_sample_1_401x401.dat)
-* $E$ time series data for temporally periodic case in "Sample Results" section 
-* Computed using [Fortran](/Fortran) routines
-
-[entrainment_sample_2_751x501.dat](/Data/entrainment_sample_2_751x501.dat)
-* $E$ time series data for approaching steady state case in "Sample Results" section
-* Computed using [Fortran](/Fortran) routines
+* gfortran 11.4.0 was used
 ?>
+
+### [SageMath](/SageMath)
+[test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
+* SageMath script that can be used to calculate test problem data corresponding to the data produced by [test_material_driver](/Fortran/test_material_driver)
+* Output is used in section 6 of the article (see [Background](#background))
+
+[CAS_complete.dat](/SageMath/CAS_complete.dat)
+* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
+* Contains test problem data for complete Legendre elliptic integrals
+* Used in section 6.1 of the article (see [Background](#background))
+
+[CAS_incomplete.dat](/SageMath/CAS_incomplete.dat)
+* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
+* Contains test problem data for incomplete Legendre elliptic integrals
+* Used in section 6.2 of the article (see [Background](#background))
+
+[CAS_functions.dat](/SageMath/CAS_functions.dat)
+* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
+* Contains test problem data for Jacobi elliptic functions
+* Used in section 6.3 of the article (see [Background](#background))
 
 ## How to Use the Fortran Routines
 
@@ -117,7 +106,7 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
     * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
     * Linux/Mac: `$ source compile_script.sh`
         * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
-    * gfortran 11.3.0 or later is recommended
+    * gfortran 11.4.0 or later is recommended
     * for Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (tested with version 2023.2.1-16 for Linux)
     * Other compilers may be possible but results should be tested
 3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
@@ -137,7 +126,7 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
     * Example: `gfortran -flto -O3 other_code.f90 elliptic.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 -o other_code`
     * In the above example, the source for the other code is `other_code.f90` and the resulting executable is `other_code`
         * Modify these names as needed
-    * gfortran 11.3.0 or later is recommended
+    * gfortran 11.4.0 or later is recommended
     * Other compilers (and compiler options) may be possible but results should be tested
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
