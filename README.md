@@ -8,10 +8,11 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 3. [File Description](#file-description)
     1. [Fortran](#fortran)
     2. [SageMath](#sagemath)
-4. [How to Use the Fortran Routines](#how-to-use-the-fortran-routines)
+4. [Main ellipFor Subroutines](#main-ellipfor-subroutines)
+5. [How to Use the Fortran Routines](#how-to-use-the-fortran-routines)
     1. [Standalone](#standalone)
     2. [With Another Code](#with-another-code)
-5. [Legal](#legal)
+6. [Legal](#legal)
 
 ## Background
 
