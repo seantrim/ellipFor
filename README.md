@@ -93,6 +93,24 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Contains test problem data for Jacobi elliptic functions
 * Used in section 6.3 of the article (see [Background](#background))
 
+## Main ellipFor Subroutines
+`complete_elliptic_integrals(m,Fc,Ec)`
+* Evaluate $K(m)$ and $E(m)$
+* Input: `m` = $m$ for $m \geq 0$
+* Output: `Fc` = $K(m)$ and `Ec` = $E(m)$
+
+`incomplete_elliptic_integrals(phi,m,F,E)`
+* Evaluate $F(\phi|m)$ and $E(\phi|m)$
+* Input: `phi` = $\phi$ for $\phi \in \mathbb{R}$, and `m` = $m$ for $m \geq 0$
+* Output: `F` = $F(\phi|m)$ and `E` = $E(\phi|m)$ 
+
+`Jacobi_elliptic_functions(u,m,sn,cn,dn)`
+* Evaluate $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
+* Input: `u` = $u$ for $u \in \mathbb{C}$, and `m` = $m$ for $m \geq 0$
+* Output: `sn` = $\text{sn}(u|m)$, `cn` = $\text{cn}(u|m)$,, and `dn` = $\text{dn}(u|m)$
+
+Note that the source code for the above routines is in [elliptic.f90](/Fortran/elliptic.f90) and examples for calling the subroutines are in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90). 
+
 ## How to Use the Fortran Routines
 
 ### Standalone
