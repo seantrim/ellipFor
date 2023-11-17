@@ -1,4 +1,4 @@
-# ellipFor <? [![DOI](https://zenodo.org/badge/534176632.svg)](https://zenodo.org/badge/latestdoi/534176632) ?>
+# ellipFor [![DOI](https://zenodo.org/badge/710577422.svg)](https://zenodo.org/doi/10.5281/zenodo.10071175)
 
 Fortran software for the evaluation of Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameters.
 
@@ -125,7 +125,7 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 `Jacobi_elliptic_functions(u,m,sn,cn,dn)`
 * Evaluate $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Input: `u` = $u$ for $u \in \mathbb{C}$, and `m` = $m$ for $m \geq 0$
-* Output: `sn` = $\text{sn}(u|m)$, `cn` = $\text{cn}(u|m)$,, and `dn` = $\text{dn}(u|m)$
+* Output: `sn` = $\text{sn}(u|m)$, `cn` = $\text{cn}(u|m)$, and `dn` = $\text{dn}(u|m)$
 
 Note that the source code for the above routines is in [elliptic.f90](/Fortran/elliptic.f90) and examples for calling the subroutines are in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90). 
 
