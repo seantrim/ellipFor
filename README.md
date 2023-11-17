@@ -53,13 +53,13 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran
 
 [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-* Test driver program for [standalone](#standalone) version of the Fortran routines
+* Test driver program for the [standalone](#standalone) version of the Fortran routines
 * Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for a given $m$, $\phi$, and $u$
 
 [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
-* Sample exexcutable for the [standalone](#standalone) driver program based on [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
+* Sample executable for the [standalone](#standalone) driver program based on [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
-    * for this sample, the script shell variables `DRIVER_FILE="ellipFor_test_driver.f90"` and `COMPILER="gfortran"`were used
+    * for this sample, the script shell variables `DRIVER_FILE="ellipFor_test_driver.f90"` and `COMPILER="gfortran"` were used
 * gfortran 11.4.0 was used
 
 [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
@@ -71,9 +71,9 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for $0 \leq m \leq 100$, $\phi = 3 \pi /4$, and $u=1+i$
 
 [test_material_driver](/Fortran/test_material_driver)
-* Sample exexcutable for the test material driver program based on [test_material_driver.f90](/Fortran/test_material_driver.f90)
+* Sample executable for the test material driver program based on [test_material_driver.f90](/Fortran/test_material_driver.f90)
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
-    * for this sample, the script shell variables `DRIVER_FILE="test_material_driver.f90"` and `COMPILER="gfortran"`were used
+    * for this sample, the script shell variables `DRIVER_FILE="test_material_driver.f90"` and `COMPILER="gfortran"` were used
 * gfortran 11.4.0 was used
 
 [complete_elliptic_integrals.dat](/Fortran/complete_elliptic_integrals.dat)
@@ -83,7 +83,7 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 
 [incomplete_elliptic_integrals.dat](/Fortran/incomplete_elliptic_integrals.dat)
 * Output file produced by executing [test_material_driver](/Fortran/test_material_driver)
-* Contains data for $F(\phi|m)$, $E(\phi|m)$
+* Contains data for $F(\phi|m)$ and $E(\phi|m)$
 * Used in section 6.2 in the article (see [Background](#background))
 
 [Jacobi_elliptic_functions.dat](/Fortran/Jacobi_elliptic_functions.dat)
@@ -167,7 +167,7 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
         * Verify that the arguments of subroutine calls correspond to the correct values and data types 
-3. Run the code execuatable as usual
+3. Run the code executable as usual
 
 ## Legal
 
