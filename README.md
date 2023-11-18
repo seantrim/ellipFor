@@ -50,7 +50,8 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
 [compile_script.sh](/Fortran/compile_script.sh)
-* Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran
+* Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran or ifx
+* Can also be used to compile [test_material_driver](/Fortran/test_material_driver) 
 
 [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 * Test driver program for the [standalone](#standalone) version of the Fortran routines
