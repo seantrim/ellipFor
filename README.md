@@ -35,17 +35,20 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 
 ### [Fortran](/Fortran)
 
+[kind_parameters.f90](/Fortran/kind_parameters.f90)
+* Contains a module with portable kind parameters imported from the `iso_fortran_env` module
+
 [elliptic.f90](/Fortran/elliptic.f90)
-* Contains routines that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
+* Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
 * Input ranges were generalized by combining transformations with calls to routines from [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90) and [xgscd_routines.f90](/Fortran/xgscd_routines.f90)
 
 [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90)
-* Contains routines for evaluation of associate incomplete elliptic integrals of first, second, and third kinds
+* Contains module procedures for the evaluation of associated elliptic integrals of the first, second, and third kinds
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
 [xgscd_routines.f90](/Fortran/xgscd_routines.f90)
-* Contains routines for the evaluation of the Jacobi elliptic functions sn, cn, and dn
+* Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
