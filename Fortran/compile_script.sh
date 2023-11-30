@@ -15,7 +15,7 @@ oneAPI_dir=/opt/intel/oneapi # Intel oneAPI
 # ----------------- No User Input Required Past This Point --------------------
 
 # source files containing algorithm implementation and the driver
-SOURCE_FILES="elliptic.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 ${DRIVER_FILE}"
+SOURCE_FILES="kind_parameters.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 elliptic.f90 ${DRIVER_FILE}"
 
 # determine object file names
 OBJECT_FILES=( $(basename -s .f90 $(basename -a $SOURCE_FILES)) )

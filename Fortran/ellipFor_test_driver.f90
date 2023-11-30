@@ -1,6 +1,7 @@
 program ellipFor_test_driver
 ! *** Driver program demonstrating the basic use of ellipFor featuring the evaluation of 1) incomplete Legendre elliptic integrals, 2) complete Legendre elliptic integrals, and 3) the primary Jacobi elliptic functions ***
  use kind_parameters
+ use elliptic, only: complete_elliptic_integrals,incomplete_elliptic_integrals,Jacobi_elliptic_functions
 implicit none
 
 !!Useful parameters
