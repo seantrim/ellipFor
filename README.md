@@ -69,6 +69,7 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
     * for this sample, the script shell variables `DRIVER_FILE="ellipFor_test_driver.f90"` and `COMPILER="gfortran"` were used
 * gfortran 11.4.0 was used
+* May also be obtained using GNU Make via [Makefile](/Fortran/Makefile)
 
 [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
 * Output file produced by executing [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
@@ -83,6 +84,7 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
     * for this sample, the script shell variables `DRIVER_FILE="test_material_driver.f90"` and `COMPILER="gfortran"` were used
 * gfortran 11.4.0 was used
+* May also be obtained using GNU Make via [Makefile](/Fortran/Makefile)
 
 [complete_elliptic_integrals.dat](/Fortran/complete_elliptic_integrals.dat)
 * Output file produced by executing [test_material_driver](/Fortran/test_material_driver)
