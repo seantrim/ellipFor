@@ -56,6 +56,10 @@ functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Co
 * Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran or ifx
 * Can also be used to compile [test_material_driver](/Fortran/test_material_driver) 
 
+[Makefile](/Fortran/Makefile)
+* Makefile for compiling the [standalone](#standalone) version of the Fortran routines using gfortran, ifx, or ifort
+* For use with GNU Make
+
 [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
 * Test driver program for the [standalone](#standalone) version of the Fortran routines
 * Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for a given $m$, $\phi$, and $u$
@@ -141,14 +145,25 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
 
 1. Specify the desired $m$, $\phi$, and $u$ in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
     * Examples are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-2. Compile the code by running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
-    * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
-    * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
-    * Linux/Mac: `$ source compile_script.sh`
-        * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
-    * gfortran 11.4.0 or later is recommended
-    * for Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (tested with version 2023.2.1-16 for Linux)
-    * Other compilers may be possible but results should be tested
+2. Compile the code using either a Bash script or GNU Make
+    1. Bash script: running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
+        * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
+            * Note that setting `DRIVER_FILE="test_material_driver.f90"` results in an executable for generating test material data 
+        * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
+            * For Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (version 2023.2.1-16 or later)
+            * gfortran 11.4.0 or later is recommended
+        * Linux/Mac: `$ source compile_script.sh`
+            * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
+    2. GNU Make: using [Makefile](/Fortran/Makefile)
+        * use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
+            * Linux/Mac: `make gfortran`, `make ifx`, or `make ifort`
+            * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `source /opt/intel/oneapi/setvars.sh`)
+            * Intel oneAPI version 2023.2.1-16 or later is recommended
+            * gfortran 11.4.0 or later is recommended
+            * GNU Make 4.3 or later is recommended
+        * the driver programs [ellipFor_test_driver](/Fortran/ellipFor_test_driver) and [test_material_driver](/Fortran/test_material_driver) will be produced
+            * Note that [test_material_driver](/Fortran/test_material_driver) can be used to generate test material data
+        * if desired, the command `make clean` will remove build objects while retaining executables
 3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
     * Linux/Mac: `$ ./ellipFor_test_driver`
     * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
@@ -162,8 +177,8 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
 
 1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code where necessary
     * Examples of how to call the subroutines are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)  
-2. Link the f90 files from the [Fortran](/Fortran) folder named [elliptic.f90](/Fortran/elliptic.f90), [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90), and [xgscd_routines.f90](/Fortran/xgscd_routines.f90) to the source for the other code
-    * Example: `gfortran -flto -O3 other_code.f90 elliptic.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 -o other_code`
+2. Link the f90 files from the [Fortran](/Fortran) folder named [kind_parameters.f90](/Fortran/kind_parameters.f90), [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90), [xgscd_routines.f90](/Fortran/xgscd_routines.f90), and [elliptic.f90](/Fortran/elliptic.f90) to the source for the other code
+    * Example: `gfortran -flto -O3 kind_parameters.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 elliptic.f90 other_code.f90 -o other_code`
     * In the above example, the source for the other code is `other_code.f90` and the resulting executable is `other_code`
         * Modify these names as needed
     * gfortran 11.4.0 or later is recommended
