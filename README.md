@@ -158,14 +158,14 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
             * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
     2. GNU Make: using [Makefile](/Fortran/Makefile)
         * use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
-            * Linux/Mac: `make gfortran`, `make ifx`, or `make ifort`
-            * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `source /opt/intel/oneapi/setvars.sh`)
+            * Linux/Mac: `$ make gfortran`, `$ make ifx`, or `$ make ifort`
+            * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
             * Intel oneAPI version 2023.2.1-16 or later is recommended
             * gfortran 11.4.0 or later is recommended
             * GNU Make 4.3 or later is recommended
         * the driver programs [ellipFor_test_driver](/Fortran/ellipFor_test_driver) and [test_material_driver](/Fortran/test_material_driver) will be produced
             * Note that [test_material_driver](/Fortran/test_material_driver) can be used to generate test material data
-        * if desired, the command `make clean` will remove build objects while retaining executables
+        * if desired, the command `$ make clean` will remove build objects while retaining executables
 3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
     * Linux/Mac: `$ ./ellipFor_test_driver`
     * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
