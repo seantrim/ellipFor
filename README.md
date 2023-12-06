@@ -147,7 +147,7 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
 
 1. Specify the desired $m$, $\phi$, and $u$ in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
     * Examples are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-2. Compile the code using either a Bash script or GNU Make
+2. Compile the code using *either* a Bash script or GNU Make
     1. Bash script: running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
         * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
             * Note that setting `DRIVER_FILE="test_material_driver.f90"` results in an executable for generating test material data 
