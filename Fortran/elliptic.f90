@@ -8,7 +8,7 @@ module elliptic
  public :: incomplete_elliptic_integrals ! compute incomplete Legendre elliptic intergrals of the first and second kinds
 contains
  
- subroutine Jacobi_elliptic_functions(u,m,sn,cn,dn)
+ elemental subroutine Jacobi_elliptic_functions(u,m,sn,cn,dn)
  !!computes the Jacobi elliptic functions sn, cn, and dn
  !!argument u can be any complex value
  !!real elliptic parameter must satisfy 0<=m (m>1 is allowed)
@@ -37,7 +37,7 @@ contains
  end if
  end subroutine Jacobi_elliptic_functions
  
- subroutine Jacobi_elliptic_functions_complex_argument_standard_parameter(u,m,sn,cn,dn)
+ elemental subroutine Jacobi_elliptic_functions_complex_argument_standard_parameter(u,m,sn,cn,dn)
  !!u can be any complex value
  !!assumes 0<=m<=1
  
@@ -89,7 +89,7 @@ contains
  end if
  end subroutine Jacobi_elliptic_functions_complex_argument_standard_parameter
  
- subroutine Jacobi_elliptic_functions_standard_input_range(u,m,sn,cn,dn)
+ elemental subroutine Jacobi_elliptic_functions_standard_input_range(u,m,sn,cn,dn)
  !!computes the Jacobi elliptic functions sn, cn, and dn
  !!argument u can be any real value
  !!elliptic parameter must be within 0<=m<=1  **** m is quadruple precision ****
@@ -112,7 +112,7 @@ contains
  call gscd(u,mc,sn,cn,dn)
  end subroutine Jacobi_elliptic_functions_standard_input_range
  
- subroutine complete_elliptic_integrals(m,Fc,Ec)
+ elemental subroutine complete_elliptic_integrals(m,Fc,Ec)
  !!!!SJT: computes the complete elliptic integrals of first and second kind given parameter m
  !!!!SJT: assumes 0<=m
  !!!!SJT: allows m>1 by applying the reciprocal-modulus transformation for complete elliptic integrals
@@ -147,7 +147,7 @@ contains
  end if
  end subroutine complete_elliptic_integrals
  
- subroutine complete_elliptic_integrals_standard_input_range(n,m,Fc,Ec,Pc)
+ elemental subroutine complete_elliptic_integrals_standard_input_range(n,m,Fc,Ec,Pc)
  !!!!SJT: computes the complete elliptic integrals of kinds first to third given parameter m and characteristic n
  !!!!SJT: assumes 0<=m<=1 and 0<=n<=1
  use xelbdj2_all_routines, only: elbdj2 
@@ -176,7 +176,7 @@ contains
  Fc=bc+dc; Ec=bc+real(mc,dp)*dc; Pc=Fc+n*jc !!build standard elliptic integrals from associate elliptic integrals
  end subroutine complete_elliptic_integrals_standard_input_range
  
- subroutine incomplete_elliptic_integrals_standard_input_range(phi,n,m,F,E,P)
+ elemental subroutine incomplete_elliptic_integrals_standard_input_range(phi,n,m,F,E,P)
  !!!!SJT: computes the incomplete elliptic integrals of kinds first to third given parameter m and characteristic n
  !!assumes 0<=phi<=pi/2, 0<=m<=1, 0<=n<=1
  use xelbdj2_all_routines, only: elbdj2
@@ -206,7 +206,7 @@ contains
  F=b+d; E=b+real(mc,dp)*d; P=F+n*j !!build standard elliptic integrals from associate elliptic integrals
  end subroutine incomplete_elliptic_integrals_standard_input_range
  
- subroutine incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
+ elemental subroutine incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
  !!!!SJT: reduce parameter using reciprocal-modulus transformation (if needed)
  !!!!SJT: computes the incomplete elliptic integrals of first and second kind given amplitude phi and parameter m
  !!assumes 0<=phi<=pi/2 and 0<=m (m>1 is allowed)
@@ -275,7 +275,7 @@ contains
  
  end subroutine incomplete_elliptic_integrals_standard_amp_large_parameter
  
- subroutine incomplete_elliptic_integrals(phi,m,F,E)
+ elemental subroutine incomplete_elliptic_integrals(phi,m,F,E)
  !!!!SJT: computes the incomplete elliptic integrals of first and second kind given amplitude phi and parameter m
  !!assumes phi is real
  !!assumes 0<=m (m>1 is allowed but m must be real)
@@ -318,7 +318,7 @@ contains
  
  end subroutine incomplete_elliptic_integrals
  
- subroutine incomplete_elliptic_integral_trapezoidal_rule(phi,k,Ntheta)
+ elemental subroutine incomplete_elliptic_integral_trapezoidal_rule(phi,k,Ntheta)
  !!compute the incomplete elliptic integral of the first kind via the trapezoidal rule in quad precision
  !!used to compute reference values by brute force that may be used for testing
  !!not intended to be used in production runs
@@ -350,11 +350,11 @@ contains
   !write(*,*) theta,theta+dtheta
   !write(*,*) integrand(theta,m),integrand(theta+dtheta,m)
  end do
- write(*,*) "IEITR: F",F
+ !write(*,*) "IEITR: F",F
  
  contains
  
-  complex(qp) function integrand(theta,k)
+  elemental complex(qp) function integrand(theta,k)
   real(qp),intent(in) :: theta,k
    integrand=(1.0_qp,0.0_qp)/sqrt(cmplx(1.0_qp-(k*sin(theta))**2,0.0_qp,qp))
   end function integrand

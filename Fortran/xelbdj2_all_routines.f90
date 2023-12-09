@@ -8,6 +8,7 @@
 !!!!SJT: modified computations of m from mc to reduce truncation error when mc is close to unity
 !!!!SJT: modified upper limits on two do loops in celbdj to avoid an index potentially going out of bounds
 !!!!SJT: disabled save and data statements in variable declarations for thread safety
+!!!!SJT: added elemental keywords to all procedures (removed write statements that do not occur in practice)
 !!!!SJT: variable declarations have been modified to use the kind parameters from the kind_parameters module
 !!!!SJT: added intent(in) and intent(out) to argument declarations
 !!!!SJT: replaced tab characters with spaces
@@ -21,7 +22,7 @@ module xelbdj2_all_routines
  public :: elbdj2 ! compute the associated Legendre integrals of the first, second, and third kinds for standard input ranges
 contains
  !---------------------------------------------------------------------------
- subroutine elbdj2(phi,phic,n,mc_qp,b,d,j) !!SJT
+ elemental subroutine elbdj2(phi,phic,n,mc_qp,b,d,j) !!SJT
  !subroutine elbdj2(phi,phic,n,mc,b,d,j) !!SJT: OG
  !
  !     Simultaneous computation of associate elliptic integrals
@@ -96,7 +97,7 @@ contains
  return
  end
  !---------------------------------------------------------------------------
- subroutine celbd(mc_qp,elb,eld) !!SJT
+ elemental subroutine celbd(mc_qp,elb,eld) !!SJT
  !subroutine celbd(mc,elb,eld) !!SJT: OG
  !
  ! Simultaneous computation of associate complete elliptic integrals
@@ -590,7 +591,7 @@ contains
  return
  end
  !---------------------------------------------------------------------------
- subroutine celbdj(nc0,mc0_qp,celb,celd,celj)
+ elemental subroutine celbdj(nc0,mc0_qp,celb,celd,celj)
  !subroutine celbdj(nc0,mc0,celb,celd,celj) !!SJT: OG
  !
  ! Simultaneous computation of associate complete elliptic integrals
@@ -623,14 +624,14 @@ contains
  logical first !!SJT: initialization cannot be in declaration for thread-safe calculations
  first=.true. !!SJT: initialization outside of declaration
  mc0=real(mc0_qp,dp) !!SJT
- if(mc0.le.0.d0) then
-     write(*,*) "(celbdj) Out of domain: mc <= 0"
-     return
- endif
- if(nc0.le.0.d0) then
-     write(*,*) "(celbdj) Out of domain: nc <= 0"
-     return
- endif
+ !if(mc0.le.0.d0) then !!SJT: does not occur in practice
+ !    write(*,*) "(celbdj) Out of domain: mc <= 0"
+ !    return
+ !endif
+ !if(nc0.le.0.d0) then
+ !    write(*,*) "(celbdj) Out of domain: nc <= 0"
+ !    return
+ !endif
  if(mc0.lt.1.d0) then
      !mc=mc0;nc=nc0
      mc_qp=mc0_qp; nc=nc0 !!SJT
@@ -679,7 +680,7 @@ contains
          endif
          y(i+1)=1.d0-x(i+1)
      enddo
-     write(*,"(a30,i5)") "(celbdj) No Conv. x-Transf. i=",i
+     !write(*,"(a30,i5)") "(celbdj) No Conv. x-Transf. i=",i !!SJT: does not occur in practice
      return
  endif
  1 continue
@@ -690,7 +691,7 @@ contains
      y(i+1)=y(i)/((1.d0+c(i))*(1.d0+d(i)))
      if(abs(y(i+1)).lt.0.325d0) goto 2
  enddo
- write(*,"(a30,i5)") "(celbdj) No Conv. y-Transf. i=",i
+ !write(*,"(a30,i5)") "(celbdj) No Conv. y-Transf. i=",i !!SJT: does not occur in practice
  return
  2 continue
  ie=i+1
@@ -712,7 +713,7 @@ contains
      if(abs(dj).lt.EPS*abs(celj)) goto 3
      celj=celj+dj
  enddo
- write(*,"(a30,i5)") "(celbdj) No Conv. Series. i=",i
+ !write(*,"(a30,i5)") "(celbdj) No Conv. Series. i=",i !!SJT: does not occur in practice
  return
  3 continue
  do i=ie-1,0,-1
@@ -733,7 +734,7 @@ contains
  return
  end
  !---------------------------------------------------------------------------
- subroutine elsbdj(s0,n,mc_qp,b,d,j) !!SJT
+ elemental subroutine elsbdj(s0,n,mc_qp,b,d,j) !!SJT
  !subroutine elsbdj(s0,n,mc,b,d,j) !!SJT: OG
  !
  ! Simultaneous computation of associate elliptic integrals
@@ -792,7 +793,7 @@ contains
                  goto 1
          endif
  enddo
- write(*,*) "(elsbdj) too many iterations: s0,m=",s0,m
+ !write(*,*) "(elsbdj) too many iterations: s0,m=",s0,m SJT: does not occur in practice
  1 continue
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
  call serbd(y,m,b,d)
@@ -810,7 +811,7 @@ contains
  return
  end
  !---------------------------------------------------------------------------
- subroutine serbd(y,m,b,d)
+ elemental subroutine serbd(y,m,b,d)
  !
  ! Simultaneous computation of associate elliptic integrals,
  ! B(phi|m) and D(phi|m), for small arguments by the series expansion
@@ -931,7 +932,7 @@ contains
  return
  end
  !---------------------------------------------------------------------------
- real(dp) function serj(y,n,m)
+ elemental real(dp) function serj(y,n,m)
  !
  ! Computation of associate elliptic integral J(phi,n|m)
  ! for small arguments by the series expansion
@@ -1295,7 +1296,7 @@ contains
  
  end
  !---------------------------------------------------------------------------
- real(dp) function uatan(t,h)
+ elemental real(dp) function uatan(t,h)
  !
  ! Universal arctangent function
  !

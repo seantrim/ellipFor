@@ -6,6 +6,7 @@
 !!!!SJT: added use statement for the kind_parameters module granting access to portable kind parameters in the xgscd_routines module
 !!!!SJT: added implicit none statement to xgscd_routines module which extends to each routine in the contains block
 !!!!SJT: disabled save statement in variable declarations for thread safety
+!!!!SJT: added elemental keywords to all procedures (removed write statements that do not occur in practice)
 !!!!SJT: modified computations of m from mc (quad precision) in an attempt to reduce truncation error when mc is close to unity
 !!!!SJT: removed single precision routines
 !!!!SJT: variable declarations were modified to used the kind values from the kind_parameters module
@@ -20,7 +21,7 @@ module xgscd_routines
  private
  public :: gscd ! computation of the primary Jacobi elliptic functions: sn, cn, and dn for standard input parameters
 contains 
- subroutine gscd(u,mc_qp,s,c,d) !!SJT
+ elemental subroutine gscd(u,mc_qp,s,c,d) !!SJT
  !subroutine gscd(u,mc,s,c,d) !!SJT: original
  !
  !     Double precision subroutine to compute three Jacobian elliptic functions simultaneously
@@ -103,7 +104,7 @@ contains
  end
  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     subroutine scd2(u,mc_qp,s,c,d) !!SJT
+     elemental subroutine scd2(u,mc_qp,s,c,d) !!SJT
  !    subroutine scd2(u,mc,s,c,d) !!SJT: original
  !
  !        Double precision subroutine to compute three Jacobian elliptic functions simultaneously
@@ -135,7 +136,7 @@ contains
          if(u0.lt.uT) goto 1
          u0=u0*0.5d0
      enddo
-     write(*,*) "(scd2) Too large input argument: u=", u
+     !write(*,*) "(scd2) Too large input argument: u=", u !!SJT does not occur in practice
  1 continue
      v=u0*u0; a=1.d0; b=v*(0.5d0-v*(B10+m*B11-v*(B20+m*(B21+m*B22))))
      if(u.lt.uA) then
@@ -160,7 +161,7 @@ contains
      return; end
  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-       real(dp) function elk(mc_qp) !!SJT
+       elemental real(dp) function elk(mc_qp) !!SJT
  !      real*8 function elk(mc) !!SJT: original
  !c
  !c        Double precision complete elliptic integral of the first kind
