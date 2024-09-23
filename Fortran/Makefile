@@ -14,6 +14,13 @@ gfortran: ellipFor_test_driver test_material_driver
 gfortran:
 	echo $(FC) $(FOPTS)
 
+# GNU Fortran Debug Mode
+gfortran_debug: FC = gfortran
+gfortran_debug: FOPTS = -Wall -std=f2018 -ffree-line-length-132 -g -fbacktrace -ffpe-trap='invalid,overflow,zero,underflow' -fbounds-check
+gfortran_debug: ellipFor_test_driver test_material_driver
+gfortran_debug:
+	echo $(FC) $(FOPTS)
+
 # Intel Fortran
 ifx: FC = ifx
 ifx: FOPTS = -ipo -O3

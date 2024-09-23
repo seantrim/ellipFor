@@ -1,25 +1,27 @@
-!!!!SJT: This is an edited version of the file xgscd.txt 
-!!!!SJT: deleted original driver program to allow linkage of subroutines to other code
-!!!!SJT: deleted sample data at end of file so that the file could be compiled
-!!!!SJT: converted to free form -- comment character "!" used throughout -- "&" used at left and right sides for line continuation
-!!!!SJT: created the xgscd_routines module and moved procedures into the contains block to control outside access
-!!!!SJT: added use statement for the kind_parameters module granting access to portable kind parameters in the xgscd_routines module
-!!!!SJT: added implicit none statement to xgscd_routines module which extends to each routine in the contains block
-!!!!SJT: disabled save statement in variable declarations for thread safety
-!!!!SJT: added elemental keywords to all procedures (removed write statements that do not occur in practice)
-!!!!SJT: modified computations of m from mc (quad precision) in an attempt to reduce truncation error when mc is close to unity
-!!!!SJT: removed single precision routines
-!!!!SJT: variable declarations were modified to used the kind values from the kind_parameters module
-!!!!SJT: added intent(in) and intent(out) to argument declarations 
-!!!!SJT: replaced tab characters with spaces
-!!!!SJT: in the code comments, "OG" is short for "Original code" and "SJT" indicates a modification
+!!!!SJT: Update Notes
+!!!! -This is an edited version of the file xgscd.txt 
+!!!! -deleted original driver program to allow linkage of subroutines to other code
+!!!! -deleted sample data at end of file so that the file could be compiled
+!!!! -converted to free form -- comment character "!" used throughout -- "&" used at left and right sides for line continuation
+!!!! -created the xgscd_routines module and moved procedures into the contains block to control outside access
+!!!! -added use statement for the kind_parameters module granting access to portable kind parameters in the xgscd_routines module
+!!!! -added implicit none statement to xgscd_routines module which extends to each routine in the contains block
+!!!! -disabled save statement in variable declarations for thread safety
+!!!! -added elemental keywords to all procedures (removed write statements that do not occur in practice)
+!!!! -modified computations of m from mc (quad precision) in an attempt to reduce truncation error when mc is close to unity
+!!!! -removed single precision routines
+!!!! -variable declarations were modified to used the kind values from the kind_parameters module
+!!!! -added intent(in) and intent(out) to argument declarations 
+!!!! -replaced tab characters with spaces
+!!!! -removed unused variables
+!!!! -in the code comments, "OG" is short for "Original code" and "SJT" indicates a modification
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 module xgscd_routines
- ! module for routines related to the computation of the primary Jacobi elliptic functions for standard input parameters
+ ! module for routines related to the computation of the pricipal Jacobi elliptic functions for standard input parameters
  use kind_parameters
  implicit none
  private
- public :: gscd ! computation of the primary Jacobi elliptic functions: sn, cn, and dn for standard input parameters
+ public :: gscd ! computation of the principal Jacobi elliptic functions: sn, cn, and dn for standard input parameters
 contains 
  elemental subroutine gscd(u,mc_qp,s,c,d) !!SJT
  !subroutine gscd(u,mc,s,c,d) !!SJT: original
@@ -43,12 +45,15 @@ contains
  real(qp),intent(in) :: mc_qp !!SJT
  real(dp),intent(in) :: u !!SJT
  real(dp),intent(out) :: s,c,d !!SJT
- real(dp) mc,m,kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx,cx,dx !!SJT
+ !real(dp) mc,m,kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx !!SJT: OG
+ real(dp) mc,kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx !!SJT: removed m
  !real(dp) elk !!SJT: declaration of elk function not required due to xgscd_routines module 
  !
  !m=1.d0-mc !!SJT: original
- m=real(1.0_qp-mc_qp,dp); mc=real(mc_qp,dp) !!SJT: quad precision used to reduce the impact of cancellation errors
- kc=sqrt(mc)
+ !m=real(1.0_qp-mc_qp,dp); !!SJT: removed 
+ mc=real(mc_qp,dp) !!SJT: quad precision used to reduce the impact of cancellation errors
+ !kc=sqrt(mc) !! SJT: OG
+ kc=real(sqrt(mc_qp),dp)
  ux=abs(u)
  if(ux.lt.0.785d0) then
      !call scd2(ux,mc,s,c,d) !!SJT: OG
@@ -58,7 +63,8 @@ contains
      k=elk(mc_qp) !!SJT
      kh=k*0.5d0; kh3=k*1.5d0; kh5=k*2.5d0; kh7=k*3.5d0;
      k2=k*2.d0; k3=k*3.d0; k4=k*4.d0
-     ux=ux-k4*dble(int(ux/k4))
+     !ux=ux-k4*dble(int(ux/k4)) !!SJT: OG
+     ux=ux-k4*real(int(ux/k4,idp),dp) !!SJT: updated to prevent integer overflow
      if(ux.lt.kh) then
          !call scd2(ux,mc,s,c,d) !!SJT: OG
          call scd2(ux,mc_qp,s,c,d) !!SJT
@@ -177,7 +183,7 @@ contains
  !c     Output: elk
  !c
          real(dp) mc
-         real(dp) mcold,PIHALF,PIINV,elkold,TINY,m,mx,P,Q
+         real(dp) mcold,PIHALF,PIINV,elkold,TINY,m,mx
          real(dp) kkc,nome
          !real(dp) :: kc !!SJT
          real(qp),intent(in) :: mc_qp !!SJT

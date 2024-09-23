@@ -1,17 +1,23 @@
 module elliptic
- ! module containing main ellipFor subroutines for the calculation of Legendre elliptic integrals and Jacobi elliptic functions with generalized input ranges
+ ! module containing main ellipFor subroutines for the calculation of Legendre elliptic integrals 
+ ! and Jacobi elliptic functions with generalized input ranges
  use kind_parameters
  implicit none
  private
  public :: Jacobi_elliptic_functions     ! compute the primary Jacobi elliptic functions sn, cn, and dn
  public :: complete_elliptic_integrals   ! compute complete Legendre elliptic intergrals of the first and second kinds
  public :: incomplete_elliptic_integrals ! compute incomplete Legendre elliptic intergrals of the first and second kinds
+
+ ! parameters
+ real(dp), parameter :: pii   =3.1415926535897932_dp
+ real(qp), parameter :: pii_qp=3.14159265358979323846264338327950288_qp
 contains
  
  elemental subroutine Jacobi_elliptic_functions(u,m,sn,cn,dn)
  !!computes the Jacobi elliptic functions sn, cn, and dn
  !!argument u can be any complex value
- !!real elliptic parameter must satisfy 0<=m (m>1 is allowed)
+ !!real elliptic parameter must satisfy m>=0 (otherwise NaN is returned)
+ use,intrinsic :: ieee_arithmetic,only: ieee_value,ieee_quiet_nan
  
  !!input
  complex(dp),intent(in) :: u !!argument 
@@ -21,19 +27,27 @@ contains
  complex(dp),intent(out) :: sn,cn,dn !!Jacobi elliptic functions
  
  !!internal variables
- real(dp) :: mr !!reciprocal parameter
- real(dp) :: k  !!modulus
- complex(dp) :: u_temp !!temporary argument
+ real(qp)    :: mr                      !!reciprocal parameter
+ real(dp)    :: k                       !!modulus
+ complex(dp) :: u_temp                  !!temporary argument
  complex(dp) :: sn_temp,cn_temp,dn_temp !!temporary Jacobi elliptic function values
- 
+ real(dp)    :: nan                     !!NaN value
+ real(qp)    :: m_qp                    !!quad precision m  
+
  if (m.gt.1.d0) then
-  k=sqrt(m); mr=1.d0/m
+  m_qp=real(m,qp)
+  mr=1._qp/m_qp
+  k=real(sqrt(m_qp),dp)
+  !k=sqrt(m); mr=1.d0/m
   u_temp=k*u
-  !write(*,*) "JEF u,m,k,u_temp,mr=",u,m,k,u_temp,mr
-  call Jacobi_elliptic_functions_complex_argument_standard_parameter(u_temp,real(mr,qp),sn_temp,cn_temp,dn_temp)
+  call Jacobi_elliptic_functions_complex_argument_standard_parameter(u_temp,mr,sn_temp,cn_temp,dn_temp)
   sn=sn_temp/k; dn=cn_temp; cn=dn_temp
- else
-  call Jacobi_elliptic_functions_complex_argument_standard_parameter(u,real(m,qp),sn,cn,dn)
+ else if (m.ge.0.d0) then
+  m_qp=real(m,qp)
+  call Jacobi_elliptic_functions_complex_argument_standard_parameter(u,m_qp,sn,cn,dn)
+ else ! m < 0 not currently supported -- returning NaN values
+  nan=ieee_value(0.d0,ieee_quiet_nan)
+  sn=cmplx(nan,nan,dp); cn=cmplx(nan,nan,dp); dn=cmplx(nan,nan,dp) 
  end if
  end subroutine Jacobi_elliptic_functions
  
@@ -50,30 +64,21 @@ contains
  
  !!internal variables
  real(dp) :: u_temp !!temporary argument
- real(dp) :: u_temp_c !!temporary argument associated with complimentary parameter
+ real(dp) :: u_temp_c !!temporary argument corresponding to complimentary parameter
  real(dp) :: sn_temp,cn_temp,dn_temp !!temporary Jacobi elliptic
  real(dp) :: sn_temp_c,cn_temp_c,dn_temp_c !!temporary Jacobi elliptic using complimentary parameters
  real(qp) :: mc !!compliment of parameter
  real(dp) :: delta !!divisor
  real(dp) :: sn_temp_dn_temp_c,cn_temp_cn_temp_c,dn_temp_cn_temp_c !!products of temporary variables
- real(dp) :: k
  real(dp) :: m_dp !!double precision value of m
  
  if (u%IM.ne.0.d0) then !!complex argument
   m_dp=real(m,dp)
-  k=sqrt(m_dp)
   mc=1.0_qp-m
-  !mc=(1.d0+k)*(1.d0-k)
   u_temp_c=u%IM
-  !write(*,*) "JEFCargSParam: u,m=",u,m
-  !write(*,*) "JEFCargSParam: u_temp_c,mc=",u_temp_c,mc
   call Jacobi_elliptic_functions_standard_input_range(u_temp_c,mc,sn_temp_c,cn_temp_c,dn_temp_c)
-  !write(*,*) "JEFCargSParam: sn_temp_c,cn_temp_c,dn_temp_c=",sn_temp_c,cn_temp_c,dn_temp_c
-  !write(*,*) ""
   u_temp=u%RE
-  !write(*,*) "JEFCargSParam: u_temp,m=",u_temp,m
   call Jacobi_elliptic_functions_standard_input_range(u_temp,m,sn_temp,cn_temp,dn_temp)
-  !write(*,*) "JEFCargSParam: sn_temp,cn_temp,dn_temp=",sn_temp,cn_temp,dn_temp
   delta=cn_temp_c**2+m_dp*(sn_temp*sn_temp_c)**2 !!reduces truncation error (this form avoids subtraction)
  
   sn_temp_dn_temp_c=sn_temp*dn_temp_c; cn_temp_cn_temp_c=cn_temp*cn_temp_c; dn_temp_cn_temp_c=dn_temp*cn_temp_c
@@ -104,52 +109,75 @@ contains
  
  !!internal variables
  real(qp) :: mc !!compliment of elliptic parameter
- !real(dp) :: k !!elliptic modulus
  
- !k=sqrt(m)
- !mc=(1.d0+k)*(1.d0-k)
  mc=1.0_qp-m
  call gscd(u,mc,sn,cn,dn)
  end subroutine Jacobi_elliptic_functions_standard_input_range
  
  elemental subroutine complete_elliptic_integrals(m,Fc,Ec)
  !!!!SJT: computes the complete elliptic integrals of first and second kind given parameter m
- !!!!SJT: assumes 0<=m
+ !!!!SJT: assumes m>=0 (returns NaN otherwise)
  !!!!SJT: allows m>1 by applying the reciprocal-modulus transformation for complete elliptic integrals
+ use,intrinsic :: ieee_arithmetic,only: ieee_value,ieee_quiet_nan
  
  !!input
- real(dp),intent(in) :: m !!elliptic characteristic and parameter
+ real(dp),intent(in) :: m         !!elliptic characteristic and parameter
  
  !!output
  complex(dp),intent(out) :: Fc,Ec !!complete elliptic integrals of the first and  second kinds
  
  !!internal variables
- real(dp) :: mc !!compliment of elliptic parameter
- real(dp) :: mr,mrc !!reciprocal parameter and its compliment 
- real(dp) :: k !!elliptic modulus and reciprocal
- real(dp) :: n !!characteristic
- real(dp) :: Fc_temp,Ec_temp,Pc_temp !!temporary complete elliptic integral values from standard input range
+ real(dp) :: mc                               !!compliment of elliptic parameter
+ real(dp) :: k                                !!elliptic modulus and reciprocal
+ real(dp) :: n                                !!characteristic
+ real(dp) :: Fc_temp,Ec_temp,Pc_temp          !!temporary complete elliptic integral values from standard input range
  real(dp) :: Fc_r,Ec_r,Pc_r,Fc_rc,Ec_rc,Pc_rc !!complete elliptic integral values based on reciprocal parameter and its compliment
- real(qp) :: m_qp,mc_qp,mr_qp,mrc_qp !!quad precision variables
+ real(dp) :: bc_r,dc_r,jc_r                   !!associated complete elliptic integrals
+ real(dp) :: bc_rc,dc_rc,jc_rc                !!associated complete elliptic integrals
+ real(dp) :: bc_temp,dc_temp,jc_temp          !!associated complete elliptic integrals
+ real(qp) :: m_qp,mc_qp,mr_qp,mrc_qp          !!quad precision variables
+ real(dp) :: nan                              !!NaN value
  
  n=0.d0 !!arbitrary characteristic value -- integrals of the third kind are not used
  
  if (m.gt.1.d0) then
   k=sqrt(m)
-  !mc=1.d0-m; mr=1.d0/m; mrc=1.d0-mr
   m_qp=real(m,qp); mr_qp=real(1.d0/m,qp); mrc_qp=1.0_qp-mr_qp; mc_qp=1.0_qp-m_qp; mc=real(mc_qp,dp)
-  call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_r,Ec_r,Pc_r)
-  call complete_elliptic_integrals_standard_input_range(n,mrc_qp,Fc_rc,Ec_rc,Pc_rc)
-  Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(m*Ec_r+mc*Fc_r,-Fc_rc+m*Ec_rc,dp)/k !!OG -- cancellation error possible for real part of Ec
- else
-  call complete_elliptic_integrals_standard_input_range(n,real(m,qp),Fc_temp,Ec_temp,Pc_temp)
+  call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_r,Ec_r,Pc_r,bc_r,dc_r,jc_r)
+  call complete_elliptic_integrals_standard_input_range(n,mrc_qp,Fc_rc,Ec_rc,Pc_rc,bc_rc,dc_rc,jc_rc)
+  !!OG -- cancellation error possible for Re[Ec]
+  !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(m*Ec_r+mc*Fc_r,-Fc_rc+m*Ec_rc,dp)/k
+ 
+  !!reduce cancellation error by factor of 10 (but cancellation in Ec_r-Fc_r still possible)
+  !!note: mc=1-m identity used
+  !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(m*(Ec_r-Fc_r)+Fc_r,-Fc_rc+m*Ec_rc,dp)/k
+
+  !!eliminate cancellation error by using identity with associated integral dc_r: Ec_r-Fc_r=-m*dc_r
+  !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(m*(-real(mr_qp,dp)*dc_r)+Fc_r,-Fc_rc+m*Ec_rc,dp)/k
+
+  !!simplify using m*real(mr_qp,dp)=1._dp (no cancellation error)
+  !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(-dc_r+Fc_r,-Fc_rc+m*Ec_rc,dp)/k
+
+  !!simplify using -dc_r+Fc_r=bc_r (eliminate differences completely in Re[Ec])
+  !!note: Re[Ec] may agree better with Mathematica than SageMath for very large m  
+  !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(bc_r,-Fc_rc+m*Ec_rc,dp)/k
+
+  !!write Im[Ec] in terms of bc_rc to reduce error near m=1
+  !!note: used Fc_rc=bc_rc+dc_rc, Ec_rc=bc_rc+(1-mrc)*dc_rc, 1-mrc=1/m
+  Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(bc_r,-mc*bc_rc,dp)/k
+ else if (m.ge.0.d0) then
+  call complete_elliptic_integrals_standard_input_range(n,real(m,qp),Fc_temp,Ec_temp,Pc_temp,bc_temp,dc_temp,jc_temp)
   Fc=cmplx(Fc_temp,0.d0,dp); Ec=cmplx(Ec_temp,0.d0,dp)
+ else ! m < 0 not currently supported -- returning NaN values
+  nan=ieee_value(0.d0,ieee_quiet_nan)
+  Fc=cmplx(nan,nan,dp); Ec=cmplx(nan,nan,dp)
  end if
  end subroutine complete_elliptic_integrals
  
- elemental subroutine complete_elliptic_integrals_standard_input_range(n,m,Fc,Ec,Pc)
+ elemental subroutine complete_elliptic_integrals_standard_input_range(n,m,Fc,Ec,Pc,bc,dc,jc)
  !!!!SJT: computes the complete elliptic integrals of kinds first to third given parameter m and characteristic n
  !!!!SJT: assumes 0<=m<=1 and 0<=n<=1
+ use, intrinsic :: ieee_arithmetic, only: ieee_value,ieee_positive_inf
  use xelbdj2_all_routines, only: elbdj2 
 
  !!input
@@ -158,53 +186,81 @@ contains
  
  !!output
  real(dp),intent(out) :: Fc,Ec,Pc !!complete elliptic integrals of the first kind, second kind, and third kind
+ real(dp),intent(out) :: bc,dc,jc !!associated complete elliptic integrals
  
  !!internal variables
- real(dp), parameter :: pii=3.1415926535897932d0
  real(dp) :: zero,piio2 !!constants
- real(dp) :: bc,dc,jc !!associate complete elliptic integrals
- real(qp) :: mc !!complimentary parameter
- !real(dp) :: k !!elliptic modulus
- 
- zero=0.d0
- piio2=pii/2.d0
- 
- !mc=1.d0-m !!complimentary parameter
- mc=1.0_qp-m
- !k=sqrt(m); mc=(1.d0+k)*(1.d0-k)
- call elbdj2(piio2,zero,n,mc,bc,dc,jc) !!returns the associate complete elliptic integrals
- Fc=bc+dc; Ec=bc+real(mc,dp)*dc; Pc=Fc+n*jc !!build standard elliptic integrals from associate elliptic integrals
+ real(qp) :: mc         !!complimentary parameter
+
+ if (m.eq.1._dp) then
+  Fc=ieee_value(1._dp,ieee_positive_inf)
+  Ec=1._dp
+  Pc=0.d0 !! arbitrarily set to zero for now -- update in future ellipFor versions
+ else 
+  zero=0.d0
+  piio2=pii/2.d0
+  
+  mc=1.0_qp-m !!complimentary parameter (quad precision)
+  call elbdj2(piio2,zero,n,mc,bc,dc,jc) !!returns the associated complete elliptic integrals
+  Fc=bc+dc; Ec=bc+real(mc,dp)*dc; Pc=Fc+n*jc !!OG: build standard elliptic integrals from associated elliptic integrals
+  !Fc=bc+dc; Ec=Fc-real(m,dp)*dc; Pc=Fc+n*jc !!slightly worse for Ec (but useful identity)
+ end if
  end subroutine complete_elliptic_integrals_standard_input_range
  
- elemental subroutine incomplete_elliptic_integrals_standard_input_range(phi,n,m,F,E,P)
+ elemental subroutine incomplete_elliptic_integrals_standard_input_range(phi,n,m,F,E,P,b,d,j)
  !!!!SJT: computes the incomplete elliptic integrals of kinds first to third given parameter m and characteristic n
  !!assumes 0<=phi<=pi/2, 0<=m<=1, 0<=n<=1
  use xelbdj2_all_routines, only: elbdj2
  
  !!input
- real(dp),intent(in) :: phi,n !!elliptic amplitude, characteristic, and parameter
+ real(dp),intent(in) :: phi,n  !!elliptic amplitude, characteristic, and parameter
  real(qp),intent(in) :: m
  
  !!output
  real(dp),intent(out) :: F,E,P !!incomplete elliptic integrals of the first kind, second kind, and third kind
+ real(dp),intent(out) :: b,d,j !!associated incomplete elliptic integrals
  
  !!internal variables
- real(dp), parameter :: pii=3.1415926535897932d0
- real(dp) :: piio2      !!constants
- real(dp) :: phic    !!complimentary variables
- real(qp) :: mc
- !real(dp) :: k          !!elliptic modulus
- real(dp) :: b,d,j      !!associate incomplete elliptic integrals
- 
- piio2=pii/2.d0
- 
- phic=piio2-phi;
- !k=sqrt(m); mc=(1.d0+k)*(1.d0-k)
- !mc=1.d0-m
+ real(dp) :: phic       !!complimentary Jacobi amplitude
+ real(qp) :: mc         !!complimentary parameter
+ real(qp) :: piio2_qp   !!pi/2 
+
+ piio2_qp=pii_qp/2._qp 
+
+ phic=real(piio2_qp-real(phi,qp),dp); ! use higher precision to ensure correctness of phi+phic=pi/2
+
  mc=1.0_qp-m
- call elbdj2(phi,phic,n,mc,b,d,j) !!associate incomplete elliptic integrals
- F=b+d; E=b+real(mc,dp)*d; P=F+n*j !!build standard elliptic integrals from associate elliptic integrals
+ call elbdj2(phi,phic,n,mc,b,d,j)  !!associated incomplete elliptic integrals
+ F=b+d; E=b+real(mc,dp)*d; P=F+n*j !!build standard elliptic integrals from associated elliptic integrals
  end subroutine incomplete_elliptic_integrals_standard_input_range
+
+ elemental subroutine incomplete_elliptic_integrals_standard_input_range_qp(phi,n,m,F,E,P,b,d,j)
+ !!!!SJT: computes the incomplete elliptic integrals of kinds first to third given parameter m and characteristic n
+ !!note: works in quadruple precision (accurate to about 25 digits)
+ !!assumes 0<=phi<=pi/2, 0<=m<=1, 0<=n<=1
+ use xelbdj2_all_routines, only: elbdj2_qp
+ 
+ !!input
+ real(qp),intent(in) :: phi,n  !!elliptic amplitude, characteristic, and parameter
+ real(qp),intent(in) :: m
+ 
+ !!output
+ real(qp),intent(out) :: F,E,P !!incomplete elliptic integrals of the first kind, second kind, and third kind
+ real(qp),intent(out) :: b,d,j !!associated incomplete elliptic integrals
+ 
+ !!internal variables
+ real(qp) :: piio2      !!constants
+ real(qp) :: phic       !!complimentary variables
+ real(qp) :: mc
+
+ piio2=pii_qp/2._qp
+ 
+ phic=piio2-phi; ! OG
+
+ mc=1.0_qp-m
+ call elbdj2_qp(phi,phic,n,mc,b,d,j)  !!associated incomplete elliptic integrals
+ F=b+d; E=b+mc*d; P=F+n*j !!build standard elliptic integrals from associated elliptic integrals
+ end subroutine incomplete_elliptic_integrals_standard_input_range_qp
  
  elemental subroutine incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
  !!!!SJT: reduce parameter using reciprocal-modulus transformation (if needed)
@@ -218,24 +274,24 @@ contains
  complex(dp),intent(out) :: F,E !!incomplete elliptic integrals of the first and second kind
  
  !!internal variables
- real(dp), parameter :: pii=3.1415926535897932d0
- real(qp), parameter :: pii_qp=3.14159265358979323846264338327950288_qp
  real(dp) :: piio2 !!constants
- real(dp) :: phic,mc    !!complimentary variables
- real(dp) :: phi_temp,phic_temp,b_temp,d_temp,j_temp !!temporary variables
- real(dp) :: u !!argument of arcsine
+ real(dp) :: mc    !!complimentary variables
  real(dp) :: k !!elliptic modulus
- real(dp) :: kr,mr !!reciprocal modulus and parameter
- real(dp) :: mrc !!compliment of the reciprocal parameter
- complex(dp) :: Fc,Ec !!complete elliptic integral values computed for m>1
- real(dp) :: Fc_temp,Ec_temp,Pc_temp !!temporary complete elliptic integral values
- real(dp) :: F_temp,E_temp,P_temp !!temporary incomplete elliptic integral values
- real(dp) :: amp,ampc !!temporary elliptic amplitude variable and compliment
- real(dp) :: sin_amp !!sine amplitude
+ !real(dp) :: mrc !!compliment of the reciprocal parameter
+ real(dp) :: Fc_temp,Ec_temp,Pc_temp !!temporary complete elliptic integrals
+ real(dp) :: bc_temp,dc_temp,jc_temp !!temporary associated complete elliptic integrals
+ real(dp) :: F_temp,E_temp,P_temp    !!temporary incomplete elliptic integrals
+ real(dp) :: b_temp,d_temp,j_temp    !!temporary associated incomplete elliptic integrals
+ real(qp) :: F_temp_qp,E_temp_qp,P_temp_qp    !!temporary incomplete elliptic integrals
+ real(qp) :: b_temp_qp,d_temp_qp,j_temp_qp    !!temporary associated incomplete elliptic integrals
+ real(dp) :: amp !!temporary elliptic amplitude variable
  real(dp) :: n !!characteristic
- real(qp) :: mr_qp,mrc_qp,m_qp,mc_qp
- real(qp) :: u_qp,phi_temp_qp,amp_qp,sin_amp_qp
- 
+ real(qp) :: mr_qp,mrc_qp,m_qp,mc_qp !!variables related to elliptic parameter
+ real(qp) :: u_qp!,amp_qp,sin_amp_qp !!argument of arcsine, elliptic amplitude, and sine amplitude 
+ real(qp) :: k_qp
+
+ real(qp) :: cos_theta,theta,sin_theta
+
  piio2=pii/2.d0
  n=0.d0 !!arbitrary characteristic -- integrals of the third kind are not used
  
@@ -243,32 +299,70 @@ contains
   call complete_elliptic_integrals(m,F,E)
  else !!0<=phi<pi/2
   if (m.gt.1.d0) then !!large parameter m>1
-   k=sqrt(m)
+   k_qp=sqrt(real(m,qp)); k=real(k_qp,dp)
    !mc=1.d0-m; mr=1.d0/m !!OG
-   mc=real(1.0_qp-real(m,qp),dp); mr_qp=1.0_qp/real(m,qp)
+   mc_qp=1.0_qp-real(m,qp)
+   mc=real(mc_qp,dp); mr_qp=1.0_qp/real(m,qp)
    !u=k*sin(phi) !!argument of arcsine
-   u_qp=real(k,qp)*sin(real(phi,qp))
+   !u_qp=real(k,qp)*sin(real(phi,qp))
+   u_qp=k_qp*sin(real(phi,qp))
    if (u_qp.le.1.0_qp) then
     !amp=asin(u)
     amp=real(asin(u_qp),dp)
-    call incomplete_elliptic_integrals_standard_input_range(amp,n,mr_qp,F_temp,E_temp,P_temp)
-    F=cmplx(F_temp/k,0.d0,dp); E=cmplx(k*E_temp+mc*F%RE,0.d0,dp)
+    call incomplete_elliptic_integrals_standard_input_range(amp,n,mr_qp,F_temp,E_temp,P_temp,b_temp,d_temp,j_temp)
+
+    ! OG 
+    !F=cmplx(F_temp/k,0.d0,dp); E=cmplx(k*E_temp+mc*F%RE,0.d0,dp)
+    ! simplified Re[E] using associated incomplete elliptic integral definitions
+    F=cmplx(F_temp/k,0.d0,dp); E=cmplx(b_temp/k,0.d0,dp)
    else
     !mrc=1.d0-mr; !!OG
-    mrc_qp=1.0_qp-mr_qp; mrc=real(mrc_qp,dp)
-    !sin_amp=(sqrt(u**2.d0-1.d0))/(u*sqrt(mrc))
-    sin_amp_qp=(sqrt(u_qp**2-1.0_qp))/(u_qp*sqrt(mrc_qp))
+    mrc_qp=1.0_qp-mr_qp; !mrc=real(mrc_qp,dp) !OG
+    call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_temp,Ec_temp,Pc_temp,bc_temp,dc_temp,jc_temp)
+
+    ! OG    
+    !sin_amp=(sqrt(u**2.d0-1.d0))/(u*sqrt(mrc)) ! OG
     !amp=asin(min(sin_amp,1.d0)) !!it is possible for sin_amp to be slightly greater than unity due to round off error
-    amp_qp=asin(min(sin_amp_qp,1.0_qp)); amp=real(amp_qp,dp) !!it may be possible for sin_amp to be slightly greater than unity due to round off error
-    call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_temp,Ec_temp,Pc_temp)
-    call incomplete_elliptic_integrals_standard_input_range(amp,n,mrc_qp,F_temp,E_temp,P_temp)
-    F=cmplx(Fc_temp,-F_temp,dp)/k
-    E=cmplx(m*Ec_temp+mc*Fc_temp,&
-      &-F_temp+m*E_temp+real(((1.0_qp-m)*sin_amp_qp*cos(amp_qp))/sqrt(1.0_qp-mrc_qp*sin_amp_qp**2),dp),dp)/k
+    !amp_qp=asin(min(sin_amp_qp,1.0_qp)); amp=real(amp_qp,dp)  ! best so far
+
+    ! for trig forms (reduces numerical error)
+    cos_theta=1._qp/tan(real(phi,qp))/sqrt(-mc_qp)
+    theta=acos(cos_theta)
+    sin_theta=sin(theta)
+
+    ! OG
+    !call incomplete_elliptic_integrals_standard_input_range(amp,n,mrc_qp,F_temp,E_temp,P_temp,b_temp,d_temp,j_temp)
+
+    ! quadruple precision with trig forms to alleviate cancellation error below
+    call incomplete_elliptic_integrals_standard_input_range_qp(theta,real(n,qp),mrc_qp,&
+                                                              &F_temp_qp,E_temp_qp,P_temp_qp,&
+                                                              &b_temp_qp,d_temp_qp,j_temp_qp)
+    ! OG
+    !F=cmplx(Fc_temp,-F_temp,dp)/k
+
+    ! use quadruple precision integral in the imaginary part (eliminates siginicant error for large m and small |phi|)
+    F=cmplx(Fc_temp,-F_temp_qp,dp)/k
+
+    ! OG
+    !E=cmplx(m*Ec_temp+mc*Fc_temp,&
+    !  &-F_temp+m*E_temp+real(((1.0_qp-m)*sin_amp_qp*cos(amp_qp))/sqrt(1.0_qp-mrc_qp*sin_amp_qp**2),dp),dp)/k
+
+    ! simplified Re[E] using associated incomplete elliptic integral definitions
+    ! also added mc_qp to simplify notation
+    !E=cmplx(bc_temp,&
+    !  &-F_temp+m*E_temp+real((mc_qp*sin_amp_qp*cos(amp_qp))/sqrt(1.0_qp-mrc_qp*sin_amp_qp**2),dp),dp)/k
+
+    ! simplified Im[E] using associated incomplete elliptic integral definitions
+    !E=cmplx(bc_temp,&
+    !  &-mc*b_temp+real((mc_qp*sin_amp_qp*cos(amp_qp))/sqrt(1.0_qp-mrc_qp*sin_amp_qp**2),dp),dp)/k
+
+    ! applied trigonometric forms and added quad precision in Im[E] to reduce cancellation error
+    E=cmplx(bc_temp,&
+      &+mc_qp*(-b_temp_qp+sin_theta*cos_theta/sqrt(1._qp-mrc_qp*sin_theta**2_isp)),dp)/k
    end if
   else !!standard input ranges
    m_qp=real(m,qp)
-   call incomplete_elliptic_integrals_standard_input_range(phi,n,m_qp,F_temp,E_temp,P_temp)
+   call incomplete_elliptic_integrals_standard_input_range(phi,n,m_qp,F_temp,E_temp,P_temp,b_temp,d_temp,j_temp)
    F=cmplx(F_temp,0.d0,dp); E=cmplx(E_temp,0.d0,dp)
   end if
  end if
@@ -278,7 +372,8 @@ contains
  elemental subroutine incomplete_elliptic_integrals(phi,m,F,E)
  !!!!SJT: computes the incomplete elliptic integrals of first and second kind given amplitude phi and parameter m
  !!assumes phi is real
- !!assumes 0<=m (m>1 is allowed but m must be real)
+ !!assumes m>=0 (otherwise NaN is returned)
+ use,intrinsic :: ieee_arithmetic,only: ieee_value,ieee_quiet_nan
  
  !!input
  real(dp),intent(in) :: phi,m !!elliptic amplitude and parameter
@@ -287,78 +382,45 @@ contains
  complex(dp),intent(out) :: F,E !!incomplete elliptic integrals of the first and second kind
  
  !!internal variables
- real(dp), parameter :: pii=3.1415926535897932d0
  real(dp) :: piio2 !!constants
  complex(dp) :: Fc,Ec !!complete elliptic integral values computed for m>1
  real(dp) :: phi_std
  real(dp) :: N0
- integer(isp) :: N,i_sign
- 
+ !integer(isp) :: N,i_sign !!OG with single precision integer N
+ integer(isp) :: i_sign
+ integer(idp) :: N !! double precision integer N
+ real(dp) :: nan !! NaN value
+
+ ! validate m value (m<0 not currently supported)
+ if (m.lt.0.d0) then ! return NaN values for unsupported m values
+  nan=ieee_value(0.d0,ieee_quiet_nan)
+  F=cmplx(nan,nan,dp); E=cmplx(nan,nan,dp)
+  return
+ end if
+
  piio2=pii/2.d0
  
  if ((0.d0.le.phi).and.(phi.le.piio2)) then !!standard amplitude range
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
  else !!amplitude outside of standard range
   call complete_elliptic_integrals(m,Fc,Ec)
-  N0=phi/pii;
-  N=nint(N0,isp) !!integer multiplier
+  N0=phi/pii
+  !N=nint(N0,isp) !!integer multiplier -- possible overflow for large phi
+  N=nint(N0,idp) !!integer multiplier -- double precision integer to handle large phi
   
-  phi_std=phi-N*pii !!find appropriate phi in standard range
+  !phi_std=phi-N*pii !!find appropriate phi in standard range -- significant cancellation may occur when using double precision
+  phi_std=real(real(phi,qp)-N*pii_qp,dp) !!find appropriate phi in standard range
   i_sign=1
   if (phi_std.lt.0.d0) then
    i_sign=-1
    phi_std=abs(phi_std)
   end if
  
-  phi_std=abs(phi_std)
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi_std,m,F,E)
   F=2*N*Fc+i_sign*F
   E=2*N*Ec+i_sign*E
  end if
  
  end subroutine incomplete_elliptic_integrals
- 
- elemental subroutine incomplete_elliptic_integral_trapezoidal_rule(phi,k,Ntheta)
- !!compute the incomplete elliptic integral of the first kind via the trapezoidal rule in quad precision
- !!used to compute reference values by brute force that may be used for testing
- !!not intended to be used in production runs
- 
- !!input
- real(qp),intent(in) :: phi !!Jacobi amplitude 
- real(qp),intent(in) :: k !!elliptic modulus
- integer(isp),intent(in) :: Ntheta !!# of mesh points
- 
- !!output (via print statement)
- complex(qp) :: F !!elliptic integral of the first kind
- 
- !!internal variable
- real(qp) :: theta !!variable of integration
- real(qp) :: dtheta !!mesh spacing
- integer(isp) :: Nindex !!index counter
- 
- dtheta=phi/real(Ntheta-1,qp)
- 
- F=(0.0_qp,0.0_qp)
- theta=0.0_qp
- 
- do Nindex=1,Ntheta-1
-  theta=real(Nindex-1,qp)*dtheta
-  !F=F+dtheta*(integrand(theta,k)+integrand(theta+dtheta,k))/2.0_qp
-  !F=F+dtheta*(integrand(theta,k)+4.0_qp*integrand(theta+dtheta/2.0_qp,k)+integrand(theta+dtheta,k))/6.0_qp
-  F=F+dtheta*(integrand(theta,k)+3.0_qp*integrand(theta+dtheta/3.0_qp,k)+3.0_qp*integrand(theta+dtheta*2.0_qp/3.0_qp,k)&
-             &+integrand(theta+dtheta,k))/8.0_qp
-  !write(*,*) theta,theta+dtheta
-  !write(*,*) integrand(theta,m),integrand(theta+dtheta,m)
- end do
- !write(*,*) "IEITR: F",F
- 
- contains
- 
-  elemental complex(qp) function integrand(theta,k)
-  real(qp),intent(in) :: theta,k
-   integrand=(1.0_qp,0.0_qp)/sqrt(cmplx(1.0_qp-(k*sin(theta))**2,0.0_qp,qp))
-  end function integrand
- 
- end subroutine incomplete_elliptic_integral_trapezoidal_rule
 
 end module elliptic
