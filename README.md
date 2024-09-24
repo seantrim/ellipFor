@@ -9,7 +9,7 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
     1. [Fortran](#fortran)
     2. [SageMath](#sagemath)
 4. [Main ellipFor Subroutines](#main-ellipfor-subroutines)
-5. [How to Use the Fortran Routines](#how-to-use-the-fortran-routines)
+5. [How to Use](#how-to-use)
     1. [Standalone](#standalone)
     2. [With Another Code](#with-another-code)
 6. [Legal](#legal)
@@ -139,37 +139,28 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 
 Note that the source code for the above routines is in `ellipFor/source/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
 
-## How to Use the Fortran Routines
+## How to Use
 
 ### Standalone
 
-Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ using the driver program [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90).
+Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ using the driver program `ellipFor/source/ellipFor_test_driver.f90`.
 
-1. Specify the desired $m$, $\phi$, and $u$ in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-    * Examples are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-2. Compile the code using *either* a Bash script or GNU Make
-    1. Bash script: running [compile_script.sh](/Fortran/compile_script.sh) from the command line.
-        * set the driver file shell variable `DRIVER_FILE` in [compile_script.sh](/Fortran/compile_script.sh) as `DRIVER_FILE="ellipFor_test_driver.f90"`
-            * Note that setting `DRIVER_FILE="test_material_driver.f90"` results in an executable for generating test material data 
-        * set the Fortran compiler shell variable `COMPILER` in [compile_script.sh](/Fortran/compile_script.sh) as `COMPILER="gfortran"` for GNU Fortran or `COMPILER="ifx"` for Intel Fortran
-            * For Intel Fortran it is assumed that the ifx compiler is accessed through the Intel oneAPI software package (version 2023.2.1-16 or later)
-            * gfortran 11.4.0 or later is recommended
-        * Linux/Mac: `$ source compile_script.sh`
-            * This produces the executable [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
-    2. GNU Make: using [Makefile](/Fortran/Makefile)
-        * use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
-            * Linux/Mac: `$ make gfortran`, `$ make ifx`, or `$ make ifort`
-            * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
-            * Intel oneAPI version 2023.2.1-16 or later is recommended
-            * gfortran 11.4.0 or later is recommended
-            * GNU Make 4.3 or later is recommended
-        * the driver programs [ellipFor_test_driver](/Fortran/ellipFor_test_driver) and [test_material_driver](/Fortran/test_material_driver) will be produced
-            * Note that [test_material_driver](/Fortran/test_material_driver) can be used to generate test material data
-        * if desired, the command `$ make clean` will remove build objects while retaining executables
-3. Run [ellipFor_test_driver](/Fortran/ellipFor_test_driver) from the command line
+1. Specify the desired $m$, $\phi$, and $u$ in `ellipFor/source/ellipFor_test_driver.f90`
+    * Examples are shown in `ellipFor/source/ellipFor_test_driver.f90`
+2. Build the code using GNU Make with `ellipFor/source/Makefile`
+    * Navigate to `ellipFor/source` directory in the terminal
+    * Use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
+        * Linux/Mac/Windows: `$ make gfortran`, `$ make ifx`, or `$ make ifort`
+        * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
+        * Intel oneAPI version 2024.2.1 or later is recommended
+        * gfortran 13.2.0 or later is recommended
+        * GNU Make 4.3 or later is recommended
+    * the driver programs `ellipFor/source/ellipFor_test_driver` and `ellipFor/source/test_material_driver` will be produced
+        * Note that `ellipFor/source/test_material_driver` can be used to automatically test all ellipFor features in detail
+    * if desired, the command `$ make clean` will remove build objects while retaining executables
+4. Run `ellipFor/source/ellipFor_test_driver` from the command line
     * Linux/Mac: `$ ./ellipFor_test_driver`
-    * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
-    * Example subroutine calls are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
+    * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file `ellipFor/source/ellipFor_test_driver.dat`
 
 ### With Another Code
 
