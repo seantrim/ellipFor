@@ -16,8 +16,8 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 
 ## Background
 
-This repository contains files and data for the ellipFor library supporting the article "A Fortran software library for Legendre elliptic integrals and Jacobi elliptic
-functions with generalized input arguments" by S.J. Trim and R.J. Spiteri. <? Computer algebra scripts for the exact solution are provided in SageMath and Maple. Symbolic computation of the internal heating rate is performed using Maple, which has been translated into Fortran. The Fortran routines can be used to calculate quantities from the exact solution both independently and within an existing convection code. ?>
+This repository contains files and data for the ellipFor library supporting the article "Algorithm xxx: ellipFor, a Fortran software library for Legendre elliptic
+integrals and Jacobi elliptic functions with generalized input arguments" by S.J. Trim and R.J. Spiteri.
 
 ## Variable Definitions
 * $m$ = parameter
