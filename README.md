@@ -137,7 +137,7 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 * Input: `u` = $u$ for $u \in \mathbb{C}$, and `m` = $m$ for $m \geq 0$
 * Output: `sn` = $\text{sn}(u|m)$, `cn` = $\text{cn}(u|m)$, and `dn` = $\text{dn}(u|m)$
 
-Note that the source code for the above routines is in [elliptic.f90](/Fortran/elliptic.f90) and examples for calling the subroutines are in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90). 
+Note that the source code for the above routines is in `ellipFor/source/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
 
 ## How to Use the Fortran Routines
 
