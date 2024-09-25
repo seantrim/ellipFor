@@ -158,7 +158,7 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
     * the driver programs `ellipFor/source/ellipFor_test_driver` and `ellipFor/source/test_material_driver` will be produced
         * Note that `ellipFor/source/test_material_driver` can be used to automatically test all ellipFor features in detail
     * if desired, the command `$ make clean` will remove build objects while retaining executables
-4. Run `ellipFor/source/ellipFor_test_driver` from the command line
+3. Run `ellipFor/source/ellipFor_test_driver` from the command line
     * Linux/Mac: `$ ./ellipFor_test_driver`
     * Windows Command Prompt: `$ start ellipFor_test_driver`
     * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file `ellipFor/source/ellipFor_test_driver.dat`
@@ -169,18 +169,21 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
 
 #### Fortran
 
-1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code where necessary
-    * Examples of how to call the subroutines are shown in [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)  
-2. Link the f90 files from the [Fortran](/Fortran) folder named [kind_parameters.f90](/Fortran/kind_parameters.f90), [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90), [xgscd_routines.f90](/Fortran/xgscd_routines.f90), and [elliptic.f90](/Fortran/elliptic.f90) to the source for the other code
-    * Example: `gfortran -flto -O3 kind_parameters.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 elliptic.f90 other_code.f90 -o other_code`
-    * In the above example, the source for the other code is `other_code.f90` and the resulting executable is `other_code`
-        * Modify these names as needed
-    * gfortran 11.4.0 or later is recommended
-    * Other compilers (and compiler options) may be possible but results should be tested
+1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code (referred to as `other_code.f90` in the following examples) where necessary
+    * Examples of how to call the subroutines are shown in `ellipFor/source/ellipFor_test_driver.f90`  
+2. Link the f90 files from the `ellipFor/source` folder named `kind_parameters.f90`, `xelbdj2_all_routines.f90`, `xgscd_routines.f90`, and `elliptic.f90` to the source for the other code
+    * `ellipFor/source/Makefile` can be used as a template to build `other_code.f90` with the ellipFor libraries and build the executable
+        * substitute references to `ellipFor_test_driver` with `other_code` in a copy of the `Makefile` provided
+        * customize as desired (e.g., compiler options, etc.)
+    * use `$ make gfortran`, `$ make ifx`, or `$ make ifort` in the terminal to build the executable `other_code` with the desired compiler
+    * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
+    * Intel oneAPI version 2024.2.1 or later is recommended
+    * gfortran 13.2.0 or later is recommended
+    * GNU Make 4.3 or later is recommended   
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
         * Verify that the arguments of subroutine calls correspond to the correct values and data types 
-3. Run the code executable as usual
+3. Run the code executable (`other_code`) as usual
 
 ## Legal
 
