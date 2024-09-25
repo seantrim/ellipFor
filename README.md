@@ -160,6 +160,7 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
     * if desired, the command `$ make clean` will remove build objects while retaining executables
 4. Run `ellipFor/source/ellipFor_test_driver` from the command line
     * Linux/Mac: `$ ./ellipFor_test_driver`
+    * Windows Command Prompt: `$ start ellipFor_test_driver`
     * This will produce data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ in the output file `ellipFor/source/ellipFor_test_driver.dat`
 
 ### With Another Code
