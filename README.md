@@ -36,40 +36,43 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 Headings that follow indicate directories in the ellipFor repository.
 
 ### `ellipFor/`
+`LICENSE`
+* GPL-3.0 license info
+
+`README.md`
+* This documentation file (written in Markdown)
 
 ### `ellipFor/source/`
-[kind_parameters.f90](/Fortran/kind_parameters.f90)
+`kind_parameters.f90`
 * Contains a module with portable kind parameters imported from the `iso_fortran_env` module
 
-[elliptic.f90](/Fortran/elliptic.f90)
+`elliptic.f90`
 * Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
-* Input ranges were generalized by combining transformations with calls to routines from [xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90) and [xgscd_routines.f90](/Fortran/xgscd_routines.f90)
+* Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90`
 
-[xelbdj2_all_routines.f90](/Fortran/xelbdj2_all_routines.f90)
+`xelbdj2_all_routines.f90`
 * Contains module procedures for the evaluation of associated elliptic integrals of the first, second, and third kinds
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
-[xgscd_routines.f90](/Fortran/xgscd_routines.f90)
+`xgscd_routines.f90`
 * Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
  
-[Makefile](/Fortran/Makefile)
-* Makefile for compiling the [standalone](#standalone) version of the Fortran routines using gfortran, ifx, or ifort
+`Makefile`
+* Makefile for building the [standalone](#standalone) version of ellipFor using gfortran, ifx, or ifort
 * For use with GNU Make
 
-[ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-* Test driver program for the [standalone](#standalone) version of the Fortran routines
+`ellipFor_test_driver.f90`
+* Test driver program for the [standalone](#standalone) version of ellipFor
 * Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for a given $m$, $\phi$, and $u$
 
-[ellipFor_test_driver](/Fortran/ellipFor_test_driver)
-* Sample executable for the [standalone](#standalone) driver program based on [ellipFor_test_driver.f90](/Fortran/ellipFor_test_driver.f90)
-* Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
-    * for this sample, the script shell variables `DRIVER_FILE="ellipFor_test_driver.f90"` and `COMPILER="gfortran"` were used
-* gfortran 11.4.0 was used
-* May also be obtained using GNU Make via [Makefile](/Fortran/Makefile)
-
+`ellipFor_test_driver`
+* Sample executable for the [standalone](#standalone) driver program based on `ellipFor/source/ellipFor_test_driver.f90`
+* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal using the .f90 files in the `ellipFor/source/` folder
+* gfortran 13.2.0 was used
+  
 [ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
 * Output file produced by executing [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
 * Contains data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
