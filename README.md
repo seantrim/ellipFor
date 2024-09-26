@@ -37,119 +37,144 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 ### `ellipFor/`
 `LICENSE`
+
 * GPL-3.0 license info
 
 `README.md`
+
 * This documentation file (written in Markdown)
 
 ### `ellipFor/source/`
 `kind_parameters.f90`
+
 * Contains a module with portable kind parameters imported from the `iso_fortran_env` module
 
 `elliptic.f90`
+
 * Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
 * Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90`
 
 `xelbdj2_all_routines.f90`
+
 * Contains module procedures for the evaluation of associated elliptic integrals of the first, second, and third kinds
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
 `xgscd_routines.f90`
+
 * Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
  
 `Makefile`
+
 * Makefile for building the [standalone](#standalone) version of ellipFor using gfortran, ifx, or ifort
 * For use with GNU Make
 
 `ellipFor_test_driver.f90`
+
 * Test driver program for the [standalone](#standalone) version of ellipFor
 * Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for specified values of $m$, $\phi$, and $u$
 
 `ellipFor_test_driver`
+
 * Sample executable for the [standalone](#standalone) driver program based on `ellipFor/source/ellipFor_test_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
 * gfortran 13.2.0 was used
   
 `ellipFor_test_driver.dat`
+
 * Output file produced by executing `ellipFor/source/ellipFor_test_driver`
 * Contains data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 
 `test_material_driver.f90`
+
 * Test material driver program that verifies the accuracy of ellipFor in detail 
 * Tests $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ against a large range of CAS reference values and a number of analytical values
 
 `test_material_driver`
+
 * Sample executable for the test material driver program based on `ellipFor/source/test_material_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
 * gfortran 13.2.0 was used
 
 `error_complete.dat`
+
 * Output file produced by executing `ellipFor/source/test_material_driver`
 * Contains relative error data compared to CAS for $K(m)$ and $E(m)$
 * Used in section 6.1 in the article (see [Background](#background))
 
 `error_incomplete.dat`
+
 * Output file produced by executing `ellipFor/source/test_material_driver`
 * Contains relative error data compared to CAS for $F(\phi|m)$ and $E(\phi|m)$
 * Used in section 6.2 in the article (see [Background](#background))
 
 `error_functions.dat`
+
 * Output file produced by executing `ellipFor/source/test_material_driver`
 * Contains relative error data compared to CAS for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Used in section 6.3 in the article (see [Background](#background))
 
 ### `ellipFor/source/expected_data/`
 `CAS_complete.dat`
+
 * Contains CAS reference data for complete Legendre elliptic integrals
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.1 of the article (see [Background](#background))
 
 `CAS_incomplete.dat`
+
 * Contains CAS reference data for incomplete Legendre elliptic integrals
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.2 of the article (see [Background](#background))
 
 `CAS_functions.dat`
+
 * Contains CAS reference data for Jacobi elliptic functions
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.3 of the article (see [Background](#background))
 
 `ellipFor_test_driver_OG.dat`
+
 * Expected output from `ellipFor/source/ellipFor_test_driver` corresponding to `ellipFor/source/ellipFor_test_driver.dat`
 * Assumes the original values of $m$, $\phi$, and $u$ defined in `ellipFor/source/ellipFor_test_driver.f90` are used
 * `ellipFor/source/ellipFor_test_driver` checks output against this reference data automatically (if desired -- see [Standalone](#standalone))
 * Computed using gfortran 13.2.0
 
 `args_complete_elliptic_integrals.dat`
+
 * Randomized values of $m$ used for testing of ellipFor's $K(m)$ and $E(m)$ values
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.1 of the article (see [Background](#background))
 
 `args_incomplete_elliptic_integrals.dat`
+
 * Randomized combinations of $\phi$ and $m$ used for testing of ellipFor's $F(\phi|m)$ and $E(\phi|m)$ values
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.2 of the article (see [Background](#background))
 
 `args_Jacobi_elliptic_functions.dat`
+
 * Randomized combinations of $u$ and $m$ used for testing of ellipFor's $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ values
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.3 of the article (see [Background](#background))
 
 ## Main ellipFor Subroutines
 `complete_elliptic_integrals(m,Fc,Ec)`
+
 * Evaluate $K(m)$ and $E(m)$
 * Input: `m` = $m \in \mathbb{R}$ with $m \geq 0$
 * Output: `Fc` = $K(m) \in \mathbb{C}$ and `Ec` = $E(m) \in \mathbb{C}$
 
 `incomplete_elliptic_integrals(phi,m,F,E)`
+
 * Evaluate $F(\phi|m)$ and $E(\phi|m)$
 * Input: `phi` = $\phi \in \mathbb{R}$, and `m` = $m \in \mathbb{R}$ with $m \geq 0$
 * Output: `F` = $F(\phi|m) \in \mathbb{C}$ and `E` = $E(\phi|m) \in \mathbb{C}$ 
 
 `Jacobi_elliptic_functions(u,m,sn,cn,dn)`
+
 * Evaluate $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Input: `u` = $u \in \mathbb{C}$, and `m` = $m \in \mathbb{R}$ with $m \geq 0$
 * Output: `sn` = $\text{sn}(u|m) \in \mathbb{C}$, `cn` = $\text{cn}(u|m) \in \mathbb{C}$, and `dn` = $\text{dn}(u|m) \in \mathbb{C}$
