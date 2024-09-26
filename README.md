@@ -119,7 +119,8 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 `ellipFor_test_driver_OG.dat`
 * Expected output from `ellipFor/source/ellipFor_test_driver` corresponding to `ellipFor/source/ellipFor_test_driver.dat`
-* `ellipFor/source/ellipFor_test_driver` checks output against this reference data automatically
+* Assumes the original values of $m$, $\phi$, and $u$ defined in `ellipFor/source/ellipFor_test_driver.f90` are used
+* `ellipFor/source/ellipFor_test_driver` checks output against this reference data automatically (if desired -- see [Standalone](#standalone))
 * Computed using gfortran 13.2.0
 
 `args_complete_elliptic_integrals.dat`
