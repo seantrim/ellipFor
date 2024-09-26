@@ -32,9 +32,11 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 * $\text{dn}(u|m)$ = delta amplitude Jacobi elliptic function
 
 ## File Description
+Headings that follow indicate directories in the ellipFor repository.
 
-### [Fortran](/Fortran)
+### `ellipFor/`
 
+### `ellipFor/source/`
 [kind_parameters.f90](/Fortran/kind_parameters.f90)
 * Contains a module with portable kind parameters imported from the `iso_fortran_env` module
 
@@ -51,11 +53,7 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 * Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
 * Assumes standard input parameter ranges
 * Adapted from routines by Toshio Fukushima (see [Legal](#legal))
-
-[compile_script.sh](/Fortran/compile_script.sh)
-* Terminal script for compiling the [standalone](#standalone) version of the Fortran routines using gfortran or ifx
-* Can also be used to compile [test_material_driver](/Fortran/test_material_driver) 
-
+ 
 [Makefile](/Fortran/Makefile)
 * Makefile for compiling the [standalone](#standalone) version of the Fortran routines using gfortran, ifx, or ifort
 * For use with GNU Make
@@ -101,24 +99,20 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 * Contains data for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Used in section 6.3 in the article (see [Background](#background))
 
-### [SageMath](/SageMath)
-[test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
-* SageMath script that can be used to calculate test problem data corresponding to the data produced by [test_material_driver](/Fortran/test_material_driver)
-* Output is used in section 6 of the article (see [Background](#background))
-
-[CAS_complete.dat](/SageMath/CAS_complete.dat)
-* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
-* Contains test problem data for complete Legendre elliptic integrals
+### `ellipFor/source/expected_data`
+`CAS_complete.dat`
+* Contains CAS reference data for complete Legendre elliptic integrals
+* Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.1 of the article (see [Background](#background))
 
-[CAS_incomplete.dat](/SageMath/CAS_incomplete.dat)
-* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
-* Contains test problem data for incomplete Legendre elliptic integrals
+`CAS_incomplete.dat`
+* Contains CAS reference data for incomplete Legendre elliptic integrals
+* Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.2 of the article (see [Background](#background))
 
-[CAS_functions.dat](/SageMath/CAS_functions.dat)
-* Output file produced by [test_problem_solutions.sage](/SageMath/test_problem_solutions.sage)
-* Contains test problem data for Jacobi elliptic functions
+`CAS_functions.dat`
+* Contains CAS reference data for Jacobi elliptic functions
+* Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.3 of the article (see [Background](#background))
 
 ## Main ellipFor Subroutines
