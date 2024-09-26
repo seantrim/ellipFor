@@ -6,8 +6,9 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 1. [Background](#background)
 2. [Variable Definitions](#variable-definitions)
 3. [File Description](#file-description)
-    1. [Fortran](#fortran)
-    2. [SageMath](#sagemath)
+    1. [ellipFor/](#ellipfor)
+    2. [ellipFor/source/](#ellipforsource)
+    3. [ellipFor/source/expected_data/](#ellipforsourceexpected_data)
 4. [Main ellipFor Subroutines](#main-ellipfor-subroutines)
 5. [How to Use](#how-to-use)
     1. [Standalone](#standalone)
@@ -99,7 +100,7 @@ Headings that follow indicate directories in the ellipFor repository.
 * Contains data for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Used in section 6.3 in the article (see [Background](#background))
 
-### `ellipFor/source/expected_data`
+### `ellipFor/source/expected_data/`
 `CAS_complete.dat`
 * Contains CAS reference data for complete Legendre elliptic integrals
 * Used by `ellipFor/source/test_material_program` to verify accuracy
