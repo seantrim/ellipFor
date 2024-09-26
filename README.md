@@ -141,20 +141,20 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 ## Main ellipFor Subroutines
 `complete_elliptic_integrals(m,Fc,Ec)`
 * Evaluate $K(m)$ and $E(m)$
-* Input: `m` = $m$ for $m \geq 0$
-* Output: `Fc` = $K(m)$ and `Ec` = $E(m)$
+* Input: `m` = $m \in \mathbb{R}$ with $m \geq 0$
+* Output: `Fc` = $K(m) \in \mathbb{C}$ and `Ec` = $E(m) \in \mathbb{C}$
 
 `incomplete_elliptic_integrals(phi,m,F,E)`
 * Evaluate $F(\phi|m)$ and $E(\phi|m)$
-* Input: `phi` = $\phi$ for $\phi \in \mathbb{R}$, and `m` = $m$ for $m \geq 0$
-* Output: `F` = $F(\phi|m)$ and `E` = $E(\phi|m)$ 
+* Input: `phi` = $\phi \in \mathbb{R}$, and `m` = $m \in \mathbb{R}$ with $m \geq 0$
+* Output: `F` = $F(\phi|m) \in \mathbb{C}$ and `E` = $E(\phi|m) \in \mathbb{C}$ 
 
 `Jacobi_elliptic_functions(u,m,sn,cn,dn)`
 * Evaluate $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
-* Input: `u` = $u$ for $u \in \mathbb{C}$, and `m` = $m$ for $m \geq 0$
-* Output: `sn` = $\text{sn}(u|m)$, `cn` = $\text{cn}(u|m)$, and `dn` = $\text{dn}(u|m)$
+* Input: `u` = $u \in \mathbb{C}$, and `m` = $m \in \mathbb{R}$ with $m \geq 0$
+* Output: `sn` = $\text{sn}(u|m) \in \mathbb{C}$, `cn` = $\text{cn}(u|m) \in \mathbb{C}$, and `dn` = $\text{dn}(u|m) \in \mathbb{C}$
 
-Note that the source code for the above routines is in `ellipFor/source/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
+All subroutine arguments are of double precision type (`kind=real64` from the `iso_fortran_env` intrinsic module). Note that the source code for the above routines is in `ellipFor/source/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
 
 ## How to Use
 
