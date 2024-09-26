@@ -33,7 +33,7 @@ integrals and Jacobi elliptic functions with generalized input arguments" by S.J
 * $\text{dn}(u|m)$ = delta amplitude Jacobi elliptic function
 
 ## File Description
-Headings that follow indicate directories in the ellipFor repository.
+Headings that follow indicate directories in the ellipFor repository. CAS (Computer Algebra System) generally refers to SageMath 10.4. In the software development phase, SageMath values were confirmed against values from the Wolfram Language Engine Community Edition (see [Legal](#legal)).
 
 ### `ellipFor/`
 `LICENSE`
@@ -66,11 +66,11 @@ Headings that follow indicate directories in the ellipFor repository.
 
 `ellipFor_test_driver.f90`
 * Test driver program for the [standalone](#standalone) version of ellipFor
-* Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for a given $m$, $\phi$, and $u$
+* Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for specified values of $m$, $\phi$, and $u$
 
 `ellipFor_test_driver`
 * Sample executable for the [standalone](#standalone) driver program based on `ellipFor/source/ellipFor_test_driver.f90`
-* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal using the .f90 files in the `ellipFor/source/` folder
+* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
 * gfortran 13.2.0 was used
   
 `ellipFor_test_driver.dat`
@@ -78,12 +78,12 @@ Headings that follow indicate directories in the ellipFor repository.
 * Contains data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 
 `test_material_driver.f90`
-* Test material driver program for the Fortran routines 
-* Tests $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ against CAS reference values and a number of analytical values
+* Test material driver program that verifies the accuracy of ellipFor in detail 
+* Tests $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ against a large range of CAS reference values and a number of analytical values
 
 `test_material_driver`
 * Sample executable for the test material driver program based on `ellipFor/source/test_material_driver.f90`
-* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal using the .f90 files in the `ellipFor/source/` folder
+* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
 * gfortran 13.2.0 was used
 
 `error_complete.dat`
