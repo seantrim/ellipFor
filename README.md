@@ -73,34 +73,32 @@ Headings that follow indicate directories in the ellipFor repository.
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal using the .f90 files in the `ellipFor/source/` folder
 * gfortran 13.2.0 was used
   
-[ellipFor_test_driver.dat](/Fortran/ellipFor_test_driver.dat)
-* Output file produced by executing [ellipFor_test_driver](/Fortran/ellipFor_test_driver)
+`ellipFor_test_driver.dat`
+* Output file produced by executing `ellipFor/source/ellipFor_test_driver`
 * Contains data for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 
-[test_material_driver.f90](/Fortran/test_material_driver.f90)
+`test_material_driver.f90`
 * Test material driver program for the Fortran routines 
-* Evaluates $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ for $0 \leq m \leq 100$, $\phi = 3 \pi /4$, and $u=1+i$
+* Tests $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ against CAS reference values and a number of analytical values
 
-[test_material_driver](/Fortran/test_material_driver)
-* Sample executable for the test material driver program based on [test_material_driver.f90](/Fortran/test_material_driver.f90)
-* Results from running [compile_script](/Fortran/compile_script) in the terminal using the .f90 files in the [Fortran](/Fortran) folder
-    * for this sample, the script shell variables `DRIVER_FILE="test_material_driver.f90"` and `COMPILER="gfortran"` were used
-* gfortran 11.4.0 was used
-* May also be obtained using GNU Make via [Makefile](/Fortran/Makefile)
+`test_material_driver`
+* Sample executable for the test material driver program based on `ellipFor/source/test_material_driver.f90`
+* Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal using the .f90 files in the `ellipFor/source/` folder
+* gfortran 13.2.0 was used
 
-[complete_elliptic_integrals.dat](/Fortran/complete_elliptic_integrals.dat)
-* Output file produced by executing [test_material_driver](/Fortran/test_material_driver)
-* Contains data for $K(m)$ and $E(m)$
+`error_complete.dat`
+* Output file produced by executing `ellipFor/source/test_material_driver`
+* Contains relative error data compared to CAS for $K(m)$ and $E(m)$
 * Used in section 6.1 in the article (see [Background](#background))
 
-[incomplete_elliptic_integrals.dat](/Fortran/incomplete_elliptic_integrals.dat)
-* Output file produced by executing [test_material_driver](/Fortran/test_material_driver)
-* Contains data for $F(\phi|m)$ and $E(\phi|m)$
+`error_incomplete.dat`
+* Output file produced by executing `ellipFor/source/test_material_driver`
+* Contains relative error data compared to CAS for $F(\phi|m)$ and $E(\phi|m)$
 * Used in section 6.2 in the article (see [Background](#background))
 
-[Jacobi_elliptic_functions.dat](/Fortran/Jacobi_elliptic_functions.dat)
-* Output file produced by executing [test_material_driver](/Fortran/test_material_driver)
-* Contains data for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
+`error_functions.dat`
+* Output file produced by executing `ellipFor/source/test_material_driver`
+* Contains relative error data compared to CAS for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Used in section 6.3 in the article (see [Background](#background))
 
 ### `ellipFor/source/expected_data/`
@@ -116,6 +114,26 @@ Headings that follow indicate directories in the ellipFor repository.
 
 `CAS_functions.dat`
 * Contains CAS reference data for Jacobi elliptic functions
+* Used by `ellipFor/source/test_material_program` to verify accuracy
+* Used in section 6.3 of the article (see [Background](#background))
+
+`ellipFor_test_driver_OG.dat`
+* Expected output from `ellipFor/source/ellipFor_test_driver` corresponding to `ellipFor/source/ellipFor_test_driver.dat`
+* `ellipFor/source/ellipFor_test_driver` checks output against this reference data automatically
+* Computed using gfortran 13.2.0
+
+`args_complete_elliptic_integrals.dat`
+* Randomized values of $m$ used for testing of ellipFor's $K(m)$ and $E(m)$ values
+* Used by `ellipFor/source/test_material_program` to verify accuracy
+* Used in section 6.1 of the article (see [Background](#background))
+
+`args_incomplete_elliptic_integrals.dat`
+* Randomized combinations of $\phi$ and $m$ used for testing of ellipFor's $F(\phi|m)$ and $E(\phi|m)$ values
+* Used by `ellipFor/source/test_material_program` to verify accuracy
+* Used in section 6.2 of the article (see [Background](#background))
+
+`args_Jacobi_elliptic_functions.dat`
+* Randomized combinations of $u$ and $m$ used for testing of ellipFor's $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ values
 * Used by `ellipFor/source/test_material_program` to verify accuracy
 * Used in section 6.3 of the article (see [Background](#background))
 
@@ -145,6 +163,9 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
 
 1. Specify the desired $m$, $\phi$, and $u$ in `ellipFor/source/ellipFor_test_driver.f90`
     * Examples are shown in `ellipFor/source/ellipFor_test_driver.f90`
+    * Note: this program tests output assuming the original values of $m$, $\phi$, and $u$ are used
+        * Warnings will occur if custom values are used
+        * To disable these warnings, set `test_output=.false.` near line 10 of `ellipFor/source/ellipFor_test_driver.f90`   
 2. Build the code using GNU Make with `ellipFor/source/Makefile`
     * Navigate to `ellipFor/source` directory in the terminal
     * Use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
