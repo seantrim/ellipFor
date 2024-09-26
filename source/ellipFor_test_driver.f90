@@ -7,6 +7,7 @@ program ellipFor_test_driver
 implicit none
 
 !!Useful parameters
+logical,  parameter :: test_output=.true. ! flag controlling if test driver output is tested against reference data
 real(dp), parameter :: pii=3.1415926535897932d0
 
 !!variables for elliptic functions and integrals
@@ -53,7 +54,7 @@ write(101,'(a5,g26.17,a2,g26.17,a1)') "dn= (",dn % re," ,",dn % im,")"
 close(101) !! close output file
 
 !validate output by comparing with reference data
-call validate_output
+if (test_output) call validate_output
 
 contains
 
