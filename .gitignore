@@ -1,0 +1,11 @@
+# Build Artifacts
+*.o
+*.mod
+# Documentation files for TOMS
+README.aux
+README.log
+README.pdf
+README.synctex.gz
+README.tex
+README_conversion_notes.txt
+
