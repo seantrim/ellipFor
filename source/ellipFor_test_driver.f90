@@ -7,8 +7,8 @@ program ellipFor_test_driver
 implicit none
 
 !!Useful parameters
-logical,  parameter :: test_output=.true. ! flag controlling if test driver output is tested against reference data
-real(dp), parameter :: pii=3.1415926535897932d0
+logical,  parameter :: test_output=.true. !! flag for testing output against reference values for m=100, phi=3*pi/4, and u=(1,1)
+real(dp), parameter :: pi=3.1415926535897932_dp
 
 !!variables for elliptic functions and integrals
 real(dp) :: m           !!elliptic parameter
@@ -18,6 +18,7 @@ complex(dp) :: Fc,Ec    !!complete elliptic integrals of first and second kinds
 complex(dp) :: Fi,Ei    !!incomplete elliptic integrals of first and second kinds 
 complex(dp) :: sn,cn,dn !!Jacobi elliptic function values
 
+print '(a52)', "--- Test driver program for the ellipFor library ---"; print '(a1)', " "
 open(unit=101,file="ellipFor_test_driver.dat") !! file for driver output
 
 !!! 1) complete Legendre elliptic integrals
@@ -30,7 +31,7 @@ write(101,'(a5,g26.17,a2,g26.17,a1)') "Ec= (",Ec % re," ,",Ec % im,")"
 write(101,'(a1)') " "
 
 !!! 2) incomplete Legendre elliptic integrals
-phi=0.75_dp*pii 
+phi=0.75_dp*pi 
 m=100._dp     
 call incomplete_elliptic_integrals(phi,m,Fi,Ei)
 write(101,'(a39)') "Incomplete Legendre Elliptic Integrals:"
@@ -54,7 +55,11 @@ write(101,'(a5,g26.17,a2,g26.17,a1)') "dn= (",dn % re," ,",dn % im,")"
 close(101) !! close output file
 
 !validate output by comparing with reference data
-if (test_output) call validate_output
+if (test_output) then
+ call validate_output
+else
+ print '(a62)', "Calculation complete -- see output in ellipFor_test_driver.dat"
+end if
 
 contains
 
@@ -195,7 +200,9 @@ contains
   if (test_flag) then
    print '(a64)', "Driver output was successfully validated against reference data."
   else
-   print '(a80)', "Driver output significantly differs from reference data. See error report above."
+   print '(a95)', "** Warning: Driver output significantly differs from reference data. See error report above. **"
+   print '(a82)', "Note: This test assumes m=100, phi=3*pi/4, and u=(1,1). For other input arguments,"
+   print '(a54)', "      set test_output=.false. to disable this warning."
   end if
  end subroutine validate_output
 
