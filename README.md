@@ -96,7 +96,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 * Sample executable for the test material driver program based on `ellipFor/source/test_material_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
-* gfortran 13.2.0 was used
+* gfortran 14.2.0 was used
 
 `error_complete.dat`
 
