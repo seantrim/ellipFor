@@ -80,7 +80,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 * Sample executable for the [standalone](#standalone) driver program based on `ellipFor/source/ellipFor_test_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
-* gfortran 13.2.0 was used
+* gfortran 14.2.0 was used
   
 `ellipFor_test_driver.dat`
 
@@ -140,7 +140,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 * Expected output from `ellipFor/source/ellipFor_test_driver` corresponding to `ellipFor/source/ellipFor_test_driver.dat`
 * Assumes the original values of $m$, $\phi$, and $u$ defined in `ellipFor/source/ellipFor_test_driver.f90` are used
 * `ellipFor/source/ellipFor_test_driver` checks output against this reference data automatically (if desired -- see [Standalone](#standalone))
-* Computed using gfortran 13.2.0
+* Computed using gfortran 14.2.0
 
 `args_complete_elliptic_integrals.dat`
 
