@@ -275,7 +275,7 @@ contains
  
  !!internal variables
  real(dp) :: piio2 !!constants
- real(dp) :: mc    !!complimentary variables
+ !real(dp) :: mc    !!complimentary parameter
  real(dp) :: k !!elliptic modulus
  !real(dp) :: mrc !!compliment of the reciprocal parameter
  real(dp) :: Fc_temp,Ec_temp,Pc_temp !!temporary complete elliptic integrals
@@ -302,7 +302,8 @@ contains
    k_qp=sqrt(real(m,qp)); k=real(k_qp,dp)
    !mc=1.d0-m; mr=1.d0/m !!OG
    mc_qp=1.0_qp-real(m,qp)
-   mc=real(mc_qp,dp); mr_qp=1.0_qp/real(m,qp)
+   !mc=real(mc_qp,dp); mr_qp=1.0_qp/real(m,qp)
+   mr_qp=1.0_qp/real(m,qp)
    !u=k*sin(phi) !!argument of arcsine
    !u_qp=real(k,qp)*sin(real(phi,qp))
    u_qp=k_qp*sin(real(phi,qp))

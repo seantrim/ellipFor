@@ -10,7 +10,7 @@ program test_material_driver
 
  
  real(dp),parameter :: tol_complete  =5.e-15_dp ! tolerance for relative errors of complete Legendre elliptic integrals
- real(dp),parameter :: tol_incomplete=5.e-15_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
+ real(dp),parameter :: tol_incomplete=1.e-16_dp !5.e-15_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
  real(dp),parameter :: tol_functions =9.e-14_dp ! tolerance for relative errors of Jacobi elliptic functions
  real(dp),parameter :: tol_special   =5.e-15_dp ! tolerance for relative errors of special values of all ellipFor functions
 

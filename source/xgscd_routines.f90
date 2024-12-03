@@ -46,12 +46,12 @@ contains
  real(dp),intent(in) :: u !!SJT
  real(dp),intent(out) :: s,c,d !!SJT
  !real(dp) mc,m,kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx !!SJT: OG
- real(dp) mc,kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx !!SJT: removed m
+ real(dp) kc,ux,k,kh,kh3,kh5,kh7,k2,k3,k4,sx !!SJT: removed m and mc (mc_qp used instead)
  !real(dp) elk !!SJT: declaration of elk function not required due to xgscd_routines module 
  !
  !m=1.d0-mc !!SJT: original
  !m=real(1.0_qp-mc_qp,dp); !!SJT: removed 
- mc=real(mc_qp,dp) !!SJT: quad precision used to reduce the impact of cancellation errors
+ !mc=real(mc_qp,dp) !!SJT: quad precision used to reduce the impact of cancellation errors
  !kc=sqrt(mc) !! SJT: OG
  kc=real(sqrt(mc_qp),dp)
  ux=abs(u)
