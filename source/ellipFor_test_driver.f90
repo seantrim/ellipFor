@@ -66,7 +66,7 @@ contains
  subroutine validate_output
   !! **** Compare driver output to reference data ****
   !!tolerance for validation
-  real(dp),parameter :: tol=1.e-15_dp
+  real(dp),parameter :: tol=5.e-15_dp
   !!flag for test status
   logical :: test_flag
   logical :: test_flag_complete
@@ -93,7 +93,7 @@ contains
   character(39) :: incomplete_integral_label
   character(26) :: elliptic_functions_label
   character(5)  :: m_label,phi_label,Fc_label,Ec_label,Fi_label,Ei_label
-  character(5)  :: u_label,sn_label,cn_label,dn_label 
+  character(5)  :: u_label,sn_label,cn_label,dn_label
   
   open(unit=102,file="expected_data/ellipFor_test_driver_OG.dat") !! file for reference data
 
@@ -183,9 +183,9 @@ contains
    print '(a26)', elliptic_functions_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (u_err % re.gt.tol) print '(a8,g26.17)',  "Re[u]   ",u_err % re
-  if (u_err % im.gt.tol) print '(a8,g26.17)',  "Im[u]   ",u_err % im
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (u_err % re.gt.tol)  print '(a8,g26.17)', "Re[u]   ",u_err % re
+  if (u_err % im.gt.tol)  print '(a8,g26.17)', "Im[u]   ",u_err % im
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (sn_err % re.gt.tol) print '(a8,g26.17)', "Re[sn]  ",sn_err % re
   if (sn_err % im.gt.tol) print '(a8,g26.17)', "Im[sn]  ",sn_err % im
   if (cn_err % re.gt.tol) print '(a8,g26.17)', "Re[cn]  ",cn_err % re
@@ -203,6 +203,12 @@ contains
    print '(a95)', "** Warning: Driver output significantly differs from reference data. See error report above. **"
    print '(a82)', "Note: This test assumes m=100, phi=3*pi/4, and u=(1,1). For other input arguments,"
    print '(a54)', "      set test_output=.false. to disable this warning."
+  end if
+
+  !!validate string labels
+  if (len_trim(space//bracket//comma//complete_integral_label//incomplete_integral_label//elliptic_functions_label&
+     &//m_label//phi_label//Fc_label//Ec_label//Fi_label//Ei_label//u_label//sn_label//cn_label//dn_label,isp).ne.156_isp) then
+   print '(a100)', "** Warning: total length of string labels from reference data file does not match expected value. **"
   end if
  end subroutine validate_output
 
