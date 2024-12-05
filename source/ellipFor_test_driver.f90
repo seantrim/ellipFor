@@ -17,9 +17,15 @@ complex(dp) :: u        !!complex argument
 complex(dp) :: Fc,Ec    !!complete elliptic integrals of first and second kinds
 complex(dp) :: Fi,Ei    !!incomplete elliptic integrals of first and second kinds 
 complex(dp) :: sn,cn,dn !!Jacobi elliptic function values
+logical  :: file_exists !!flag indicating the existence of files
 
 print '(a52)', "--- Test driver program for the ellipFor library ---"; print '(a1)', " "
-open(unit=101,file="ellipFor_test_driver.dat") !! file for driver output
+inquire(file="ellipFor_test_driver.dat",exist=file_exists)
+if (file_exists) then
+ open(unit=101,file="ellipFor_test_driver.dat",status="replace",action="write") !! file for driver output
+else
+ open(unit=101,file="ellipFor_test_driver.dat",status="new",action="write")     !! file for driver output
+end if
 
 !!! 1) complete Legendre elliptic integrals
 m=100._dp
@@ -95,7 +101,7 @@ contains
   character(5)  :: m_label,phi_label,Fc_label,Ec_label,Fi_label,Ei_label
   character(5)  :: u_label,sn_label,cn_label,dn_label
   
-  open(unit=102,file="expected_data/ellipFor_test_driver_OG.dat") !! file for reference data
+  open(unit=102,file="expected_data/ellipFor_test_driver_OG.dat",status="old",action="read") !! file for reference data
 
   !!!!!! 1) complete Legendre elliptic integrals
   test_flag_complete=.true. !!initialize test flag
@@ -119,7 +125,7 @@ contains
    print '(a37)', complete_integral_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (Fc_err % re.gt.tol) print '(a8,g26.17)', "Re[Fc]  ",Fc_err % re
   if (Fc_err % im.gt.tol) print '(a8,g26.17)', "Im[Fc]  ",Fc_err % im
   if (Ec_err % re.gt.tol) print '(a8,g26.17)', "Re[Ec]  ",Ec_err % re
@@ -149,8 +155,8 @@ contains
    print '(a39)', incomplete_integral_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (phi_err.gt.tol) print '(a8,g26.17)',     "phi     ",phi_err
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (phi_err.gt.tol)     print '(a8,g26.17)', "phi     ",phi_err
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (Fi_err % re.gt.tol) print '(a8,g26.17)', "Re[Fi]  ",Fi_err % re
   if (Fi_err % im.gt.tol) print '(a8,g26.17)', "Im[Fi]  ",Fi_err % im
   if (Ei_err % re.gt.tol) print '(a8,g26.17)', "Re[Ei]  ",Ei_err % re

@@ -59,7 +59,7 @@ contains
 
   ! local variables
   ! parameters
-  real(dp), parameter :: pii=3.1415926535897932d0 ! pi
+  real(dp), parameter :: pii=3.1415926535897932_dp ! pi
   
   ! variables for elliptic functions and integrals
   real(dp) :: m           !!elliptic parameter
@@ -445,6 +445,7 @@ contains
   logical,intent(out) :: test_passed             ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists   ! flag for the existence of files
   logical      :: Fc_test_passed,Ec_test_passed ! flags for tests of Fc and Ec values
   real(dp)     :: m             ! the parameter
   complex(dp)  :: Fc_CAS,Ec_CAS ! CAS reference values for complete Legendre elliptic intergrals of first and second kinds
@@ -455,8 +456,13 @@ contains
   integer(isp) :: io                      ! for read iostat argument
   ! introduce test in terminal: range of m should match randomized list
   print '(a75)', " *** Test K(m) and E(m) relative to SageMath values for 0 <= m <= 10**7 ***" 
-  open(unit=101,file="expected_data/CAS_complete.dat") ! CAS reference file
-  open(unit=202,file="error_complete.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_complete.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_complete.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_complete.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_complete.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   Fc_err_max=(0._dp,0._dp)
   Ec_err_max=(0._dp,0._dp)
@@ -522,6 +528,7 @@ contains
   logical,intent(out) :: test_passed             ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists   ! flag for the existence of files
   logical      :: Fi_test_passed,Ei_test_passed ! flags for tests of Fc and Ec values
   real(dp)     :: phi           ! Jacobi amplitude
   real(dp)     :: m             ! the parameter
@@ -536,8 +543,13 @@ contains
   ! introduce test in terminal: range of m should match randomized list
   print '(a110)', " *** Test F(phi|m) and E(phi|m) relative to SageMath values for -10**9 <= phi <= 10**9 and 0 <= m <= 10**7 ***" 
   ! open files
-  open(unit=101,file="expected_data/CAS_incomplete.dat") ! CAS reference file
-  open(unit=202,file="error_incomplete.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_incomplete.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_incomplete.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_incomplete.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_incomplete.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   Fi_err_max =(0._dp,0._dp)
   Ei_err_max =(0._dp,0._dp)
@@ -615,6 +627,7 @@ contains
   logical,intent(out) :: test_passed      ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists             ! flag for the existence of files
   logical      :: sn_test_passed,cn_test_passed,dn_test_passed ! test flags
   complex(dp)  :: u                       ! first input parameter for the Jacobi elliptic functions
   real(dp)     :: m                       ! second input parameter for the Jacobi elliptic functions 
@@ -633,8 +646,13 @@ contains
   ! introduce test in terminal: range of m should match randomized list
   print '(a71)', " *** Test sn(u|m), cn(u|m), and dn(u|m) relative to SageMath values ***"
   print '(a74)', "  Argument ranges: -1 <= Re[u] <= 1, -1 <= Im[u] <= 1, and 0 <= m <= 10**2" 
-  open(unit=101,file="expected_data/CAS_functions.dat") ! CAS reference file
-  open(unit=202,file="error_functions.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_functions.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_functions.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_functions.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_functions.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   sn_err_max =(0._dp,0._dp)
   cn_err_max =(0._dp,0._dp)
