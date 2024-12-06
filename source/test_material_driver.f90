@@ -8,11 +8,11 @@ program test_material_driver
  use elliptic, only: complete_elliptic_integrals,incomplete_elliptic_integrals,Jacobi_elliptic_functions 
  implicit none
 
- 
- real(dp),parameter :: tol_complete  =5.e-15_dp ! tolerance for relative errors of complete Legendre elliptic integrals
- real(dp),parameter :: tol_incomplete=5.e-15_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
+ ! note: the below tolerances were selected to allow for some variability between compilers and hardware 
+ real(dp),parameter :: tol_complete  =5.e-14_dp ! tolerance for relative errors of complete Legendre elliptic integrals
+ real(dp),parameter :: tol_incomplete=5.e-14_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
  real(dp),parameter :: tol_functions =9.e-14_dp ! tolerance for relative errors of Jacobi elliptic functions
- real(dp),parameter :: tol_special   =5.e-15_dp ! tolerance for relative errors of special values of all ellipFor functions
+ real(dp),parameter :: tol_special   =1.e-14_dp ! tolerance for relative errors of special values of all ellipFor functions
 
  logical :: special_value_tests_passed      ! flag to indicate if all special value tests were passed
  logical :: complete_integral_test_passed   ! flag to indicate if general complete elliptic integral test passed
@@ -469,7 +469,8 @@ contains
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) m,Fc_CAS%re,Fc_CAS%im,Ec_CAS%re,Ec_CAS%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & m,Fc_CAS%re,Fc_CAS%im,Ec_CAS%re,Ec_CAS%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! compute ellipFor values
@@ -558,7 +559,8 @@ contains
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) phi,m,Fi_CAS%re,Fi_CAS%im,Ei_CAS%re,Ei_CAS%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & phi,m,Fi_CAS%re,Fi_CAS%im,Ei_CAS%re,Ei_CAS%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! compute ellipFor values
@@ -663,9 +665,10 @@ contains
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) u%re,u%im,m,&
-                        &sn_SM  %re,sn_SM  %im,cn_SM  %re,cn_SM  %im,dn_SM  %re,dn_SM  %im,&
-                        &sn_Math%re,sn_Math%im,cn_Math%re,cn_Math%im,dn_Math%re,dn_Math%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & u%re,u%im,m,&
+   &sn_SM  %re,sn_SM  %im,cn_SM  %re,cn_SM  %im,dn_SM  %re,dn_SM  %im,&
+   &sn_Math%re,sn_Math%im,cn_Math%re,cn_Math%im,dn_Math%re,dn_Math%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! determine if SageMath and Mathematica values agree within tolerance
