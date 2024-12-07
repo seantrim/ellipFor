@@ -107,11 +107,16 @@ contains
   test_flag_complete=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a37)') complete_integral_label
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Fc_label,Fc_ref % re,comma,Fc_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Ec_label,Ec_ref % re,comma,Ec_ref % im,bracket
-  read(102,'(a1)') space
+  read(102,'(a37)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & complete_integral_label
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Fc_label,Fc_ref % re,comma,Fc_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Ec_label,Ec_ref % re,comma,Ec_ref % im,bracket
+  read(102,'(a1)'                    ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & space
 
   !!compute relative errors (compared to reference data) and check against tolerance
   m_err=abs((m-m_ref)/m_ref)                        ; if (m_err.gt.tol)       test_flag_complete=.false.
@@ -135,12 +140,18 @@ contains
   test_flag_incomplete=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a39)') incomplete_integral_label
-  read(102,'(a5,g26.17)') phi_label,phi_ref
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Fi_label,Fi_ref % re,comma,Fi_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Ei_label,Ei_ref % re,comma,Ei_ref % im,bracket 
-  read(102,'(a1)') space 
+  read(102,'(a39)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & incomplete_integral_label
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & phi_label,phi_ref
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Fi_label,Fi_ref % re,comma,Fi_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Ei_label,Ei_ref % re,comma,Ei_ref % im,bracket 
+  read(102,'(a1)'                    ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & space 
 
   !!compute relative errors (compared to reference data) and check against tolerance
   phi_err=abs((phi-phi_ref)/phi_ref)                ; if (phi_err.gt.tol)     test_flag_incomplete=.false.
@@ -166,12 +177,18 @@ contains
   test_flag_functions=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a26)') elliptic_functions_label
-  read(102,'(a5,g26.17,a2,g26.17,a1)') u_label,u_ref % re,comma,u_ref % im,bracket 
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') sn_label,sn_ref % re,comma,sn_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') cn_label,cn_ref % re,comma,cn_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') dn_label,dn_ref % re,comma,dn_ref % im,bracket 
+  read(102,'(a26)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & elliptic_functions_label
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & u_label,u_ref % re,comma,u_ref % im,bracket 
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & sn_label,sn_ref % re,comma,sn_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & cn_label,cn_ref % re,comma,cn_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & dn_label,dn_ref % re,comma,dn_ref % im,bracket 
 
   !!compute relative errors (compared to reference data) and check against tolerance
   u_err % re=abs((u % re-u_ref % re)/u_ref % re)    ; if (u_err % re.gt.tol)  test_flag_functions=.false. 
