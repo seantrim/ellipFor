@@ -68,7 +68,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
  
 `Makefile`
 
-* Makefile for building the [standalone](#standalone) version of ellipFor using gfortran, ifx, or ifort
+* Makefile for building the [standalone](#standalone) version of ellipFor using gfortran or ifx
 * For use with GNU Make
 
 `ellipFor_test_driver.f90`
@@ -194,11 +194,11 @@ Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\t
         * To disable these warnings, set `test_output=.false.` near line 10 of `ellipFor/source/ellipFor_test_driver.f90`   
 2. Build the code using GNU Make with `ellipFor/source/Makefile`
     * Navigate to `ellipFor/source` directory in the terminal
-    * Use `make` command in the terminal with the rule for the compiler of choice (gfortran, ifx, or ifort)  
-        * Linux/Mac/Windows: `$ make gfortran`, `$ make ifx`, or `$ make ifort`
+    * Use `make` command in the terminal with the rule for the compiler of choice (gfortran or ifx)  
+        * Linux/Mac/Windows: `$ make gfortran` or `$ make ifx`
         * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
-        * Intel oneAPI version 2024.2.1 or later is recommended
-        * gfortran 13.2.0 or later is recommended
+        * Intel oneAPI version 2025.0.1 or later is recommended
+        * gfortran 14.2.0 or later is recommended
         * GNU Make 4.3 or later is recommended
     * the driver programs `ellipFor/source/ellipFor_test_driver` and `ellipFor/source/test_material_driver` will be produced
         * Note that `ellipFor/source/test_material_driver` can be used to automatically test all ellipFor features in detail
@@ -220,10 +220,10 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
     * `ellipFor/source/Makefile` can be used as a template to build `other_code.f90` with the ellipFor libraries and build the executable
         * substitute references to `ellipFor_test_driver` with `other_code` in a copy of the `Makefile` provided
         * customize as desired (e.g., compiler options, etc.)
-    * use `$ make gfortran`, `$ make ifx`, or `$ make ifort` in the terminal to build the executable `other_code` with the desired compiler
+    * use `$ make gfortran` or `$ make ifx` in the terminal to build the executable `other_code` with the desired compiler
     * Note for Intel oneAPI users: the setvars script must be applied before running `make` (e.g., `$ source /opt/intel/oneapi/setvars.sh`)
-    * Intel oneAPI version 2024.2.1 or later is recommended
-    * gfortran 13.2.0 or later is recommended
+    * Intel oneAPI version 2025.0.1 or later is recommended
+    * gfortran 14.2.0 or later is recommended
     * GNU Make 4.3 or later is recommended   
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
