@@ -797,7 +797,7 @@ contains
                  goto 1
          endif
  enddo
- !write(*,*) "(elsbdj) too many iterations: s0,m=",s0,m SJT: does not occur in practice
+ !write(*,*) "(elsbdj) too many iterations: s0,m=",s0,m !SJT: does not occur in practice
  1 continue
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
  call serbd(y,m,b,d)
