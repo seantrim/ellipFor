@@ -1487,9 +1487,9 @@ contains
  real(qp),intent(out) :: b,d,j !!SJT
  real(qp) m,h,del,s,y,c,sy,t !!SJT
  real(qp),intent(in) :: mc_qp !!SJT
- integer(isp),parameter :: NMAX=40 ! SJT: added variable max size (original value is 10)
+ integer(isp),parameter :: NMAX=40_isp ! SJT: added variable max size (original value is 10)
  !real(qp) yy(11),ss(11),cd(11) ! OG
- real(qp) yy(NMAX+1),ss(NMAX+1),cd(NMAX+1)
+ real(qp) yy(NMAX+1_isp),ss(NMAX+1_isp),cd(NMAX+1_isp)
  integer(isp) i,k
  
  ! write(*,*) "(elsj) s0,n,mc=",s0,n,mc
@@ -1518,16 +1518,16 @@ contains
  ! write(*,"(a20,1p3e10.2)") "(elsbdj) b,d,j=",b,d,j
          return
  endif
- yy(1)=y
- ss(1)=s
+ yy(1_isp)=y
+ ss(1_isp)=s
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",1,y
  !do i=1,10 ! OG
- do i=1,NMAX
+ do i=1_isp,NMAX
      c=sqrt(1._qp-y)
      d=sqrt(1._qp-m*y)
      y=y/((1._qp+c)*(1._qp+d))
-         yy(i+1)=y
-         ss(i+1)=sqrt(y)
+         yy(i+1_isp)=y
+         ss(i+1_isp)=sqrt(y)
          cd(i)=c*d
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
          if(y.lt.del) then
@@ -1538,12 +1538,12 @@ contains
  1 continue
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
  call serbd_qp(y,m,b,d)
- b=ss(i+1)*b
- d=ss(i+1)*y*d
- j=ss(i+1)*serj_qp(y,n,m)
- do k=i,1,-1
-         sy=ss(k)*yy(k+1)
-         t=sy/(1._qp-n*(yy(k)-yy(k+1)*cd(k)))
+ b=ss(i+1_isp)*b
+ d=ss(i+1_isp)*y*d
+ j=ss(i+1_isp)*serj_qp(y,n,m)
+ do k=i,1_isp,-1_isp
+         sy=ss(k)*yy(k+1_isp)
+         t=sy/(1._qp-n*(yy(k)-yy(k+1_isp)*cd(k)))
          b=2._qp*b-sy
          d=d+(d+sy)
          j=j+(j+uatan_qp(t,h))
@@ -1571,8 +1571,8 @@ contains
  logical flag
  integer(isp) IMAX,i,is,ie
  !parameter (IMAX=40) ! OG
- parameter (IMAX=40)  ! SJT: adjustement in max # of iterations for quadruple precision
- real(qp) y(0:IMAX),x(0:IMAX),c(0:IMAX),d(0:IMAX),a(0:IMAX)
+ parameter (IMAX=40_isp)  ! SJT: adjustement in max # of iterations for quadruple precision
+ real(qp) y(0_isp:IMAX),x(0_isp:IMAX),c(0_isp:IMAX),d(0_isp:IMAX),a(0_isp:IMAX)
  real(qp) mc,mc0,nc,m,n,celk,yi,ye,dj,m1,kc0,temp !!SJT
  real(qp),intent(in) :: mc0_qp !!SJT
  real(qp) :: mc_qp !!SJT
@@ -1602,7 +1602,7 @@ contains
  if(first) then
      first=.FALSE.
      do i=1,IMAX
-         B(i)=1._qp/real(2*i+1,qp)
+         B(i)=1._qp/real(2_isp*i+1_isp,qp)
      enddo
  endif
  mc=mc_qp !!SJT
@@ -1616,29 +1616,29 @@ contains
  m=1.0_qp-mc_qp; n=1._qp-nc !!SJT
  flag=nc.lt.mc.or.(n*nc).gt.(nc-mc)
  if(flag) then
-     y(0)=(nc-mc)/(nc*m)
+     y(0_isp)=(nc-mc)/(nc*m)
  else
-     y(0)=n/m
+     y(0_isp)=n/m
  endif
- is=0
- if(y(0).gt.0.5_qp) then
-     x(0)=1._qp-y(0)
-     do i=0,IMAX-1 !!SJT
+ is=0_isp
+ if(y(0_isp).gt.0.5_qp) then
+     x(0_isp)=1._qp-y(0_isp)
+     do i=0_isp,IMAX-1_isp !!SJT
      !do i=0,IMAX !!SJT: OG
          c(i)=sqrt(x(i))
          d(i)=sqrt(mc+m*x(i))
          x(i+1)=(c(i)+d(i))/(1._qp+d(i))
          if(x(i+1).gt.0.5_qp) then
              y(i+1)=y(i)/((1._qp+c(i))*(1._qp+d(i)))
-             is=i+1
+             is=i+1_isp
              goto 1
          endif
-         y(i+1)=1._qp-x(i+1)
+         y(i+1_isp)=1._qp-x(i+1_isp)
      enddo
      return
  endif
  1 continue
- do i=is,IMAX-1 !!SJT
+ do i=is,IMAX-1_isp !!SJT
  !do i=is,IMAX !!SJT: OG
      c(i)=sqrt(1._qp-y(i))
      d(i)=sqrt(1._qp-m*y(i))
@@ -1647,28 +1647,28 @@ contains
  enddo
  return
  2 continue
- ie=i+1
+ ie=i+1_isp
  ye=y(ie)
  celk=celb+celd
- a(0)=celd
- celj=a(0)
+ a(0_isp)=celd
+ celj=a(0_isp)
  yi=ye
- a(1)=((1._qp+2._qp*m)*celd-celb)*THIRD
- dj=a(1)*yi
- i=1
+ a(1_isp)=((1._qp+2._qp*m)*celd-celb)*THIRD
+ dj=a(1_isp)*yi
+ i=1_isp
  if(abs(dj).lt.EPS*abs(celj)) goto 3
  celj=celj+dj
  m1=1._qp+m
- do i=2,IMAX
+ do i=2_isp,IMAX
      yi=yi*ye
-     a(i)=(1._qp-B(i))*m1*a(i-1)-(1._qp-2._qp*B(i))*m*a(i-2)
+     a(i)=(1._qp-B(i))*m1*a(i-1_isp)-(1._qp-2._qp*B(i))*m*a(i-2_isp)
      dj=a(i)*yi
      if(abs(dj).lt.EPS*abs(celj)) goto 3
      celj=celj+dj
  enddo
  return
  3 continue
- do i=ie-1,0,-1
+ do i=ie-1_isp,0_isp,-1_isp
      celj=(2._qp*(c(i)+d(i))*celj-y(i)*celk)/(c(i)*d(i)*(1._qp+c(i))*(1._qp+d(i)))
  enddo
  if(flag) then
