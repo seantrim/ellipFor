@@ -753,7 +753,7 @@ contains
  !real(dp) m,mc,h,del,s,y,c,sy,t !!SJT
  real(dp) m,h,del,s,y,c,sy,t !!SJT
  real(qp),intent(in) :: mc_qp !!SJT
- real(dp) yy(11),ss(11),cd(11)
+ real(dp) yy(11_isp),ss(11_isp),cd(11_isp)
  !real(dp) serj,uatan !!SJT: due to module definition, this routine already has access to serj and uatan functions
  integer(isp) i,k
  
@@ -761,16 +761,16 @@ contains
  
  !m=1.d0-mc !!SJT: original
  m=real(1.0_qp-mc_qp,dp); !mc=real(mc_qp,dp) !!SJT
- !kc=mc**0.5d0; m=(1.d0+kc)*(1.d0-kc) !!SJT: to reduce truncation error when mc is close to unity
- h=n*(1.d0-n)*(n-m)
- !del=0.04094d0-0.00652d0*m
- !del=0.03429d0
- !del=0.02448d0  ! JA
- del=0.01622d0   ! J9
- !del=0.00969d0  ! J8
- !del=0.00500d0  ! J7
- !del=2.073d-3    ! J6
- !del=6.037d-4    ! J5
+ !kc=mc**0.5e0_dp; m=(1.e0_dp+kc)*(1.e0_dp-kc) !!SJT: to reduce truncation error when mc is close to unity
+ h=n*(1.e0_dp-n)*(n-m)
+ !del=0.04094e0_dp-0.00652e0_dp*m
+ !del=0.03429e0_dp
+ !del=0.02448e0_dp  ! JA
+ del=0.01622e0_dp   ! J9
+ !del=0.00969e0_dp  ! J8
+ !del=0.00500e0_dp  ! J7
+ !del=2.073e-3_dp    ! J6
+ !del=6.037e-4_dp    ! J5
  
  s=s0
  y=s*s
@@ -782,15 +782,15 @@ contains
  ! write(*,"(a20,1p3e10.2)") "(elsbdj) b,d,j=",b,d,j
          return
  endif
- yy(1)=y
- ss(1)=s
+ yy(1_isp)=y
+ ss(1_isp)=s
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",1,y
- do i=1,10
-     c=sqrt(1.d0-y)
-     d=sqrt(1.d0-m*y)
-     y=y/((1.d0+c)*(1.d0+d))
-         yy(i+1)=y
-         ss(i+1)=sqrt(y)
+ do i=1_isp,10_isp
+     c=sqrt(1.e0_dp-y)
+     d=sqrt(1.e0_dp-m*y)
+     y=y/((1.e0_dp+c)*(1.e0_dp+d))
+         yy(i+1_isp)=y
+         ss(i+1_isp)=sqrt(y)
          cd(i)=c*d
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
          if(y.lt.del) then
@@ -801,13 +801,13 @@ contains
  1 continue
  ! write(*,"(a20,i10,1pe10.2)") "(elsbdj) i,y=",i+1,y
  call serbd(y,m,b,d)
- b=ss(i+1)*b
- d=ss(i+1)*y*d
- j=ss(i+1)*serj(y,n,m)
- do k=i,1,-1
-         sy=ss(k)*yy(k+1)
-         t=sy/(1.d0-n*(yy(k)-yy(k+1)*cd(k)))
-         b=2.d0*b-sy
+ b=ss(i+1_isp)*b
+ d=ss(i+1_isp)*y*d
+ j=ss(i+1_isp)*serj(y,n,m)
+ do k=i,1_isp,-1_isp
+         sy=ss(k)*yy(k+1_isp)
+         t=sy/(1.e0_dp-n*(yy(k)-yy(k+1_isp)*cd(k)))
+         b=2.e0_dp*b-sy
          d=d+(d+sy)
          j=j+(j+uatan(t,h))
  enddo
