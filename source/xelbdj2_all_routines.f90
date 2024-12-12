@@ -834,62 +834,62 @@ contains
  real(dp) F9,F90,F91,F92,F93,F94
  real(dp) FA,FA0,FA1,FA2,FA3,FA4,FA5
  real(dp) FB,FB0,FB1,FB2,FB3,FB4,FB5
- parameter (F10=1.d0/6.d0)
- parameter (F20=3.d0/40.d0)
- parameter (F21=2.d0/40.d0)
- parameter (F30=5.d0/112.d0)
- parameter (F31=3.d0/112.d0)
- parameter (F40=35.d0/1152.d0)
- parameter (F41=20.d0/1152.d0)
- parameter (F42=18.d0/1152.d0)
- parameter (F50=63.d0/2816.d0)
- parameter (F51=35.d0/2816.d0)
- parameter (F52=30.d0/2816.d0)
- parameter (F60=231.d0/13312.d0)
- parameter (F61=126.d0/13312.d0)
- parameter (F62=105.d0/13312.d0)
- parameter (F63=100.d0/13312.d0)
- parameter (F70=429.d0/30720.d0)
- parameter (F71=231.d0/30720.d0)
- parameter (F72=189.d0/30720.d0)
- parameter (F73=175.d0/30720.d0)
- parameter (F80=6435.d0/557056.d0)
- parameter (F81=3432.d0/557056.d0)
- parameter (F82=2722.d0/557056.d0)
- parameter (F83=2520.d0/557056.d0)
- parameter (F84=2450.d0/557056.d0)
- parameter (F90=12155.d0/1245184.d0)
- parameter (F91=6435.d0/1245184.d0)
- parameter (F92=5148.d0/1245184.d0)
- parameter (F93=4620.d0/1245184.d0)
- parameter (F94=4410.d0/1245184.d0)
- parameter (FA0=46189.d0/5505024.d0)
- parameter (FA1=24310.d0/5505024.d0)
- parameter (FA2=19305.d0/5505024.d0)
- parameter (FA3=17160.d0/5505024.d0)
- parameter (FA4=16170.d0/5505024.d0)
- parameter (FA5=15876.d0/5505024.d0)
- parameter (FB0=88179.d0/12058624.d0)
- parameter (FB1=46189.d0/12058624.d0)
- parameter (FB2=36465.d0/12058624.d0)
- parameter (FB3=32175.d0/12058624.d0)
- parameter (FB4=30030.d0/12058624.d0)
- parameter (FB5=29106.d0/12058624.d0)
+ parameter (F10=1.e0_dp/6.e0_dp)
+ parameter (F20=3.e0_dp/40.e0_dp)
+ parameter (F21=2.e0_dp/40.e0_dp)
+ parameter (F30=5.e0_dp/112.e0_dp)
+ parameter (F31=3.e0_dp/112.e0_dp)
+ parameter (F40=35.e0_dp/1152.e0_dp)
+ parameter (F41=20.e0_dp/1152.e0_dp)
+ parameter (F42=18.e0_dp/1152.e0_dp)
+ parameter (F50=63.e0_dp/2816.e0_dp)
+ parameter (F51=35.e0_dp/2816.e0_dp)
+ parameter (F52=30.e0_dp/2816.e0_dp)
+ parameter (F60=231.e0_dp/13312.e0_dp)
+ parameter (F61=126.e0_dp/13312.e0_dp)
+ parameter (F62=105.e0_dp/13312.e0_dp)
+ parameter (F63=100.e0_dp/13312.e0_dp)
+ parameter (F70=429.e0_dp/30720.e0_dp)
+ parameter (F71=231.e0_dp/30720.e0_dp)
+ parameter (F72=189.e0_dp/30720.e0_dp)
+ parameter (F73=175.e0_dp/30720.e0_dp)
+ parameter (F80=6435.e0_dp/557056.e0_dp)
+ parameter (F81=3432.e0_dp/557056.e0_dp)
+ parameter (F82=2722.e0_dp/557056.e0_dp)
+ parameter (F83=2520.e0_dp/557056.e0_dp)
+ parameter (F84=2450.e0_dp/557056.e0_dp)
+ parameter (F90=12155.e0_dp/1245184.e0_dp)
+ parameter (F91=6435.e0_dp/1245184.e0_dp)
+ parameter (F92=5148.e0_dp/1245184.e0_dp)
+ parameter (F93=4620.e0_dp/1245184.e0_dp)
+ parameter (F94=4410.e0_dp/1245184.e0_dp)
+ parameter (FA0=46189.e0_dp/5505024.e0_dp)
+ parameter (FA1=24310.e0_dp/5505024.e0_dp)
+ parameter (FA2=19305.e0_dp/5505024.e0_dp)
+ parameter (FA3=17160.e0_dp/5505024.e0_dp)
+ parameter (FA4=16170.e0_dp/5505024.e0_dp)
+ parameter (FA5=15876.e0_dp/5505024.e0_dp)
+ parameter (FB0=88179.e0_dp/12058624.e0_dp)
+ parameter (FB1=46189.e0_dp/12058624.e0_dp)
+ parameter (FB2=36465.e0_dp/12058624.e0_dp)
+ parameter (FB3=32175.e0_dp/12058624.e0_dp)
+ parameter (FB4=30030.e0_dp/12058624.e0_dp)
+ parameter (FB5=29106.e0_dp/12058624.e0_dp)
  real(dp) A1,A2,A3,A4,A5,A6,A7,A8,A9,AA,AB
- parameter (A1=3.d0/5.d0)
- parameter (A2=5.d0/7.d0)
- parameter (A3=7.d0/9.d0)
- parameter (A4=9.d0/11.d0)
- parameter (A5=11.d0/13.d0)
- parameter (A6=13.d0/15.d0)
- parameter (A7=15.d0/17.d0)
- parameter (A8=17.d0/19.d0)
- parameter (A9=19.d0/21.d0)
- parameter (AA=21.d0/23.d0)
- parameter (AB=23.d0/25.d0)
+ parameter (A1=3.e0_dp/5.e0_dp)
+ parameter (A2=5.e0_dp/7.e0_dp)
+ parameter (A3=7.e0_dp/9.e0_dp)
+ parameter (A4=9.e0_dp/11.e0_dp)
+ parameter (A5=11.e0_dp/13.e0_dp)
+ parameter (A6=13.e0_dp/15.e0_dp)
+ parameter (A7=15.e0_dp/17.e0_dp)
+ parameter (A8=17.e0_dp/19.e0_dp)
+ parameter (A9=19.e0_dp/21.e0_dp)
+ parameter (AA=21.e0_dp/23.e0_dp)
+ parameter (AB=23.e0_dp/25.e0_dp)
  real(dp) B1,B2,B3,B4,B5,B6,B7,B8,B9,BA,BB
  real(dp) D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB
- parameter (D0=1.d0/3.d0)
+ parameter (D0=1.e0_dp/3.e0_dp)
  !
  !        write(*,*) "(serbd) y,m=",y,m
  F1=F10+m*F10
@@ -931,7 +931,7 @@ contains
  B9=F9-D8
  BA=FA-D9
  BB=FB-DA
- b=1.d0+y*(B1+y*(B2+y*(B3+y*(B4+y*(B5+y*(B6+y*(B7+y*(B8 &
+ b=1.e0_dp+y*(B1+y*(B2+y*(B3+y*(B4+y*(B5+y*(B6+y*(B7+y*(B8 &
      +y*(B9+y*(BA+y*BB))))))))))
  return
  end
@@ -974,248 +974,248 @@ contains
  real(dp) JA40,JA41,JA42,JA43,JA44,JA45,JA50,JA51,JA52,JA53,JA54
  real(dp) JA60,JA61,JA62,JA63,JA70,JA71,JA72,JA80,JA81,JA90
  
- parameter (J100=1.d0/3.d0)
+ parameter (J100=1.e0_dp/3.e0_dp)
  
- parameter (J200=1.d0/10.d0)
- parameter (J201=2.d0/10.d0)
- parameter (J210=1.d0/10.d0)
+ parameter (J200=1.e0_dp/10.e0_dp)
+ parameter (J201=2.e0_dp/10.e0_dp)
+ parameter (J210=1.e0_dp/10.e0_dp)
  
- parameter (J300=3.d0/56.d0)
- parameter (J301=4.d0/56.d0)
- parameter (J302=8.d0/56.d0)
- parameter (J310=2.d0/56.d0)
- parameter (J311=4.d0/56.d0)
- parameter (J320=3.d0/56.d0)
+ parameter (J300=3.e0_dp/56.e0_dp)
+ parameter (J301=4.e0_dp/56.e0_dp)
+ parameter (J302=8.e0_dp/56.e0_dp)
+ parameter (J310=2.e0_dp/56.e0_dp)
+ parameter (J311=4.e0_dp/56.e0_dp)
+ parameter (J320=3.e0_dp/56.e0_dp)
  
- parameter (J400=5.d0/144.d0)
- parameter (J401=6.d0/144.d0)
- parameter (J402=8.d0/144.d0)
- parameter (J403=16.d0/144.d0)
- parameter (J410=3.d0/144.d0)
- parameter (J411=4.d0/144.d0)
- parameter (J412=8.d0/144.d0)
- parameter (J420=3.d0/144.d0)
- parameter (J421=6.d0/144.d0)
- parameter (J430=5.d0/144.d0)
+ parameter (J400=5.e0_dp/144.e0_dp)
+ parameter (J401=6.e0_dp/144.e0_dp)
+ parameter (J402=8.e0_dp/144.e0_dp)
+ parameter (J403=16.e0_dp/144.e0_dp)
+ parameter (J410=3.e0_dp/144.e0_dp)
+ parameter (J411=4.e0_dp/144.e0_dp)
+ parameter (J412=8.e0_dp/144.e0_dp)
+ parameter (J420=3.e0_dp/144.e0_dp)
+ parameter (J421=6.e0_dp/144.e0_dp)
+ parameter (J430=5.e0_dp/144.e0_dp)
  
- parameter (J500=35.d0/1408.d0)
- parameter (J501=40.d0/1408.d0)
- parameter (J502=48.d0/1408.d0)
- parameter (J503=64.d0/1408.d0)
- parameter (J504=128.d0/1408.d0)
- parameter (J510=20.d0/1408.d0)
- parameter (J511=24.d0/1408.d0)
- parameter (J512=32.d0/1408.d0)
- parameter (J513=64.d0/1408.d0)
- parameter (J520=18.d0/1408.d0)
- parameter (J521=24.d0/1408.d0)
- parameter (J522=48.d0/1408.d0)
- parameter (J530=20.d0/1408.d0)
- parameter (J531=40.d0/1408.d0)
- parameter (J540=35.d0/1408.d0)
+ parameter (J500=35.e0_dp/1408.e0_dp)
+ parameter (J501=40.e0_dp/1408.e0_dp)
+ parameter (J502=48.e0_dp/1408.e0_dp)
+ parameter (J503=64.e0_dp/1408.e0_dp)
+ parameter (J504=128.e0_dp/1408.e0_dp)
+ parameter (J510=20.e0_dp/1408.e0_dp)
+ parameter (J511=24.e0_dp/1408.e0_dp)
+ parameter (J512=32.e0_dp/1408.e0_dp)
+ parameter (J513=64.e0_dp/1408.e0_dp)
+ parameter (J520=18.e0_dp/1408.e0_dp)
+ parameter (J521=24.e0_dp/1408.e0_dp)
+ parameter (J522=48.e0_dp/1408.e0_dp)
+ parameter (J530=20.e0_dp/1408.e0_dp)
+ parameter (J531=40.e0_dp/1408.e0_dp)
+ parameter (J540=35.e0_dp/1408.e0_dp)
  
- parameter (J600=63.d0/3328.d0)
- parameter (J601=70.d0/3328.d0)
- parameter (J602=80.d0/3328.d0)
- parameter (J603=96.d0/3328.d0)
- parameter (J604=128.d0/3328.d0)
- parameter (J605=256.d0/3328.d0)
- parameter (J610=35.d0/3328.d0)
- parameter (J611=40.d0/3328.d0)
- parameter (J612=48.d0/3328.d0)
- parameter (J613=64.d0/3328.d0)
- parameter (J614=128.d0/3328.d0)
- parameter (J620=30.d0/3328.d0)
- parameter (J621=36.d0/3328.d0)
- parameter (J622=48.d0/3328.d0)
- parameter (J623=96.d0/3328.d0)
- parameter (J630=30.d0/3328.d0)
- parameter (J631=40.d0/3328.d0)
- parameter (J632=80.d0/3328.d0)
- parameter (J640=35.d0/3328.d0)
- parameter (J641=70.d0/3328.d0)
- parameter (J650=63.d0/3328.d0)
+ parameter (J600=63.e0_dp/3328.e0_dp)
+ parameter (J601=70.e0_dp/3328.e0_dp)
+ parameter (J602=80.e0_dp/3328.e0_dp)
+ parameter (J603=96.e0_dp/3328.e0_dp)
+ parameter (J604=128.e0_dp/3328.e0_dp)
+ parameter (J605=256.e0_dp/3328.e0_dp)
+ parameter (J610=35.e0_dp/3328.e0_dp)
+ parameter (J611=40.e0_dp/3328.e0_dp)
+ parameter (J612=48.e0_dp/3328.e0_dp)
+ parameter (J613=64.e0_dp/3328.e0_dp)
+ parameter (J614=128.e0_dp/3328.e0_dp)
+ parameter (J620=30.e0_dp/3328.e0_dp)
+ parameter (J621=36.e0_dp/3328.e0_dp)
+ parameter (J622=48.e0_dp/3328.e0_dp)
+ parameter (J623=96.e0_dp/3328.e0_dp)
+ parameter (J630=30.e0_dp/3328.e0_dp)
+ parameter (J631=40.e0_dp/3328.e0_dp)
+ parameter (J632=80.e0_dp/3328.e0_dp)
+ parameter (J640=35.e0_dp/3328.e0_dp)
+ parameter (J641=70.e0_dp/3328.e0_dp)
+ parameter (J650=63.e0_dp/3328.e0_dp)
  
- parameter (J700=231.d0/15360.d0)
- parameter (J701=252.d0/15360.d0)
- parameter (J702=280.d0/15360.d0)
- parameter (J703=320.d0/15360.d0)
- parameter (J704=384.d0/15360.d0)
- parameter (J705=512.d0/15360.d0)
- parameter (J706=1024.d0/15360.d0)
- parameter (J710=126.d0/15360.d0)
- parameter (J711=140.d0/15360.d0)
- parameter (J712=160.d0/15360.d0)
- parameter (J713=192.d0/15360.d0)
- parameter (J714=256.d0/15360.d0)
- parameter (J715=512.d0/15360.d0)
- parameter (J720=105.d0/15360.d0)
- parameter (J721=120.d0/15360.d0)
- parameter (J722=144.d0/15360.d0)
- parameter (J723=192.d0/15360.d0)
- parameter (J724=384.d0/15360.d0)
- parameter (J730=100.d0/15360.d0)
- parameter (J731=120.d0/15360.d0)
- parameter (J732=160.d0/15360.d0)
- parameter (J733=320.d0/15360.d0)
- parameter (J740=105.d0/15360.d0)
- parameter (J741=140.d0/15360.d0)
- parameter (J742=280.d0/15360.d0)
- parameter (J750=126.d0/15360.d0)
- parameter (J751=252.d0/15360.d0)
- parameter (J760=231.d0/15360.d0)
+ parameter (J700=231.e0_dp/15360.e0_dp)
+ parameter (J701=252.e0_dp/15360.e0_dp)
+ parameter (J702=280.e0_dp/15360.e0_dp)
+ parameter (J703=320.e0_dp/15360.e0_dp)
+ parameter (J704=384.e0_dp/15360.e0_dp)
+ parameter (J705=512.e0_dp/15360.e0_dp)
+ parameter (J706=1024.e0_dp/15360.e0_dp)
+ parameter (J710=126.e0_dp/15360.e0_dp)
+ parameter (J711=140.e0_dp/15360.e0_dp)
+ parameter (J712=160.e0_dp/15360.e0_dp)
+ parameter (J713=192.e0_dp/15360.e0_dp)
+ parameter (J714=256.e0_dp/15360.e0_dp)
+ parameter (J715=512.e0_dp/15360.e0_dp)
+ parameter (J720=105.e0_dp/15360.e0_dp)
+ parameter (J721=120.e0_dp/15360.e0_dp)
+ parameter (J722=144.e0_dp/15360.e0_dp)
+ parameter (J723=192.e0_dp/15360.e0_dp)
+ parameter (J724=384.e0_dp/15360.e0_dp)
+ parameter (J730=100.e0_dp/15360.e0_dp)
+ parameter (J731=120.e0_dp/15360.e0_dp)
+ parameter (J732=160.e0_dp/15360.e0_dp)
+ parameter (J733=320.e0_dp/15360.e0_dp)
+ parameter (J740=105.e0_dp/15360.e0_dp)
+ parameter (J741=140.e0_dp/15360.e0_dp)
+ parameter (J742=280.e0_dp/15360.e0_dp)
+ parameter (J750=126.e0_dp/15360.e0_dp)
+ parameter (J751=252.e0_dp/15360.e0_dp)
+ parameter (J760=231.e0_dp/15360.e0_dp)
  
- parameter (J800=429.d0/34816.d0)
- parameter (J801=462.d0/34816.d0)
- parameter (J802=504.d0/34816.d0)
- parameter (J803=560.d0/34816.d0)
- parameter (J804=640.d0/34816.d0)
- parameter (J805=768.d0/34816.d0)
- parameter (J806=1024.d0/34816.d0)
- parameter (J807=2048.d0/34816.d0)
- parameter (J810=231.d0/34816.d0)
- parameter (J811=252.d0/34816.d0)
- parameter (J812=280.d0/34816.d0)
- parameter (J813=320.d0/34816.d0)
- parameter (J814=384.d0/34816.d0)
- parameter (J815=512.d0/34816.d0)
- parameter (J816=1024.d0/34816.d0)
- parameter (J820=189.d0/34816.d0)
- parameter (J821=210.d0/34816.d0)
- parameter (J822=240.d0/34816.d0)
- parameter (J823=288.d0/34816.d0)
- parameter (J824=284.d0/34816.d0)
- parameter (J825=768.d0/34816.d0)
- parameter (J830=175.d0/34816.d0)
- parameter (J831=200.d0/34816.d0)
- parameter (J832=240.d0/34816.d0)
- parameter (J833=320.d0/34816.d0)
- parameter (J834=640.d0/34816.d0)
- parameter (J840=175.d0/34816.d0)
- parameter (J841=210.d0/34816.d0)
- parameter (J842=280.d0/34816.d0)
- parameter (J843=560.d0/34816.d0)
- parameter (J850=189.d0/34816.d0)
- parameter (J851=252.d0/34816.d0)
- parameter (J852=504.d0/34816.d0)
- parameter (J860=231.d0/34816.d0)
- parameter (J861=462.d0/34816.d0)
- parameter (J870=429.d0/34816.d0)
+ parameter (J800=429.e0_dp/34816.e0_dp)
+ parameter (J801=462.e0_dp/34816.e0_dp)
+ parameter (J802=504.e0_dp/34816.e0_dp)
+ parameter (J803=560.e0_dp/34816.e0_dp)
+ parameter (J804=640.e0_dp/34816.e0_dp)
+ parameter (J805=768.e0_dp/34816.e0_dp)
+ parameter (J806=1024.e0_dp/34816.e0_dp)
+ parameter (J807=2048.e0_dp/34816.e0_dp)
+ parameter (J810=231.e0_dp/34816.e0_dp)
+ parameter (J811=252.e0_dp/34816.e0_dp)
+ parameter (J812=280.e0_dp/34816.e0_dp)
+ parameter (J813=320.e0_dp/34816.e0_dp)
+ parameter (J814=384.e0_dp/34816.e0_dp)
+ parameter (J815=512.e0_dp/34816.e0_dp)
+ parameter (J816=1024.e0_dp/34816.e0_dp)
+ parameter (J820=189.e0_dp/34816.e0_dp)
+ parameter (J821=210.e0_dp/34816.e0_dp)
+ parameter (J822=240.e0_dp/34816.e0_dp)
+ parameter (J823=288.e0_dp/34816.e0_dp)
+ parameter (J824=284.e0_dp/34816.e0_dp)
+ parameter (J825=768.e0_dp/34816.e0_dp)
+ parameter (J830=175.e0_dp/34816.e0_dp)
+ parameter (J831=200.e0_dp/34816.e0_dp)
+ parameter (J832=240.e0_dp/34816.e0_dp)
+ parameter (J833=320.e0_dp/34816.e0_dp)
+ parameter (J834=640.e0_dp/34816.e0_dp)
+ parameter (J840=175.e0_dp/34816.e0_dp)
+ parameter (J841=210.e0_dp/34816.e0_dp)
+ parameter (J842=280.e0_dp/34816.e0_dp)
+ parameter (J843=560.e0_dp/34816.e0_dp)
+ parameter (J850=189.e0_dp/34816.e0_dp)
+ parameter (J851=252.e0_dp/34816.e0_dp)
+ parameter (J852=504.e0_dp/34816.e0_dp)
+ parameter (J860=231.e0_dp/34816.e0_dp)
+ parameter (J861=462.e0_dp/34816.e0_dp)
+ parameter (J870=429.e0_dp/34816.e0_dp)
  
- parameter (J900=6435.d0/622592.d0)
- parameter (J901=6864.d0/622592.d0)
- parameter (J902=7392.d0/622592.d0)
- parameter (J903=8064.d0/622592.d0)
- parameter (J904=8960.d0/622592.d0)
- parameter (J905=10240.d0/622592.d0)
- parameter (J906=12288.d0/622592.d0)
- parameter (J907=16384.d0/622592.d0)
- parameter (J908=32768.d0/622592.d0)
- parameter (J910=3432.d0/622592.d0)
- parameter (J911=3696.d0/622592.d0)
- parameter (J912=4032.d0/622592.d0)
- parameter (J913=4480.d0/622592.d0)
- parameter (J914=5120.d0/622592.d0)
- parameter (J915=6144.d0/622592.d0)
- parameter (J916=8192.d0/622592.d0)
- parameter (J917=16384.d0/622592.d0)
- parameter (J920=2772.d0/622592.d0)
- parameter (J921=3024.d0/622592.d0)
- parameter (J922=3360.d0/622592.d0)
- parameter (J923=3840.d0/622592.d0)
- parameter (J924=4608.d0/622592.d0)
- parameter (J925=6144.d0/622592.d0)
- parameter (J926=12288.d0/622592.d0)
- parameter (J930=2520.d0/622592.d0)
- parameter (J931=2800.d0/622592.d0)
- parameter (J932=3200.d0/622592.d0)
- parameter (J933=3840.d0/622592.d0)
- parameter (J934=5120.d0/622592.d0)
- parameter (J935=10240.d0/622592.d0)
- parameter (J940=2450.d0/622592.d0)
- parameter (J941=2800.d0/622592.d0)
- parameter (J942=3360.d0/622592.d0)
- parameter (J943=4480.d0/622592.d0)
- parameter (J944=8960.d0/622592.d0)
- parameter (J950=2520.d0/622592.d0)
- parameter (J951=3024.d0/622592.d0)
- parameter (J952=4032.d0/622592.d0)
- parameter (J953=8064.d0/622592.d0)
- parameter (J960=2772.d0/622592.d0)
- parameter (J961=3696.d0/622592.d0)
- parameter (J962=7392.d0/622592.d0)
- parameter (J970=3432.d0/622592.d0)
- parameter (J971=6864.d0/622592.d0)
- parameter (J980=6435.d0/622592.d0)
+ parameter (J900=6435.e0_dp/622592.e0_dp)
+ parameter (J901=6864.e0_dp/622592.e0_dp)
+ parameter (J902=7392.e0_dp/622592.e0_dp)
+ parameter (J903=8064.e0_dp/622592.e0_dp)
+ parameter (J904=8960.e0_dp/622592.e0_dp)
+ parameter (J905=10240.e0_dp/622592.e0_dp)
+ parameter (J906=12288.e0_dp/622592.e0_dp)
+ parameter (J907=16384.e0_dp/622592.e0_dp)
+ parameter (J908=32768.e0_dp/622592.e0_dp)
+ parameter (J910=3432.e0_dp/622592.e0_dp)
+ parameter (J911=3696.e0_dp/622592.e0_dp)
+ parameter (J912=4032.e0_dp/622592.e0_dp)
+ parameter (J913=4480.e0_dp/622592.e0_dp)
+ parameter (J914=5120.e0_dp/622592.e0_dp)
+ parameter (J915=6144.e0_dp/622592.e0_dp)
+ parameter (J916=8192.e0_dp/622592.e0_dp)
+ parameter (J917=16384.e0_dp/622592.e0_dp)
+ parameter (J920=2772.e0_dp/622592.e0_dp)
+ parameter (J921=3024.e0_dp/622592.e0_dp)
+ parameter (J922=3360.e0_dp/622592.e0_dp)
+ parameter (J923=3840.e0_dp/622592.e0_dp)
+ parameter (J924=4608.e0_dp/622592.e0_dp)
+ parameter (J925=6144.e0_dp/622592.e0_dp)
+ parameter (J926=12288.e0_dp/622592.e0_dp)
+ parameter (J930=2520.e0_dp/622592.e0_dp)
+ parameter (J931=2800.e0_dp/622592.e0_dp)
+ parameter (J932=3200.e0_dp/622592.e0_dp)
+ parameter (J933=3840.e0_dp/622592.e0_dp)
+ parameter (J934=5120.e0_dp/622592.e0_dp)
+ parameter (J935=10240.e0_dp/622592.e0_dp)
+ parameter (J940=2450.e0_dp/622592.e0_dp)
+ parameter (J941=2800.e0_dp/622592.e0_dp)
+ parameter (J942=3360.e0_dp/622592.e0_dp)
+ parameter (J943=4480.e0_dp/622592.e0_dp)
+ parameter (J944=8960.e0_dp/622592.e0_dp)
+ parameter (J950=2520.e0_dp/622592.e0_dp)
+ parameter (J951=3024.e0_dp/622592.e0_dp)
+ parameter (J952=4032.e0_dp/622592.e0_dp)
+ parameter (J953=8064.e0_dp/622592.e0_dp)
+ parameter (J960=2772.e0_dp/622592.e0_dp)
+ parameter (J961=3696.e0_dp/622592.e0_dp)
+ parameter (J962=7392.e0_dp/622592.e0_dp)
+ parameter (J970=3432.e0_dp/622592.e0_dp)
+ parameter (J971=6864.e0_dp/622592.e0_dp)
+ parameter (J980=6435.e0_dp/622592.e0_dp)
  
- parameter (JA00=12155.d0/1376256.d0)
- parameter (JA01=12870.d0/1376256.d0)
- parameter (JA02=13728.d0/1376256.d0)
- parameter (JA03=14784.d0/1376256.d0)
- parameter (JA04=16128.d0/1376256.d0)
- parameter (JA05=17920.d0/1376256.d0)
- parameter (JA06=20480.d0/1376256.d0)
- parameter (JA07=24576.d0/1376256.d0)
- parameter (JA08=32768.d0/1376256.d0)
- parameter (JA09=65536.d0/1376256.d0)
- parameter (JA10=6435.d0/1376256.d0)
- parameter (JA11=6864.d0/1376256.d0)
- parameter (JA12=7392.d0/1376256.d0)
- parameter (JA13=8064.d0/1376256.d0)
- parameter (JA14=8960.d0/1376256.d0)
- parameter (JA15=10240.d0/1376256.d0)
- parameter (JA16=12288.d0/1376256.d0)
- parameter (JA17=16384.d0/1376256.d0)
- parameter (JA18=32768.d0/1376256.d0)
- parameter (JA20=5148.d0/1376256.d0)
- parameter (JA21=5544.d0/1376256.d0)
- parameter (JA22=6048.d0/1376256.d0)
- parameter (JA23=6720.d0/1376256.d0)
- parameter (JA24=7680.d0/1376256.d0)
- parameter (JA25=9216.d0/1376256.d0)
- parameter (JA26=12288.d0/1376256.d0)
- parameter (JA27=24576.d0/1376256.d0)
- parameter (JA30=4620.d0/1376256.d0)
- parameter (JA31=5040.d0/1376256.d0)
- parameter (JA32=5600.d0/1376256.d0)
- parameter (JA33=6400.d0/1376256.d0)
- parameter (JA34=7680.d0/1376256.d0)
- parameter (JA35=10240.d0/1376256.d0)
- parameter (JA36=20480.d0/1376256.d0)
- parameter (JA40=4410.d0/1376256.d0)
- parameter (JA41=4900.d0/1376256.d0)
- parameter (JA42=5600.d0/1376256.d0)
- parameter (JA43=6720.d0/1376256.d0)
- parameter (JA44=8960.d0/1376256.d0)
- parameter (JA45=17920.d0/1376256.d0)
- parameter (JA50=4410.d0/1376256.d0)
- parameter (JA51=5040.d0/1376256.d0)
- parameter (JA52=6048.d0/1376256.d0)
- parameter (JA53=8064.d0/1376256.d0)
- parameter (JA54=16128.d0/1376256.d0)
- parameter (JA60=4620.d0/1376256.d0)
- parameter (JA61=5544.d0/1376256.d0)
- parameter (JA62=7392.d0/1376256.d0)
- parameter (JA63=14784.d0/1376256.d0)
- parameter (JA70=5148.d0/1376256.d0)
- parameter (JA71=6864.d0/1376256.d0)
- parameter (JA72=13728.d0/1376256.d0)
- parameter (JA80=6435.d0/1376256.d0)
- parameter (JA81=12870.d0/1376256.d0)
- parameter (JA90=12155.d0/1376256.d0)
+ parameter (JA00=12155.e0_dp/1376256.e0_dp)
+ parameter (JA01=12870.e0_dp/1376256.e0_dp)
+ parameter (JA02=13728.e0_dp/1376256.e0_dp)
+ parameter (JA03=14784.e0_dp/1376256.e0_dp)
+ parameter (JA04=16128.e0_dp/1376256.e0_dp)
+ parameter (JA05=17920.e0_dp/1376256.e0_dp)
+ parameter (JA06=20480.e0_dp/1376256.e0_dp)
+ parameter (JA07=24576.e0_dp/1376256.e0_dp)
+ parameter (JA08=32768.e0_dp/1376256.e0_dp)
+ parameter (JA09=65536.e0_dp/1376256.e0_dp)
+ parameter (JA10=6435.e0_dp/1376256.e0_dp)
+ parameter (JA11=6864.e0_dp/1376256.e0_dp)
+ parameter (JA12=7392.e0_dp/1376256.e0_dp)
+ parameter (JA13=8064.e0_dp/1376256.e0_dp)
+ parameter (JA14=8960.e0_dp/1376256.e0_dp)
+ parameter (JA15=10240.e0_dp/1376256.e0_dp)
+ parameter (JA16=12288.e0_dp/1376256.e0_dp)
+ parameter (JA17=16384.e0_dp/1376256.e0_dp)
+ parameter (JA18=32768.e0_dp/1376256.e0_dp)
+ parameter (JA20=5148.e0_dp/1376256.e0_dp)
+ parameter (JA21=5544.e0_dp/1376256.e0_dp)
+ parameter (JA22=6048.e0_dp/1376256.e0_dp)
+ parameter (JA23=6720.e0_dp/1376256.e0_dp)
+ parameter (JA24=7680.e0_dp/1376256.e0_dp)
+ parameter (JA25=9216.e0_dp/1376256.e0_dp)
+ parameter (JA26=12288.e0_dp/1376256.e0_dp)
+ parameter (JA27=24576.e0_dp/1376256.e0_dp)
+ parameter (JA30=4620.e0_dp/1376256.e0_dp)
+ parameter (JA31=5040.e0_dp/1376256.e0_dp)
+ parameter (JA32=5600.e0_dp/1376256.e0_dp)
+ parameter (JA33=6400.e0_dp/1376256.e0_dp)
+ parameter (JA34=7680.e0_dp/1376256.e0_dp)
+ parameter (JA35=10240.e0_dp/1376256.e0_dp)
+ parameter (JA36=20480.e0_dp/1376256.e0_dp)
+ parameter (JA40=4410.e0_dp/1376256.e0_dp)
+ parameter (JA41=4900.e0_dp/1376256.e0_dp)
+ parameter (JA42=5600.e0_dp/1376256.e0_dp)
+ parameter (JA43=6720.e0_dp/1376256.e0_dp)
+ parameter (JA44=8960.e0_dp/1376256.e0_dp)
+ parameter (JA45=17920.e0_dp/1376256.e0_dp)
+ parameter (JA50=4410.e0_dp/1376256.e0_dp)
+ parameter (JA51=5040.e0_dp/1376256.e0_dp)
+ parameter (JA52=6048.e0_dp/1376256.e0_dp)
+ parameter (JA53=8064.e0_dp/1376256.e0_dp)
+ parameter (JA54=16128.e0_dp/1376256.e0_dp)
+ parameter (JA60=4620.e0_dp/1376256.e0_dp)
+ parameter (JA61=5544.e0_dp/1376256.e0_dp)
+ parameter (JA62=7392.e0_dp/1376256.e0_dp)
+ parameter (JA63=14784.e0_dp/1376256.e0_dp)
+ parameter (JA70=5148.e0_dp/1376256.e0_dp)
+ parameter (JA71=6864.e0_dp/1376256.e0_dp)
+ parameter (JA72=13728.e0_dp/1376256.e0_dp)
+ parameter (JA80=6435.e0_dp/1376256.e0_dp)
+ parameter (JA81=12870.e0_dp/1376256.e0_dp)
+ parameter (JA90=12155.e0_dp/1376256.e0_dp)
  
  ! write(*,"(a20,1p3e10.2)") "(serj) y,n,m=",y,n,m
  
  J1=J100
  J2=J200+n*J201+m*J210
- !if(y.lt.9.2925066E-09) then
+ !if(y.lt.9.2925066e-09_dp) then
  !    serj=y*(J1+y*J2)
  ! write(*,"(a20,1pe10.2)") "(serj) J2",serj
  !    return
  !endif
  
  J3=J300+n*(J301+n*J302)+m*(J310+n*J311+m*J320)
- !if(y.lt.4.3667383d-06) then
+ !if(y.lt.4.3667383e-06_dp) then
  !    serj=y*(J1+y*(J2+y*J3))
  ! write(*,"(a20,1pe10.2)") "(serj) J3",serj
  !    return
@@ -1223,7 +1223,7 @@ contains
  
  J4=J400+n*(J401+n*(J402+n*J403)) &
      +m*(J410+n*(J411+n*J412)+m*(J420+n*J421+m*J430))
- !if(y.le.9.4990006E-05) then
+ !if(y.le.9.4990006e-05_dp) then
  !    serj=y*(J1+y*(J2+y*(J3+y*J4)))
  ! write(*,"(a20,1pe10.2)") "(serj) J4",serj
  !    return
@@ -1232,7 +1232,7 @@ contains
  J5=J500+n*(J501+n*(J502+n*(J503+n*J504))) &
      +m*(J510+n*(J511+n*(J512+n*J513)) &
      +m*(J520+n*(J521+n*J522)+m*(J530+n*J531+m*J540)))
- if(y.le.6.0369310d-04) then
+ if(y.le.6.0369310e-04_dp) then
      serj=y*(J1+y*(J2+y*(J3+y*(J4+y*J5))))
  ! write(*,"(a20,1pe10.2)") "(serj) J5",serj
      return
@@ -1242,7 +1242,7 @@ contains
      +m*(J610+n*(J611+n*(J612+n*(J613+n*J614))) &
      +m*(J620+n*(J621+n*(J622+n*J623)) &
      +m*(J630+n*(J631+n*J632)+m*(J640+n*J641+m*J650))))
- if(y.le.2.0727505d-03) then
+ if(y.le.2.0727505e-03_dp) then
      serj=y*(J1+y*(J2+y*(J3+y*(J4+y*(J5+y*J6)))))
  ! write(*,"(a20,1pe10.2)") "(serj) J6",serj
      return
@@ -1253,7 +1253,7 @@ contains
      +m*(J720+n*(J721+n*(J722+n*(J723+n*J724))) &
      +m*(J730+n*(J731+n*(J732+n*J733)) &
      +m*(J740+n*(J741+n*J742)+m*(J750+n*J751+m*J760)))))
- if(y.le.5.0047026d-03) then
+ if(y.le.5.0047026e-03_dp) then
      serj=y*(J1+y*(J2+y*(J3+y*(J4+y*(J5+y*(J6+y*J7))))))
  ! write(*,"(a20,1pe10.2)") "(serj) J7",serj
     return
@@ -1265,7 +1265,7 @@ contains
      +m*(J830+n*(J831+n*(J832+n*(J833+n*J834))) &
      +m*(J840+n*(J841+n*(J842+n*J843)) &
      +m*(J850+n*(J851+n*J852)+m*(J860+n*J861+m*J870))))))
- if(y.le.9.6961652d-03) then
+ if(y.le.9.6961652e-03_dp) then
      serj=y*(J1+y*(J2+y*(J3+y*(J4+y*(J5+y*(J6+y*(J7+y*J8)))))))
  ! write(*,"(a20,1pe10.2)") "(serj) J8",serj
      return
@@ -1278,7 +1278,7 @@ contains
      +m*(J940+n*(J941+n*(J942+n*(J943+n*J944))) &
      +m*(J950+n*(J951+n*(J952+n*J953)) &
      +m*(J960+n*(J961+n*J962)+m*(J970+n*J971+m*J980)))))))
- if(y.le.1.6220210d-02) then
+ if(y.le.1.6220210e-02_dp) then
      serj=y*(J1+y*(J2+y*(J3+y*(J4+y*(J5+y*(J6+y*(J7+y*(J8+y*J9))))))))
  ! write(*,"(a20,1pe10.2)") "(serj) J9",serj
      return
@@ -1314,20 +1314,20 @@ contains
  real(dp) A3,A5,A7,A9,A11,A13,A15,A17,A19,A21,A23,A25
  !data hold/1.d0/, rold/1.d0/,riold/1.d0/ !!SJT: disable for thread safety
  !save hold,rold,riold !!SJT: disable for thread safety
- parameter (A3=1.d0/3.d0)
- parameter (A5=1.d0/5.d0)
- parameter (A7=1.d0/7.d0)
- parameter (A9=1.d0/9.d0)
- parameter (A11=1.d0/11.d0)
- parameter (A13=1.d0/13.d0)
- parameter (A15=1.d0/15.d0)
- parameter (A17=1.d0/17.d0)
- parameter (A19=1.d0/19.d0)
- parameter (A21=1.d0/21.d0)
- parameter (A23=1.d0/23.d0)
- parameter (A25=1.d0/25.d0)
+ parameter (A3=1.e0_dp/3.e0_dp)
+ parameter (A5=1.e0_dp/5.e0_dp)
+ parameter (A7=1.e0_dp/7.e0_dp)
+ parameter (A9=1.e0_dp/9.e0_dp)
+ parameter (A11=1.e0_dp/11.e0_dp)
+ parameter (A13=1.e0_dp/13.e0_dp)
+ parameter (A15=1.e0_dp/15.e0_dp)
+ parameter (A17=1.e0_dp/17.e0_dp)
+ parameter (A19=1.e0_dp/19.e0_dp)
+ parameter (A21=1.e0_dp/21.e0_dp)
+ parameter (A23=1.e0_dp/23.e0_dp)
+ parameter (A25=1.e0_dp/25.e0_dp)
  !!!!!SJT: replace data statment with manual value assignment for thread safety
- hold=1.d0; rold=1.d0; riold=1.d0
+ hold=1.e0_dp; rold=1.e0_dp; riold=1.e0_dp
  !!!!!SJT: end replace data statment with manual value assignment for thread safety
  !
  ! write(*,*) "(uatan) t,h=",t,h
@@ -1336,61 +1336,61 @@ contains
  a=abs(z)
  !
  ! write(*,*) "(uatan) z=",z
- if(a.lt.3.3306691d-16) then
+ if(a.lt.3.3306691e-16_dp) then
      uatan=t
  ! write(*,*) "0"
- elseif(a.lt.2.3560805d-08) then
-     uatan=t*(1.d0+z*A3)
+ elseif(a.lt.2.3560805e-08_dp) then
+     uatan=t*(1.e0_dp+z*A3)
  ! write(*,*) "1"
- elseif(a.lt.9.1939631d-06) then
-     uatan=t*(1.d0+z*(A3+z*A5))
+ elseif(a.lt.9.1939631e-06_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*A5))
  ! write(*,*) "2"
- elseif(a.lt.1.7779240d-04) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*A7)))
+ elseif(a.lt.1.7779240e-04_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*A7)))
  ! write(*,*) "3"
- elseif(a.lt.1.0407839d-03) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*A9))))
+ elseif(a.lt.1.0407839e-03_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*A9))))
  ! write(*,*) "4"
- elseif(a.lt.3.3616998d-03) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*A11)))))
+ elseif(a.lt.3.3616998e-03_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*A11)))))
  ! write(*,*) "5"
- elseif(a.lt.7.7408014d-03) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*A13))))))
+ elseif(a.lt.7.7408014e-03_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*A13))))))
  ! write(*,*) "6"
- elseif(a.lt.1.4437181d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*A15)))))))
+ elseif(a.lt.1.4437181e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*A15)))))))
  ! write(*,*) "7"
- elseif(a.lt.2.3407312d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*A17))))))))
+ elseif(a.lt.2.3407312e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*A17))))))))
  ! write(*,*) "8"
- elseif(a.lt.3.4416203d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*A19)))))))))
+ elseif(a.lt.3.4416203e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*A19)))))))))
  ! write(*,*) "9"
- elseif(z.lt.0.d0) then
-     if(abs(h-hold).lt.1.d-16) then
+ elseif(z.lt.0.e0_dp) then
+     if(abs(h-hold).lt.1.e-16_dp) then
          r=rold; ri=riold
      else
-         r=sqrt(h); ri=1.d0/r; hold=h; rold=r; riold=ri
+         r=sqrt(h); ri=1.e0_dp/r; hold=h; rold=r; riold=ri
      endif
      uatan=atan(r*t)*ri
  ! write(*,*) "atan"
- elseif(a.lt.4.7138547d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*A21))))))))))
+ elseif(a.lt.4.7138547e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*A21))))))))))
  ! write(*,*) "A"
- elseif(a.lt.6.1227405d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*(A21+z*A23)))))))))))
+ elseif(a.lt.6.1227405e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*(A21+z*A23)))))))))))
  ! write(*,*) "B"
- elseif(a.lt.7.6353468d-02) then
-     uatan=t*(1.d0+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*(A21+z*(A23+z*A25))))))))))))
+ elseif(a.lt.7.6353468e-02_dp) then
+     uatan=t*(1.e0_dp+z*(A3+z*(A5+z*(A7+z*(A9+z*(A11+z*(A13+z*(A15+z*(A17+z*(A19+z*(A21+z*(A23+z*A25))))))))))))
  ! write(*,*) "C"
  else
-     if(abs(h-hold).lt.1.d-16) then
+     if(abs(h-hold).lt.1.e-16_dp) then
          r=rold; ri=riold
      else
-         r=sqrt(-h); ri=1.d0/r; hold=h; rold=r; riold=ri
+         r=sqrt(-h); ri=1.e0_dp/r; hold=h; rold=r; riold=ri
      endif
      y=r*t
-     x=log((1.d0+y)/(1.d0-y))*0.5d0
+     x=log((1.e0_dp+y)/(1.e0_dp-y))*0.5e0_dp
      uatan=x*ri
  ! write(*,*) "hyper"
  endif
