@@ -542,7 +542,8 @@ contains
   integer(isp) :: io                    ! for read iostat argument 
 
   ! introduce test in terminal: range of m should match randomized list
-  print '(a110)', " *** Test F(phi|m) and E(phi|m) relative to SageMath values for -10**9 <= phi <= 10**9 and 0 <= m <= 10**7 ***" 
+  print '(a110)', " *** Test F(phi|m) and E(phi|m) relative to SageMath values for &
+                  &-10**9 <= phi <= 10**9 and 0 <= m <= 10**7 ***" 
   ! open files
   open(unit=101,file="expected_data/CAS_incomplete.dat",status="old",action="read") ! CAS reference file
   inquire(file="error_incomplete.dat",exist=file_exists)
@@ -636,12 +637,12 @@ contains
   real(dp),parameter :: CAS_tol=5.e-16_dp ! tolerance for CAS agreement test
   real(dp)     :: CAS_test_array(1:6)     ! array for testing agreement between CAS packages
   logical      :: CAS_test                ! flag for CAS agreement test
-  complex(dp)  :: sn_SM,cn_SM,dn_SM       ! SageMath values for complete Legendre elliptic intergrals of first and second kinds
-  complex(dp)  :: sn_Math,cn_Math,dn_Math ! Mathematica values for complete Legendre elliptic intergrals of first and second kinds
-  complex(dp)  :: sn,cn,dn                ! ellipFor values for complete Legendre elliptic integrals of first and second kinds
-  complex(dp)  :: sn_err,cn_err,dn_err    ! error values for complete Legendre elliptic integrals relative to CAS values
-  complex(dp)  :: sn_err_max,cn_err_max,dn_err_max    ! max errors for complete Legendre elliptic integrals relative to CAS values
-  complex(dp)  :: sn_err_mean,cn_err_mean,dn_err_mean ! max errors for complete Legendre elliptic integrals relative to CAS values
+  complex(dp)  :: sn_SM,cn_SM,dn_SM       ! SageMath values for Jacobi elliptic functions
+  complex(dp)  :: sn_Math,cn_Math,dn_Math ! Mathematica values for Jacobi elliptic functions
+  complex(dp)  :: sn,cn,dn                ! ellipFor values for Jacobi elliptic functions
+  complex(dp)  :: sn_err,cn_err,dn_err    ! error values for Jacobi elliptic functions relative to CAS values
+  complex(dp)  :: sn_err_max,cn_err_max,dn_err_max    ! max errors for Jacobi elliptic functions relative to CAS values
+  complex(dp)  :: sn_err_mean,cn_err_mean,dn_err_mean ! max errors for Jacobi elliptic functions relative to CAS values
   integer(isp) :: nargs                   ! # of arguments
   integer(isp) :: io                      ! for read iostat argument
 
