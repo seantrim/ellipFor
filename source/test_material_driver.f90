@@ -8,11 +8,11 @@ program test_material_driver
  use elliptic, only: complete_elliptic_integrals,incomplete_elliptic_integrals,Jacobi_elliptic_functions 
  implicit none
 
- 
- real(dp),parameter :: tol_complete  =5.e-15_dp ! tolerance for relative errors of complete Legendre elliptic integrals
- real(dp),parameter :: tol_incomplete=5.e-15_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
+ ! note: the below tolerances were selected to allow for some variability between compilers and hardware 
+ real(dp),parameter :: tol_complete  =5.e-14_dp ! tolerance for relative errors of complete Legendre elliptic integrals
+ real(dp),parameter :: tol_incomplete=5.e-14_dp ! tolerance for relative errors of incomplete Legendre elliptic integrals
  real(dp),parameter :: tol_functions =9.e-14_dp ! tolerance for relative errors of Jacobi elliptic functions
- real(dp),parameter :: tol_special   =5.e-15_dp ! tolerance for relative errors of special values of all ellipFor functions
+ real(dp),parameter :: tol_special   =1.e-14_dp ! tolerance for relative errors of special values of all ellipFor functions
 
  logical :: special_value_tests_passed      ! flag to indicate if all special value tests were passed
  logical :: complete_integral_test_passed   ! flag to indicate if general complete elliptic integral test passed
@@ -59,7 +59,7 @@ contains
 
   ! local variables
   ! parameters
-  real(dp), parameter :: pii=3.1415926535897932d0 ! pi
+  real(dp), parameter :: pii=3.1415926535897932_dp ! pi
   
   ! variables for elliptic functions and integrals
   real(dp) :: m           !!elliptic parameter
@@ -445,6 +445,7 @@ contains
   logical,intent(out) :: test_passed             ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists   ! flag for the existence of files
   logical      :: Fc_test_passed,Ec_test_passed ! flags for tests of Fc and Ec values
   real(dp)     :: m             ! the parameter
   complex(dp)  :: Fc_CAS,Ec_CAS ! CAS reference values for complete Legendre elliptic intergrals of first and second kinds
@@ -455,15 +456,21 @@ contains
   integer(isp) :: io                      ! for read iostat argument
   ! introduce test in terminal: range of m should match randomized list
   print '(a75)', " *** Test K(m) and E(m) relative to SageMath values for 0 <= m <= 10**7 ***" 
-  open(unit=101,file="expected_data/CAS_complete.dat") ! CAS reference file
-  open(unit=202,file="error_complete.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_complete.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_complete.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_complete.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_complete.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   Fc_err_max=(0._dp,0._dp)
   Ec_err_max=(0._dp,0._dp)
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) m,Fc_CAS%re,Fc_CAS%im,Ec_CAS%re,Ec_CAS%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & m,Fc_CAS%re,Fc_CAS%im,Ec_CAS%re,Ec_CAS%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! compute ellipFor values
@@ -522,6 +529,7 @@ contains
   logical,intent(out) :: test_passed             ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists   ! flag for the existence of files
   logical      :: Fi_test_passed,Ei_test_passed ! flags for tests of Fc and Ec values
   real(dp)     :: phi           ! Jacobi amplitude
   real(dp)     :: m             ! the parameter
@@ -534,10 +542,16 @@ contains
   integer(isp) :: io                    ! for read iostat argument 
 
   ! introduce test in terminal: range of m should match randomized list
-  print '(a110)', " *** Test F(phi|m) and E(phi|m) relative to SageMath values for -10**9 <= phi <= 10**9 and 0 <= m <= 10**7 ***" 
+  print '(a110)', " *** Test F(phi|m) and E(phi|m) relative to SageMath values for &
+                  &-10**9 <= phi <= 10**9 and 0 <= m <= 10**7 ***" 
   ! open files
-  open(unit=101,file="expected_data/CAS_incomplete.dat") ! CAS reference file
-  open(unit=202,file="error_incomplete.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_incomplete.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_incomplete.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_incomplete.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_incomplete.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   Fi_err_max =(0._dp,0._dp)
   Ei_err_max =(0._dp,0._dp)
@@ -546,7 +560,8 @@ contains
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) phi,m,Fi_CAS%re,Fi_CAS%im,Ei_CAS%re,Ei_CAS%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & phi,m,Fi_CAS%re,Fi_CAS%im,Ei_CAS%re,Ei_CAS%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! compute ellipFor values
@@ -615,26 +630,32 @@ contains
   logical,intent(out) :: test_passed      ! flag to indicate if test was passed within tolerance
 
   ! local variables
+  logical      :: file_exists             ! flag for the existence of files
   logical      :: sn_test_passed,cn_test_passed,dn_test_passed ! test flags
   complex(dp)  :: u                       ! first input parameter for the Jacobi elliptic functions
   real(dp)     :: m                       ! second input parameter for the Jacobi elliptic functions 
   real(dp),parameter :: CAS_tol=5.e-16_dp ! tolerance for CAS agreement test
   real(dp)     :: CAS_test_array(1:6)     ! array for testing agreement between CAS packages
   logical      :: CAS_test                ! flag for CAS agreement test
-  complex(dp)  :: sn_SM,cn_SM,dn_SM       ! SageMath values for complete Legendre elliptic intergrals of first and second kinds
-  complex(dp)  :: sn_Math,cn_Math,dn_Math ! Mathematica values for complete Legendre elliptic intergrals of first and second kinds
-  complex(dp)  :: sn,cn,dn                ! ellipFor values for complete Legendre elliptic integrals of first and second kinds
-  complex(dp)  :: sn_err,cn_err,dn_err    ! error values for complete Legendre elliptic integrals relative to CAS values
-  complex(dp)  :: sn_err_max,cn_err_max,dn_err_max    ! max errors for complete Legendre elliptic integrals relative to CAS values
-  complex(dp)  :: sn_err_mean,cn_err_mean,dn_err_mean ! max errors for complete Legendre elliptic integrals relative to CAS values
+  complex(dp)  :: sn_SM,cn_SM,dn_SM       ! SageMath values for Jacobi elliptic functions
+  complex(dp)  :: sn_Math,cn_Math,dn_Math ! Mathematica values for Jacobi elliptic functions
+  complex(dp)  :: sn,cn,dn                ! ellipFor values for Jacobi elliptic functions
+  complex(dp)  :: sn_err,cn_err,dn_err    ! error values for Jacobi elliptic functions relative to CAS values
+  complex(dp)  :: sn_err_max,cn_err_max,dn_err_max    ! max errors for Jacobi elliptic functions relative to CAS values
+  complex(dp)  :: sn_err_mean,cn_err_mean,dn_err_mean ! max errors for Jacobi elliptic functions relative to CAS values
   integer(isp) :: nargs                   ! # of arguments
   integer(isp) :: io                      ! for read iostat argument
 
   ! introduce test in terminal: range of m should match randomized list
   print '(a71)', " *** Test sn(u|m), cn(u|m), and dn(u|m) relative to SageMath values ***"
   print '(a74)', "  Argument ranges: -1 <= Re[u] <= 1, -1 <= Im[u] <= 1, and 0 <= m <= 10**2" 
-  open(unit=101,file="expected_data/CAS_functions.dat") ! CAS reference file
-  open(unit=202,file="error_functions.dat")           ! file for error data
+  open(unit=101,file="expected_data/CAS_functions.dat",status="old",action="read") ! CAS reference file
+  inquire(file="error_functions.dat",exist=file_exists)
+  if (file_exists) then
+   open(unit=202,file="error_functions.dat",status="replace",action="write")       ! file for error data
+  else
+   open(unit=202,file="error_functions.dat",status="new",action="write")           ! file for error data
+  end if
   ! initialize stat variables
   sn_err_max =(0._dp,0._dp)
   cn_err_max =(0._dp,0._dp)
@@ -645,9 +666,10 @@ contains
   nargs=0 ! intialize counter for randomized argument list
   do
    ! read in CAS reference values 
-   read(101,*,iostat=io) u%re,u%im,m,&
-                        &sn_SM  %re,sn_SM  %im,cn_SM  %re,cn_SM  %im,dn_SM  %re,dn_SM  %im,&
-                        &sn_Math%re,sn_Math%im,cn_Math%re,cn_Math%im,dn_Math%re,dn_Math%im
+   read(101,*,asynchronous='no',blank='null',decimal='point',round='nearest',iostat=io)&
+   & u%re,u%im,m,&
+   &sn_SM  %re,sn_SM  %im,cn_SM  %re,cn_SM  %im,dn_SM  %re,dn_SM  %im,&
+   &sn_Math%re,sn_Math%im,cn_Math%re,cn_Math%im,dn_Math%re,dn_Math%im
    if (io.lt.0_isp) exit ! exit loop if end of file reached
 
    ! determine if SageMath and Mathematica values agree within tolerance

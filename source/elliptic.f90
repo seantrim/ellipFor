@@ -34,7 +34,7 @@ contains
  real(dp)    :: nan                     !!NaN value
  real(qp)    :: m_qp                    !!quad precision m  
 
- if (m.gt.1.d0) then
+ if (m.gt.1._dp) then
   m_qp=real(m,qp)
   mr=1._qp/m_qp
   k=real(sqrt(m_qp),dp)
@@ -42,11 +42,11 @@ contains
   u_temp=k*u
   call Jacobi_elliptic_functions_complex_argument_standard_parameter(u_temp,mr,sn_temp,cn_temp,dn_temp)
   sn=sn_temp/k; dn=cn_temp; cn=dn_temp
- else if (m.ge.0.d0) then
+ else if (m.ge.0._dp) then
   m_qp=real(m,qp)
   call Jacobi_elliptic_functions_complex_argument_standard_parameter(u,m_qp,sn,cn,dn)
  else ! m < 0 not currently supported -- returning NaN values
-  nan=ieee_value(0.d0,ieee_quiet_nan)
+  nan=ieee_value(0._dp,ieee_quiet_nan)
   sn=cmplx(nan,nan,dp); cn=cmplx(nan,nan,dp); dn=cmplx(nan,nan,dp) 
  end if
  end subroutine Jacobi_elliptic_functions
@@ -72,14 +72,14 @@ contains
  real(dp) :: sn_temp_dn_temp_c,cn_temp_cn_temp_c,dn_temp_cn_temp_c !!products of temporary variables
  real(dp) :: m_dp !!double precision value of m
  
- if (u%IM.ne.0.d0) then !!complex argument
+ if (u%IM.ne.0._dp) then !!complex argument
   m_dp=real(m,dp)
   mc=1.0_qp-m
   u_temp_c=u%IM
   call Jacobi_elliptic_functions_standard_input_range(u_temp_c,mc,sn_temp_c,cn_temp_c,dn_temp_c)
   u_temp=u%RE
   call Jacobi_elliptic_functions_standard_input_range(u_temp,m,sn_temp,cn_temp,dn_temp)
-  delta=cn_temp_c**2+m_dp*(sn_temp*sn_temp_c)**2 !!reduces truncation error (this form avoids subtraction)
+  delta=cn_temp_c**2_isp+m_dp*(sn_temp*sn_temp_c)**2_isp !!reduces truncation error (this form avoids subtraction)
  
   sn_temp_dn_temp_c=sn_temp*dn_temp_c; cn_temp_cn_temp_c=cn_temp*cn_temp_c; dn_temp_cn_temp_c=dn_temp*cn_temp_c
  
@@ -90,7 +90,7 @@ contains
  else !!real argument
   u_temp=u%RE
   call Jacobi_elliptic_functions_standard_input_range(u_temp,m,sn_temp,cn_temp,dn_temp)
-  sn=cmplx(sn_temp,0.d0,dp); cn=cmplx(cn_temp,0.d0,dp); dn=cmplx(dn_temp,0.d0,dp)
+  sn=cmplx(sn_temp,0._dp,dp); cn=cmplx(cn_temp,0._dp,dp); dn=cmplx(dn_temp,0._dp,dp)
  end if
  end subroutine Jacobi_elliptic_functions_complex_argument_standard_parameter
  
@@ -131,18 +131,18 @@ contains
  real(dp) :: k                                !!elliptic modulus and reciprocal
  real(dp) :: n                                !!characteristic
  real(dp) :: Fc_temp,Ec_temp,Pc_temp          !!temporary complete elliptic integral values from standard input range
- real(dp) :: Fc_r,Ec_r,Pc_r,Fc_rc,Ec_rc,Pc_rc !!complete elliptic integral values based on reciprocal parameter and its compliment
+ real(dp) :: Fc_r,Ec_r,Pc_r,Fc_rc,Ec_rc,Pc_rc !!complete elliptic integral values based on reciprocal parameter and compliment
  real(dp) :: bc_r,dc_r,jc_r                   !!associated complete elliptic integrals
  real(dp) :: bc_rc,dc_rc,jc_rc                !!associated complete elliptic integrals
  real(dp) :: bc_temp,dc_temp,jc_temp          !!associated complete elliptic integrals
  real(qp) :: m_qp,mc_qp,mr_qp,mrc_qp          !!quad precision variables
  real(dp) :: nan                              !!NaN value
  
- n=0.d0 !!arbitrary characteristic value -- integrals of the third kind are not used
+ n=0._dp !!arbitrary characteristic value -- integrals of the third kind are not used
  
- if (m.gt.1.d0) then
+ if (m.gt.1._dp) then
   k=sqrt(m)
-  m_qp=real(m,qp); mr_qp=real(1.d0/m,qp); mrc_qp=1.0_qp-mr_qp; mc_qp=1.0_qp-m_qp; mc=real(mc_qp,dp)
+  m_qp=real(m,qp); mr_qp=real(1._dp/m,qp); mrc_qp=1.0_qp-mr_qp; mc_qp=1.0_qp-m_qp; mc=real(mc_qp,dp)
   call complete_elliptic_integrals_standard_input_range(n,mr_qp,Fc_r,Ec_r,Pc_r,bc_r,dc_r,jc_r)
   call complete_elliptic_integrals_standard_input_range(n,mrc_qp,Fc_rc,Ec_rc,Pc_rc,bc_rc,dc_rc,jc_rc)
   !!OG -- cancellation error possible for Re[Ec]
@@ -162,14 +162,14 @@ contains
   !!note: Re[Ec] may agree better with Mathematica than SageMath for very large m  
   !Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(bc_r,-Fc_rc+m*Ec_rc,dp)/k
 
-  !!write Im[Ec] in terms of bc_rc to reduce error near m=1
+  !!express Im[Ec] in terms of bc_rc to reduce error near m=1
   !!note: used Fc_rc=bc_rc+dc_rc, Ec_rc=bc_rc+(1-mrc)*dc_rc, 1-mrc=1/m
   Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(bc_r,-mc*bc_rc,dp)/k
- else if (m.ge.0.d0) then
+ else if (m.ge.0._dp) then
   call complete_elliptic_integrals_standard_input_range(n,real(m,qp),Fc_temp,Ec_temp,Pc_temp,bc_temp,dc_temp,jc_temp)
-  Fc=cmplx(Fc_temp,0.d0,dp); Ec=cmplx(Ec_temp,0.d0,dp)
+  Fc=cmplx(Fc_temp,0._dp,dp); Ec=cmplx(Ec_temp,0._dp,dp)
  else ! m < 0 not currently supported -- returning NaN values
-  nan=ieee_value(0.d0,ieee_quiet_nan)
+  nan=ieee_value(0._dp,ieee_quiet_nan)
   Fc=cmplx(nan,nan,dp); Ec=cmplx(nan,nan,dp)
  end if
  end subroutine complete_elliptic_integrals
@@ -195,10 +195,10 @@ contains
  if (m.eq.1._dp) then
   Fc=ieee_value(1._dp,ieee_positive_inf)
   Ec=1._dp
-  Pc=0.d0 !! arbitrarily set to zero for now -- update in future ellipFor versions
+  Pc=0._dp !! arbitrarily set to zero for now -- update in future ellipFor versions
  else 
-  zero=0.d0
-  piio2=pii/2.d0
+  zero=0._dp
+  piio2=pii/2._dp
   
   mc=1.0_qp-m !!complimentary parameter (quad precision)
   call elbdj2(piio2,zero,n,mc,bc,dc,jc) !!returns the associated complete elliptic integrals
@@ -275,7 +275,7 @@ contains
  
  !!internal variables
  real(dp) :: piio2 !!constants
- real(dp) :: mc    !!complimentary variables
+ !real(dp) :: mc    !!complimentary parameter
  real(dp) :: k !!elliptic modulus
  !real(dp) :: mrc !!compliment of the reciprocal parameter
  real(dp) :: Fc_temp,Ec_temp,Pc_temp !!temporary complete elliptic integrals
@@ -292,17 +292,18 @@ contains
 
  real(qp) :: cos_theta,theta,sin_theta
 
- piio2=pii/2.d0
- n=0.d0 !!arbitrary characteristic -- integrals of the third kind are not used
+ piio2=pii/2._dp
+ n=0._dp !!arbitrary characteristic -- integrals of the third kind are not used
  
  if (phi.eq.piio2) then
   call complete_elliptic_integrals(m,F,E)
  else !!0<=phi<pi/2
-  if (m.gt.1.d0) then !!large parameter m>1
+  if (m.gt.1._dp) then !!large parameter m>1
    k_qp=sqrt(real(m,qp)); k=real(k_qp,dp)
    !mc=1.d0-m; mr=1.d0/m !!OG
    mc_qp=1.0_qp-real(m,qp)
-   mc=real(mc_qp,dp); mr_qp=1.0_qp/real(m,qp)
+   !mc=real(mc_qp,dp); mr_qp=1.0_qp/real(m,qp)
+   mr_qp=1.0_qp/real(m,qp)
    !u=k*sin(phi) !!argument of arcsine
    !u_qp=real(k,qp)*sin(real(phi,qp))
    u_qp=k_qp*sin(real(phi,qp))
@@ -314,7 +315,7 @@ contains
     ! OG 
     !F=cmplx(F_temp/k,0.d0,dp); E=cmplx(k*E_temp+mc*F%RE,0.d0,dp)
     ! simplified Re[E] using associated incomplete elliptic integral definitions
-    F=cmplx(F_temp/k,0.d0,dp); E=cmplx(b_temp/k,0.d0,dp)
+    F=cmplx(F_temp/k,0._dp,dp); E=cmplx(b_temp/k,0._dp,dp)
    else
     !mrc=1.d0-mr; !!OG
     mrc_qp=1.0_qp-mr_qp; !mrc=real(mrc_qp,dp) !OG
@@ -363,7 +364,7 @@ contains
   else !!standard input ranges
    m_qp=real(m,qp)
    call incomplete_elliptic_integrals_standard_input_range(phi,n,m_qp,F_temp,E_temp,P_temp,b_temp,d_temp,j_temp)
-   F=cmplx(F_temp,0.d0,dp); E=cmplx(E_temp,0.d0,dp)
+   F=cmplx(F_temp,0._dp,dp); E=cmplx(E_temp,0._dp,dp)
   end if
  end if
  
@@ -392,15 +393,15 @@ contains
  real(dp) :: nan !! NaN value
 
  ! validate m value (m<0 not currently supported)
- if (m.lt.0.d0) then ! return NaN values for unsupported m values
-  nan=ieee_value(0.d0,ieee_quiet_nan)
+ if (m.lt.0._dp) then ! return NaN values for unsupported m values
+  nan=ieee_value(0._dp,ieee_quiet_nan)
   F=cmplx(nan,nan,dp); E=cmplx(nan,nan,dp)
   return
  end if
 
- piio2=pii/2.d0
+ piio2=pii/2._dp
  
- if ((0.d0.le.phi).and.(phi.le.piio2)) then !!standard amplitude range
+ if ((0._dp.le.phi).and.(phi.le.piio2)) then !!standard amplitude range
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
  else !!amplitude outside of standard range
   call complete_elliptic_integrals(m,Fc,Ec)
@@ -410,15 +411,15 @@ contains
   
   !phi_std=phi-N*pii !!find appropriate phi in standard range -- significant cancellation may occur when using double precision
   phi_std=real(real(phi,qp)-N*pii_qp,dp) !!find appropriate phi in standard range
-  i_sign=1
-  if (phi_std.lt.0.d0) then
-   i_sign=-1
+  i_sign=1_isp
+  if (phi_std.lt.0._dp) then
+   i_sign=-1_isp
    phi_std=abs(phi_std)
   end if
  
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi_std,m,F,E)
-  F=2*N*Fc+i_sign*F
-  E=2*N*Ec+i_sign*E
+  F=2_isp*N*Fc+i_sign*F
+  E=2_isp*N*Ec+i_sign*E
  end if
  
  end subroutine incomplete_elliptic_integrals

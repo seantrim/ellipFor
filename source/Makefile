@@ -2,8 +2,7 @@
 ## Instructions ##
 # GNU Fortran: make gfortran
 # Intel Fortran: make ifx
-# Intel Fortran classic: make ifort
-### Note for ifx and ifort compilers accessed via Intel oneAPI ###
+### Note for ifx compiler accessed via Intel oneAPI ###
 # The appropriate script must be run in the terminal prior to using GNU Make
 # e.g., source /opt/intel/oneapi/setvars.sh
 
@@ -26,13 +25,6 @@ ifx: FC = ifx
 ifx: FOPTS = -ipo -O3
 ifx: ellipFor_test_driver test_material_driver
 ifx:
-	echo $(FC) $(FOPTS)
-
-# Intel Fortran Classic
-ifort: FC = ifort
-ifort: FOPTS = -ipo -O3
-ifort: ellipFor_test_driver test_material_driver
-ifort:
 	echo $(FC) $(FOPTS)
 
 test_material_driver: kind_parameters.o xelbdj2_all_routines.o xgscd_routines.o elliptic.o elliptic.mod test_material_driver.o kind_parameters.mod elliptic.mod xelbdj2_all_routines.mod xgscd_routines.mod

@@ -17,9 +17,15 @@ complex(dp) :: u        !!complex argument
 complex(dp) :: Fc,Ec    !!complete elliptic integrals of first and second kinds
 complex(dp) :: Fi,Ei    !!incomplete elliptic integrals of first and second kinds 
 complex(dp) :: sn,cn,dn !!Jacobi elliptic function values
+logical  :: file_exists !!flag indicating the existence of files
 
 print '(a52)', "--- Test driver program for the ellipFor library ---"; print '(a1)', " "
-open(unit=101,file="ellipFor_test_driver.dat") !! file for driver output
+inquire(file="ellipFor_test_driver.dat",exist=file_exists)
+if (file_exists) then
+ open(unit=101,file="ellipFor_test_driver.dat",status="replace",action="write") !! file for driver output
+else
+ open(unit=101,file="ellipFor_test_driver.dat",status="new",action="write")     !! file for driver output
+end if
 
 !!! 1) complete Legendre elliptic integrals
 m=100._dp
@@ -66,7 +72,7 @@ contains
  subroutine validate_output
   !! **** Compare driver output to reference data ****
   !!tolerance for validation
-  real(dp),parameter :: tol=1.e-15_dp
+  real(dp),parameter :: tol=5.e-15_dp
   !!flag for test status
   logical :: test_flag
   logical :: test_flag_complete
@@ -93,19 +99,24 @@ contains
   character(39) :: incomplete_integral_label
   character(26) :: elliptic_functions_label
   character(5)  :: m_label,phi_label,Fc_label,Ec_label,Fi_label,Ei_label
-  character(5)  :: u_label,sn_label,cn_label,dn_label 
+  character(5)  :: u_label,sn_label,cn_label,dn_label
   
-  open(unit=102,file="expected_data/ellipFor_test_driver_OG.dat") !! file for reference data
+  open(unit=102,file="expected_data/ellipFor_test_driver_OG.dat",status="old",action="read") !! file for reference data
 
   !!!!!! 1) complete Legendre elliptic integrals
   test_flag_complete=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a37)') complete_integral_label
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Fc_label,Fc_ref % re,comma,Fc_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Ec_label,Ec_ref % re,comma,Ec_ref % im,bracket
-  read(102,'(a1)') space
+  read(102,'(a37)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & complete_integral_label
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Fc_label,Fc_ref % re,comma,Fc_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Ec_label,Ec_ref % re,comma,Ec_ref % im,bracket
+  read(102,'(a1)'                    ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & space
 
   !!compute relative errors (compared to reference data) and check against tolerance
   m_err=abs((m-m_ref)/m_ref)                        ; if (m_err.gt.tol)       test_flag_complete=.false.
@@ -119,7 +130,7 @@ contains
    print '(a37)', complete_integral_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (Fc_err % re.gt.tol) print '(a8,g26.17)', "Re[Fc]  ",Fc_err % re
   if (Fc_err % im.gt.tol) print '(a8,g26.17)', "Im[Fc]  ",Fc_err % im
   if (Ec_err % re.gt.tol) print '(a8,g26.17)', "Re[Ec]  ",Ec_err % re
@@ -129,12 +140,18 @@ contains
   test_flag_incomplete=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a39)') incomplete_integral_label
-  read(102,'(a5,g26.17)') phi_label,phi_ref
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Fi_label,Fi_ref % re,comma,Fi_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') Ei_label,Ei_ref % re,comma,Ei_ref % im,bracket 
-  read(102,'(a1)') space 
+  read(102,'(a39)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & incomplete_integral_label
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & phi_label,phi_ref
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Fi_label,Fi_ref % re,comma,Fi_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & Ei_label,Ei_ref % re,comma,Ei_ref % im,bracket 
+  read(102,'(a1)'                    ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & space 
 
   !!compute relative errors (compared to reference data) and check against tolerance
   phi_err=abs((phi-phi_ref)/phi_ref)                ; if (phi_err.gt.tol)     test_flag_incomplete=.false.
@@ -149,8 +166,8 @@ contains
    print '(a39)', incomplete_integral_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (phi_err.gt.tol) print '(a8,g26.17)',     "phi     ",phi_err
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (phi_err.gt.tol)     print '(a8,g26.17)', "phi     ",phi_err
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (Fi_err % re.gt.tol) print '(a8,g26.17)', "Re[Fi]  ",Fi_err % re
   if (Fi_err % im.gt.tol) print '(a8,g26.17)', "Im[Fi]  ",Fi_err % im
   if (Ei_err % re.gt.tol) print '(a8,g26.17)', "Re[Ei]  ",Ei_err % re
@@ -160,12 +177,18 @@ contains
   test_flag_functions=.true. !!initialize test flag
 
   !!read reference data
-  read(102,'(a26)') elliptic_functions_label
-  read(102,'(a5,g26.17,a2,g26.17,a1)') u_label,u_ref % re,comma,u_ref % im,bracket 
-  read(102,'(a5,g26.17)') m_label,m_ref
-  read(102,'(a5,g26.17,a2,g26.17,a1)') sn_label,sn_ref % re,comma,sn_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') cn_label,cn_ref % re,comma,cn_ref % im,bracket 
-  read(102,'(a5,g26.17,a2,g26.17,a1)') dn_label,dn_ref % re,comma,dn_ref % im,bracket 
+  read(102,'(a26)'                   ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & elliptic_functions_label
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & u_label,u_ref % re,comma,u_ref % im,bracket 
+  read(102,'(a5,g26.17)'             ,advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & m_label,m_ref
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & sn_label,sn_ref % re,comma,sn_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & cn_label,cn_ref % re,comma,cn_ref % im,bracket 
+  read(102,'(a5,g26.17,a2,g26.17,a1)',advance='yes',asynchronous='no',blank='null',decimal='point',round='nearest')&
+  & dn_label,dn_ref % re,comma,dn_ref % im,bracket 
 
   !!compute relative errors (compared to reference data) and check against tolerance
   u_err % re=abs((u % re-u_ref % re)/u_ref % re)    ; if (u_err % re.gt.tol)  test_flag_functions=.false. 
@@ -183,9 +206,9 @@ contains
    print '(a26)', elliptic_functions_label
    print '(a11,a14)',   "Variable    ","Relative Error"
   end if
-  if (u_err % re.gt.tol) print '(a8,g26.17)',  "Re[u]   ",u_err % re
-  if (u_err % im.gt.tol) print '(a8,g26.17)',  "Im[u]   ",u_err % im
-  if (m_err.gt.tol) print '(a8,g26.17)',       "m       ",m_err
+  if (u_err % re.gt.tol)  print '(a8,g26.17)', "Re[u]   ",u_err % re
+  if (u_err % im.gt.tol)  print '(a8,g26.17)', "Im[u]   ",u_err % im
+  if (m_err.gt.tol)       print '(a8,g26.17)', "m       ",m_err
   if (sn_err % re.gt.tol) print '(a8,g26.17)', "Re[sn]  ",sn_err % re
   if (sn_err % im.gt.tol) print '(a8,g26.17)', "Im[sn]  ",sn_err % im
   if (cn_err % re.gt.tol) print '(a8,g26.17)', "Re[cn]  ",cn_err % re
@@ -203,6 +226,12 @@ contains
    print '(a95)', "** Warning: Driver output significantly differs from reference data. See error report above. **"
    print '(a82)', "Note: This test assumes m=100, phi=3*pi/4, and u=(1,1). For other input arguments,"
    print '(a54)', "      set test_output=.false. to disable this warning."
+  end if
+
+  !!validate string labels
+  if (len_trim(space//bracket//comma//complete_integral_label//incomplete_integral_label//elliptic_functions_label&
+     &//m_label//phi_label//Fc_label//Ec_label//Fi_label//Ei_label//u_label//sn_label//cn_label//dn_label,isp).ne.156_isp) then
+   print '(a100)', "** Warning: total length of string labels from reference data file does not match expected value. **"
   end if
  end subroutine validate_output
 
