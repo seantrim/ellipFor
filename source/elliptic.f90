@@ -131,7 +131,7 @@ contains
  real(dp) :: k                                !!elliptic modulus and reciprocal
  real(dp) :: n                                !!characteristic
  real(dp) :: Fc_temp,Ec_temp,Pc_temp          !!temporary complete elliptic integral values from standard input range
- real(dp) :: Fc_r,Ec_r,Pc_r,Fc_rc,Ec_rc,Pc_rc !!complete elliptic integral values based on reciprocal parameter and its compliment
+ real(dp) :: Fc_r,Ec_r,Pc_r,Fc_rc,Ec_rc,Pc_rc !!complete elliptic integral values based on reciprocal parameter and compliment
  real(dp) :: bc_r,dc_r,jc_r                   !!associated complete elliptic integrals
  real(dp) :: bc_rc,dc_rc,jc_rc                !!associated complete elliptic integrals
  real(dp) :: bc_temp,dc_temp,jc_temp          !!associated complete elliptic integrals
