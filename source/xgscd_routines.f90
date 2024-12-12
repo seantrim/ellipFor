@@ -4,7 +4,7 @@
 !!!! -deleted sample data at end of file so that the file could be compiled
 !!!! -converted to free form -- comment character "!" used throughout -- "&" used at left and right sides for line continuation
 !!!! -created the xgscd_routines module and moved procedures into the contains block to control outside access
-!!!! -added use statement for the kind_parameters module granting access to portable kind parameters in the xgscd_routines module
+!!!! -added use statement for kind_parameters module granting access to portable kind parameters in xgscd_routines module
 !!!! -added implicit none statement to xgscd_routines module which extends to each routine in the contains block
 !!!! -disabled save statement in variable declarations for thread safety
 !!!! -added elemental keywords to all procedures (removed write statements that do not occur in practice)
