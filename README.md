@@ -236,4 +236,4 @@ This repository is subject to the GPLv3 license (`ellipFor/LICENSE`).
 
 The routines contained within `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90` are adapted from routines by Toshio Fukushima available under the CC BY-SA 4.0 license. Original versions of these routines can be found at http://dx.doi.org/10.13140/RG.2.2.27011.66085 and https://www.researchgate.net/publication/233903220_xgscdtxt_Fortran_program_package_to_compute_the_Jacobian_elliptic_functions_snum_cnum_dnum.
 
-Some initial software testing in the development phase was performed using the Wolfram Language 14.1.0 Engine Community Edition. The production vesrion of ellipFor does not utilize the Wolfram Language Engine. 
+Some initial software testing in the development phase was performed using the Wolfram Language 14.1.0 Engine Community Edition. The production version of ellipFor does not utilize the Wolfram Language Engine. 
