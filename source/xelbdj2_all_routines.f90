@@ -15,6 +15,7 @@
 !!!! -replaced tab characters with spaces
 !!!! -removed unused variables
 !!!! -added quadruple precision versions of the original routines
+!!!! -modernized syntax for parameter variable declarations
 !!!! -in the code comments, "OG" is short for "Original code" and "SJT" indicates a modification
 module xelbdj2_all_routines
  ! module containing subroutines for the calculation of associated Legendre elliptic integrals for standard input ranges
@@ -117,52 +118,52 @@ contains
  real(dp) m,mx,kkc,nome
  real(qp),intent(in) :: mc_qp !!SJT
  !
- real(dp) PIQ,PIHALF!,PI,PIINV !!SJT: removed unused parameters
- parameter (PIQ=0.78539816339744830961566084581988e0_dp)
- parameter (PIHALF=1.5707963267948966192313216916398e0_dp)
+ !real(dp) PIQ,PIHALF!,PI,PIINV !!SJT: removed unused parameters
+ real(dp),parameter :: PIQ=0.78539816339744830961566084581988e0_dp
+ real(dp),parameter :: PIHALF=1.5707963267948966192313216916398e0_dp
  !parameter (PI=3.1415926535897932384626433832795e0_dp)
  !parameter (PIINV=0.31830988618379067153776752674503e0_dp)
  real(dp) mcold,elbold,eldold
  !save mcold,elbold,eldold !!SJT: disable for thread safety -- variables are initialized at start of each celbd call
- real(dp) Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16
- parameter (Q1=1.e0_dp/16.e0_dp,Q2=1.e0_dp/32.e0_dp,Q3=21.e0_dp/1024.e0_dp)
- parameter (Q4=31.e0_dp/2048.e0_dp,Q5=6257.e0_dp/524288.e0_dp)
- parameter (Q6=10293.e0_dp/1048576.e0_dp,Q7=279025.e0_dp/33554432.e0_dp)
- parameter (Q8=483127.e0_dp/67108864.e0_dp)
- parameter (Q9=435506703.e0_dp/68719476736.e0_dp)
- parameter (Q10=776957575.e0_dp/137438953472.e0_dp)
- parameter (Q11=22417045555.e0_dp/4398046511104.e0_dp)
- parameter (Q12=40784671953.e0_dp/8796093022208.e0_dp)
- parameter (Q13=9569130097211.e0_dp/2251799813685248.e0_dp)
- parameter (Q14=17652604545791.e0_dp/4503599627370496.e0_dp)
- parameter (Q15=523910972020563.e0_dp/144115188075855872.e0_dp)
- parameter (Q16=976501268709949.e0_dp/288230376151711744.e0_dp)
- real(dp) K1,K2,K3,K4,K5,K6,K7
- parameter (K1=1.e0_dp/4.e0_dp)
- parameter (K2=9.e0_dp/64.e0_dp)
- parameter (K3=25.e0_dp/256.e0_dp)
- parameter (K4=1225.e0_dp/16384.e0_dp)
- parameter (K5=3969.e0_dp/65536.e0_dp)
- parameter (K6=53361.e0_dp/1048576.e0_dp)
- parameter (K7=184041.e0_dp/4194304.e0_dp)
- real(dp) B1,B2,B3,B4,B5,B6,B7,B8
- parameter (B1=1.e0_dp/2.e0_dp)
- parameter (B2=1.e0_dp/16.e0_dp)
- parameter (B3=3.e0_dp/128.e0_dp)
- parameter (B4=25.e0_dp/2048.e0_dp)
- parameter (B5=245.e0_dp/32768.e0_dp)
- parameter (B6=1323.e0_dp/262144.e0_dp)
- parameter (B7=7623.e0_dp/2097152.e0_dp)
- parameter (B8=184041.e0_dp/67108864.e0_dp)
- real(dp) D1,D2,D3,D4,D5,D6,D7,D8
- parameter (D1=1.e0_dp/2.e0_dp)
- parameter (D2=3.e0_dp/16.e0_dp)
- parameter (D3=15.e0_dp/128.e0_dp)
- parameter (D4=175.e0_dp/2048.e0_dp)
- parameter (D5=2205.e0_dp/32768.e0_dp)
- parameter (D6=14553.e0_dp/262144.e0_dp)
- parameter (D7=99099.e0_dp/2097152.e0_dp)
- parameter (D8=2760615.e0_dp/67108864.e0_dp)
+ !real(dp) Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16
+ real(dp),parameter :: Q1=1.e0_dp/16.e0_dp,Q2=1.e0_dp/32.e0_dp,Q3=21.e0_dp/1024.e0_dp
+ real(dp),parameter :: Q4=31.e0_dp/2048.e0_dp,Q5=6257.e0_dp/524288.e0_dp
+ real(dp),parameter :: Q6=10293.e0_dp/1048576.e0_dp,Q7=279025.e0_dp/33554432.e0_dp
+ real(dp),parameter :: Q8=483127.e0_dp/67108864.e0_dp
+ real(dp),parameter :: Q9=435506703.e0_dp/68719476736.e0_dp
+ real(dp),parameter :: Q10=776957575.e0_dp/137438953472.e0_dp
+ real(dp),parameter :: Q11=22417045555.e0_dp/4398046511104.e0_dp
+ real(dp),parameter :: Q12=40784671953.e0_dp/8796093022208.e0_dp
+ real(dp),parameter :: Q13=9569130097211.e0_dp/2251799813685248.e0_dp
+ real(dp),parameter :: Q14=17652604545791.e0_dp/4503599627370496.e0_dp
+ real(dp),parameter :: Q15=523910972020563.e0_dp/144115188075855872.e0_dp
+ real(dp),parameter :: Q16=976501268709949.e0_dp/288230376151711744.e0_dp
+ !real(dp) K1,K2,K3,K4,K5,K6,K7
+ real(dp),parameter :: K1=1.e0_dp/4.e0_dp
+ real(dp),parameter :: K2=9.e0_dp/64.e0_dp
+ real(dp),parameter :: K3=25.e0_dp/256.e0_dp
+ real(dp),parameter :: K4=1225.e0_dp/16384.e0_dp
+ real(dp),parameter :: K5=3969.e0_dp/65536.e0_dp
+ real(dp),parameter :: K6=53361.e0_dp/1048576.e0_dp
+ real(dp),parameter :: K7=184041.e0_dp/4194304.e0_dp
+ !real(dp) B1,B2,B3,B4,B5,B6,B7,B8
+ real(dp),parameter :: B1=1.e0_dp/2.e0_dp
+ real(dp),parameter :: B2=1.e0_dp/16.e0_dp
+ real(dp),parameter :: B3=3.e0_dp/128.e0_dp
+ real(dp),parameter :: B4=25.e0_dp/2048.e0_dp
+ real(dp),parameter :: B5=245.e0_dp/32768.e0_dp
+ real(dp),parameter :: B6=1323.e0_dp/262144.e0_dp
+ real(dp),parameter :: B7=7623.e0_dp/2097152.e0_dp
+ real(dp),parameter :: B8=184041.e0_dp/67108864.e0_dp
+ !real(dp) D1,D2,D3,D4,D5,D6,D7,D8
+ real(dp),parameter :: D1=1.e0_dp/2.e0_dp
+ real(dp),parameter :: D2=3.e0_dp/16.e0_dp
+ real(dp),parameter :: D3=15.e0_dp/128.e0_dp
+ real(dp),parameter :: D4=175.e0_dp/2048.e0_dp
+ real(dp),parameter :: D5=2205.e0_dp/32768.e0_dp
+ real(dp),parameter :: D6=14553.e0_dp/262144.e0_dp
+ real(dp),parameter :: D7=99099.e0_dp/2097152.e0_dp
+ real(dp),parameter :: D8=2760615.e0_dp/67108864.e0_dp
  real(dp) logq2,dkkc,dddc,dele,delb,elk1
  !logical first/.TRUE./    !!!SJT: note that logical variable first is always .true. at the start of each routine call
  logical first !!SJT: initialization within declaration not allowed due to thread safety
@@ -611,16 +612,17 @@ contains
  real(dp),intent(in) :: nc0
  real(dp),intent(out) :: celb,celd,celj !!SJT
  logical flag
- integer(isp) IMAX,i,is,ie
- parameter (IMAX=40_isp)
+ !integer(isp) IMAX,i,is,ie !!SJT: OG
+ integer(isp) i,is,ie !!SJT
+ integer(isp),parameter :: IMAX=40_isp
  real(dp) y(0_isp:IMAX),x(0_isp:IMAX),c(0_isp:IMAX),d(0_isp:IMAX),a(0_isp:IMAX)
  real(dp) mc,mc0,nc,m,n,celk,yi,ye,dj,m1,kc0,temp !!SJT
  real(qp),intent(in) :: mc0_qp !!SJT
  real(qp) :: mc_qp !!SJT
- real(dp) PIHALF,EPS,THIRD
- parameter (PIHALF=1.5707963267948966e0_dp)
- parameter (EPS=1.11e-16_dp)
- parameter (THIRD=1.e0_dp/3.e0_dp)
+ !real(dp) PIHALF,EPS,THIRD
+ real(dp),parameter :: PIHALF=1.5707963267948966e0_dp
+ real(dp),parameter :: EPS=1.11e-16_dp
+ real(dp),parameter :: THIRD=1.e0_dp/3.e0_dp
  real(dp) B(IMAX)
  !logical first /.TRUE./  !!!SJT: note that logical variable first is .true. at the start of each routine call
  !save B,first !!SJT: disable for thread safety
@@ -827,69 +829,71 @@ contains
  real(dp),intent(in) :: y,m !!SJT
  real(dp),intent(out) :: b,d !!SJT
  !
- real(dp) F1,F2,F3,F4
- real(dp) F10,F20,F21,F30,F31,F40,F41,F42
- real(dp) F5,F50,F51,F52,F6,F60,F61,F62,F63
- real(dp) F7,F70,F71,F72,F73,F8,F80,F81,F82,F83,F84
- real(dp) F9,F90,F91,F92,F93,F94
- real(dp) FA,FA0,FA1,FA2,FA3,FA4,FA5
- real(dp) FB,FB0,FB1,FB2,FB3,FB4,FB5
- parameter (F10=1.e0_dp/6.e0_dp)
- parameter (F20=3.e0_dp/40.e0_dp)
- parameter (F21=2.e0_dp/40.e0_dp)
- parameter (F30=5.e0_dp/112.e0_dp)
- parameter (F31=3.e0_dp/112.e0_dp)
- parameter (F40=35.e0_dp/1152.e0_dp)
- parameter (F41=20.e0_dp/1152.e0_dp)
- parameter (F42=18.e0_dp/1152.e0_dp)
- parameter (F50=63.e0_dp/2816.e0_dp)
- parameter (F51=35.e0_dp/2816.e0_dp)
- parameter (F52=30.e0_dp/2816.e0_dp)
- parameter (F60=231.e0_dp/13312.e0_dp)
- parameter (F61=126.e0_dp/13312.e0_dp)
- parameter (F62=105.e0_dp/13312.e0_dp)
- parameter (F63=100.e0_dp/13312.e0_dp)
- parameter (F70=429.e0_dp/30720.e0_dp)
- parameter (F71=231.e0_dp/30720.e0_dp)
- parameter (F72=189.e0_dp/30720.e0_dp)
- parameter (F73=175.e0_dp/30720.e0_dp)
- parameter (F80=6435.e0_dp/557056.e0_dp)
- parameter (F81=3432.e0_dp/557056.e0_dp)
- parameter (F82=2722.e0_dp/557056.e0_dp)
- parameter (F83=2520.e0_dp/557056.e0_dp)
- parameter (F84=2450.e0_dp/557056.e0_dp)
- parameter (F90=12155.e0_dp/1245184.e0_dp)
- parameter (F91=6435.e0_dp/1245184.e0_dp)
- parameter (F92=5148.e0_dp/1245184.e0_dp)
- parameter (F93=4620.e0_dp/1245184.e0_dp)
- parameter (F94=4410.e0_dp/1245184.e0_dp)
- parameter (FA0=46189.e0_dp/5505024.e0_dp)
- parameter (FA1=24310.e0_dp/5505024.e0_dp)
- parameter (FA2=19305.e0_dp/5505024.e0_dp)
- parameter (FA3=17160.e0_dp/5505024.e0_dp)
- parameter (FA4=16170.e0_dp/5505024.e0_dp)
- parameter (FA5=15876.e0_dp/5505024.e0_dp)
- parameter (FB0=88179.e0_dp/12058624.e0_dp)
- parameter (FB1=46189.e0_dp/12058624.e0_dp)
- parameter (FB2=36465.e0_dp/12058624.e0_dp)
- parameter (FB3=32175.e0_dp/12058624.e0_dp)
- parameter (FB4=30030.e0_dp/12058624.e0_dp)
- parameter (FB5=29106.e0_dp/12058624.e0_dp)
- real(dp) A1,A2,A3,A4,A5,A6,A7,A8,A9,AA,AB
- parameter (A1=3.e0_dp/5.e0_dp)
- parameter (A2=5.e0_dp/7.e0_dp)
- parameter (A3=7.e0_dp/9.e0_dp)
- parameter (A4=9.e0_dp/11.e0_dp)
- parameter (A5=11.e0_dp/13.e0_dp)
- parameter (A6=13.e0_dp/15.e0_dp)
- parameter (A7=15.e0_dp/17.e0_dp)
- parameter (A8=17.e0_dp/19.e0_dp)
- parameter (A9=19.e0_dp/21.e0_dp)
- parameter (AA=21.e0_dp/23.e0_dp)
- parameter (AB=23.e0_dp/25.e0_dp)
+ !real(dp) F1,F2,F3,F4 !!SJT: OG
+ real(dp) F1,F2,F3,F4,F5,F6,F7,F8,F9,FA,FB !!SJT: non-parameter variables
+ !real(dp) F10,F20,F21,F30,F31,F40,F41,F42
+ !real(dp) F5,F50,F51,F52,F6,F60,F61,F62,F63
+ !real(dp) F7,F70,F71,F72,F73,F8,F80,F81,F82,F83,F84
+ !real(dp) F9,F90,F91,F92,F93,F94
+ !real(dp) FA,FA0,FA1,FA2,FA3,FA4,FA5
+ !real(dp) FB,FB0,FB1,FB2,FB3,FB4,FB5
+ real(dp),parameter :: F10=1.e0_dp/6.e0_dp
+ real(dp),parameter :: F20=3.e0_dp/40.e0_dp
+ real(dp),parameter :: F21=2.e0_dp/40.e0_dp
+ real(dp),parameter :: F30=5.e0_dp/112.e0_dp
+ real(dp),parameter :: F31=3.e0_dp/112.e0_dp
+ real(dp),parameter :: F40=35.e0_dp/1152.e0_dp
+ real(dp),parameter :: F41=20.e0_dp/1152.e0_dp
+ real(dp),parameter :: F42=18.e0_dp/1152.e0_dp
+ real(dp),parameter :: F50=63.e0_dp/2816.e0_dp
+ real(dp),parameter :: F51=35.e0_dp/2816.e0_dp
+ real(dp),parameter :: F52=30.e0_dp/2816.e0_dp
+ real(dp),parameter :: F60=231.e0_dp/13312.e0_dp
+ real(dp),parameter :: F61=126.e0_dp/13312.e0_dp
+ real(dp),parameter :: F62=105.e0_dp/13312.e0_dp
+ real(dp),parameter :: F63=100.e0_dp/13312.e0_dp
+ real(dp),parameter :: F70=429.e0_dp/30720.e0_dp
+ real(dp),parameter :: F71=231.e0_dp/30720.e0_dp
+ real(dp),parameter :: F72=189.e0_dp/30720.e0_dp
+ real(dp),parameter :: F73=175.e0_dp/30720.e0_dp
+ real(dp),parameter :: F80=6435.e0_dp/557056.e0_dp
+ real(dp),parameter :: F81=3432.e0_dp/557056.e0_dp
+ real(dp),parameter :: F82=2722.e0_dp/557056.e0_dp
+ real(dp),parameter :: F83=2520.e0_dp/557056.e0_dp
+ real(dp),parameter :: F84=2450.e0_dp/557056.e0_dp
+ real(dp),parameter :: F90=12155.e0_dp/1245184.e0_dp
+ real(dp),parameter :: F91=6435.e0_dp/1245184.e0_dp
+ real(dp),parameter :: F92=5148.e0_dp/1245184.e0_dp
+ real(dp),parameter :: F93=4620.e0_dp/1245184.e0_dp
+ real(dp),parameter :: F94=4410.e0_dp/1245184.e0_dp
+ real(dp),parameter :: FA0=46189.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FA1=24310.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FA2=19305.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FA3=17160.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FA4=16170.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FA5=15876.e0_dp/5505024.e0_dp
+ real(dp),parameter :: FB0=88179.e0_dp/12058624.e0_dp
+ real(dp),parameter :: FB1=46189.e0_dp/12058624.e0_dp
+ real(dp),parameter :: FB2=36465.e0_dp/12058624.e0_dp
+ real(dp),parameter :: FB3=32175.e0_dp/12058624.e0_dp
+ real(dp),parameter :: FB4=30030.e0_dp/12058624.e0_dp
+ real(dp),parameter :: FB5=29106.e0_dp/12058624.e0_dp
+ !real(dp) A1,A2,A3,A4,A5,A6,A7,A8,A9,AA,AB
+ real(dp),parameter :: A1=3.e0_dp/5.e0_dp
+ real(dp),parameter :: A2=5.e0_dp/7.e0_dp
+ real(dp),parameter :: A3=7.e0_dp/9.e0_dp
+ real(dp),parameter :: A4=9.e0_dp/11.e0_dp
+ real(dp),parameter :: A5=11.e0_dp/13.e0_dp
+ real(dp),parameter :: A6=13.e0_dp/15.e0_dp
+ real(dp),parameter :: A7=15.e0_dp/17.e0_dp
+ real(dp),parameter :: A8=17.e0_dp/19.e0_dp
+ real(dp),parameter :: A9=19.e0_dp/21.e0_dp
+ real(dp),parameter :: AA=21.e0_dp/23.e0_dp
+ real(dp),parameter :: AB=23.e0_dp/25.e0_dp
  real(dp) B1,B2,B3,B4,B5,B6,B7,B8,B9,BA,BB
- real(dp) D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB
- parameter (D0=1.e0_dp/3.e0_dp)
+ !real(dp) D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB !!SJT: OG
+ real(dp) D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB !!SJT: non-parameter variables
+ real(dp),parameter :: D0=1.e0_dp/3.e0_dp
  !
  !        write(*,*) "(serbd) y,m=",y,m
  F1=F10+m*F10
@@ -949,260 +953,260 @@ contains
  
  real(dp) J1,J2,J3,J4,J5,J6,J7,J8,J9,JA
  
- real(dp) J100,J200,J201,J210,J300,J301,J302,J310,J311,J320
- real(dp) J400,J401,J402,J403,J410,J411,J412,J420,J421,J430
- real(dp) J500,J501,J502,J503,J504,J510,J511,J512,J513,J520
- real(dp) J521,J522,J530,J531,J540
- real(dp) J600,J601,J602,J603,J604,J605,J610,J611,J612,J613,J614
- real(dp) J620,J621,J622,J623,J630,J631,J632,J640,J641,J650
- real(dp) J700,J701,J702,J703,J704,J705,J706
- real(dp) J710,J711,J712,J713,J714,J715,J720,J721,J722,J723,J724
- real(dp) J730,J731,J732,J733,J740,J741,J742,J750,J751,J760
- real(dp) J800,J801,J802,J803,J804,J805,J806,J807
- real(dp) J810,J811,J812,J813,J814,J815,J816
- real(dp) J820,J821,J822,J823,J824,J825,J830,J831,J832,J833,J834
- real(dp) J840,J841,J842,J843,J850,J851,J852,J860,J861,J870
- real(dp) J900,J901,J902,J903,J904,J905,J906,J907,J908
- real(dp) J910,J911,J912,J913,J914,J915,J916,J917
- real(dp) J920,J921,J922,J923,J924,J925,J926
- real(dp) J930,J931,J932,J933,J934,J935,J940,J941,J942,J943,J944
- real(dp) J950,J951,J952,J953,J960,J961,J962,J970,J971,J980
- real(dp) JA00,JA01,JA02,JA03,JA04,JA05,JA06,JA07,JA08,JA09
- real(dp) JA10,JA11,JA12,JA13,JA14,JA15,JA16,JA17,JA18
- real(dp) JA20,JA21,JA22,JA23,JA24,JA25,JA26,JA27
- real(dp) JA30,JA31,JA32,JA33,JA34,JA35,JA36
- real(dp) JA40,JA41,JA42,JA43,JA44,JA45,JA50,JA51,JA52,JA53,JA54
- real(dp) JA60,JA61,JA62,JA63,JA70,JA71,JA72,JA80,JA81,JA90
+ !real(dp) J100,J200,J201,J210,J300,J301,J302,J310,J311,J320
+ !real(dp) J400,J401,J402,J403,J410,J411,J412,J420,J421,J430
+ !real(dp) J500,J501,J502,J503,J504,J510,J511,J512,J513,J520
+ !real(dp) J521,J522,J530,J531,J540
+ !real(dp) J600,J601,J602,J603,J604,J605,J610,J611,J612,J613,J614
+ !real(dp) J620,J621,J622,J623,J630,J631,J632,J640,J641,J650
+ !real(dp) J700,J701,J702,J703,J704,J705,J706
+ !real(dp) J710,J711,J712,J713,J714,J715,J720,J721,J722,J723,J724
+ !real(dp) J730,J731,J732,J733,J740,J741,J742,J750,J751,J760
+ !real(dp) J800,J801,J802,J803,J804,J805,J806,J807
+ !real(dp) J810,J811,J812,J813,J814,J815,J816
+ !real(dp) J820,J821,J822,J823,J824,J825,J830,J831,J832,J833,J834
+ !real(dp) J840,J841,J842,J843,J850,J851,J852,J860,J861,J870
+ !real(dp) J900,J901,J902,J903,J904,J905,J906,J907,J908
+ !real(dp) J910,J911,J912,J913,J914,J915,J916,J917
+ !real(dp) J920,J921,J922,J923,J924,J925,J926
+ !real(dp) J930,J931,J932,J933,J934,J935,J940,J941,J942,J943,J944
+ !real(dp) J950,J951,J952,J953,J960,J961,J962,J970,J971,J980
+ !real(dp) JA00,JA01,JA02,JA03,JA04,JA05,JA06,JA07,JA08,JA09
+ !real(dp) JA10,JA11,JA12,JA13,JA14,JA15,JA16,JA17,JA18
+ !real(dp) JA20,JA21,JA22,JA23,JA24,JA25,JA26,JA27
+ !real(dp) JA30,JA31,JA32,JA33,JA34,JA35,JA36
+ !real(dp) JA40,JA41,JA42,JA43,JA44,JA45,JA50,JA51,JA52,JA53,JA54
+ !real(dp) JA60,JA61,JA62,JA63,JA70,JA71,JA72,JA80,JA81,JA90
  
- parameter (J100=1.e0_dp/3.e0_dp)
+ real(dp),parameter :: J100=1.e0_dp/3.e0_dp
  
- parameter (J200=1.e0_dp/10.e0_dp)
- parameter (J201=2.e0_dp/10.e0_dp)
- parameter (J210=1.e0_dp/10.e0_dp)
+ real(dp),parameter :: J200=1.e0_dp/10.e0_dp
+ real(dp),parameter :: J201=2.e0_dp/10.e0_dp
+ real(dp),parameter :: J210=1.e0_dp/10.e0_dp
  
- parameter (J300=3.e0_dp/56.e0_dp)
- parameter (J301=4.e0_dp/56.e0_dp)
- parameter (J302=8.e0_dp/56.e0_dp)
- parameter (J310=2.e0_dp/56.e0_dp)
- parameter (J311=4.e0_dp/56.e0_dp)
- parameter (J320=3.e0_dp/56.e0_dp)
+ real(dp),parameter :: J300=3.e0_dp/56.e0_dp
+ real(dp),parameter :: J301=4.e0_dp/56.e0_dp
+ real(dp),parameter :: J302=8.e0_dp/56.e0_dp
+ real(dp),parameter :: J310=2.e0_dp/56.e0_dp
+ real(dp),parameter :: J311=4.e0_dp/56.e0_dp
+ real(dp),parameter :: J320=3.e0_dp/56.e0_dp
  
- parameter (J400=5.e0_dp/144.e0_dp)
- parameter (J401=6.e0_dp/144.e0_dp)
- parameter (J402=8.e0_dp/144.e0_dp)
- parameter (J403=16.e0_dp/144.e0_dp)
- parameter (J410=3.e0_dp/144.e0_dp)
- parameter (J411=4.e0_dp/144.e0_dp)
- parameter (J412=8.e0_dp/144.e0_dp)
- parameter (J420=3.e0_dp/144.e0_dp)
- parameter (J421=6.e0_dp/144.e0_dp)
- parameter (J430=5.e0_dp/144.e0_dp)
+ real(dp),parameter :: J400=5.e0_dp/144.e0_dp
+ real(dp),parameter :: J401=6.e0_dp/144.e0_dp
+ real(dp),parameter :: J402=8.e0_dp/144.e0_dp
+ real(dp),parameter :: J403=16.e0_dp/144.e0_dp
+ real(dp),parameter :: J410=3.e0_dp/144.e0_dp
+ real(dp),parameter :: J411=4.e0_dp/144.e0_dp
+ real(dp),parameter :: J412=8.e0_dp/144.e0_dp
+ real(dp),parameter :: J420=3.e0_dp/144.e0_dp
+ real(dp),parameter :: J421=6.e0_dp/144.e0_dp
+ real(dp),parameter :: J430=5.e0_dp/144.e0_dp
  
- parameter (J500=35.e0_dp/1408.e0_dp)
- parameter (J501=40.e0_dp/1408.e0_dp)
- parameter (J502=48.e0_dp/1408.e0_dp)
- parameter (J503=64.e0_dp/1408.e0_dp)
- parameter (J504=128.e0_dp/1408.e0_dp)
- parameter (J510=20.e0_dp/1408.e0_dp)
- parameter (J511=24.e0_dp/1408.e0_dp)
- parameter (J512=32.e0_dp/1408.e0_dp)
- parameter (J513=64.e0_dp/1408.e0_dp)
- parameter (J520=18.e0_dp/1408.e0_dp)
- parameter (J521=24.e0_dp/1408.e0_dp)
- parameter (J522=48.e0_dp/1408.e0_dp)
- parameter (J530=20.e0_dp/1408.e0_dp)
- parameter (J531=40.e0_dp/1408.e0_dp)
- parameter (J540=35.e0_dp/1408.e0_dp)
+ real(dp),parameter :: J500=35.e0_dp/1408.e0_dp
+ real(dp),parameter :: J501=40.e0_dp/1408.e0_dp
+ real(dp),parameter :: J502=48.e0_dp/1408.e0_dp
+ real(dp),parameter :: J503=64.e0_dp/1408.e0_dp
+ real(dp),parameter :: J504=128.e0_dp/1408.e0_dp
+ real(dp),parameter :: J510=20.e0_dp/1408.e0_dp
+ real(dp),parameter :: J511=24.e0_dp/1408.e0_dp
+ real(dp),parameter :: J512=32.e0_dp/1408.e0_dp
+ real(dp),parameter :: J513=64.e0_dp/1408.e0_dp
+ real(dp),parameter :: J520=18.e0_dp/1408.e0_dp
+ real(dp),parameter :: J521=24.e0_dp/1408.e0_dp
+ real(dp),parameter :: J522=48.e0_dp/1408.e0_dp
+ real(dp),parameter :: J530=20.e0_dp/1408.e0_dp
+ real(dp),parameter :: J531=40.e0_dp/1408.e0_dp
+ real(dp),parameter :: J540=35.e0_dp/1408.e0_dp
  
- parameter (J600=63.e0_dp/3328.e0_dp)
- parameter (J601=70.e0_dp/3328.e0_dp)
- parameter (J602=80.e0_dp/3328.e0_dp)
- parameter (J603=96.e0_dp/3328.e0_dp)
- parameter (J604=128.e0_dp/3328.e0_dp)
- parameter (J605=256.e0_dp/3328.e0_dp)
- parameter (J610=35.e0_dp/3328.e0_dp)
- parameter (J611=40.e0_dp/3328.e0_dp)
- parameter (J612=48.e0_dp/3328.e0_dp)
- parameter (J613=64.e0_dp/3328.e0_dp)
- parameter (J614=128.e0_dp/3328.e0_dp)
- parameter (J620=30.e0_dp/3328.e0_dp)
- parameter (J621=36.e0_dp/3328.e0_dp)
- parameter (J622=48.e0_dp/3328.e0_dp)
- parameter (J623=96.e0_dp/3328.e0_dp)
- parameter (J630=30.e0_dp/3328.e0_dp)
- parameter (J631=40.e0_dp/3328.e0_dp)
- parameter (J632=80.e0_dp/3328.e0_dp)
- parameter (J640=35.e0_dp/3328.e0_dp)
- parameter (J641=70.e0_dp/3328.e0_dp)
- parameter (J650=63.e0_dp/3328.e0_dp)
+ real(dp),parameter :: J600=63.e0_dp/3328.e0_dp
+ real(dp),parameter :: J601=70.e0_dp/3328.e0_dp
+ real(dp),parameter :: J602=80.e0_dp/3328.e0_dp
+ real(dp),parameter :: J603=96.e0_dp/3328.e0_dp
+ real(dp),parameter :: J604=128.e0_dp/3328.e0_dp
+ real(dp),parameter :: J605=256.e0_dp/3328.e0_dp
+ real(dp),parameter :: J610=35.e0_dp/3328.e0_dp
+ real(dp),parameter :: J611=40.e0_dp/3328.e0_dp
+ real(dp),parameter :: J612=48.e0_dp/3328.e0_dp
+ real(dp),parameter :: J613=64.e0_dp/3328.e0_dp
+ real(dp),parameter :: J614=128.e0_dp/3328.e0_dp
+ real(dp),parameter :: J620=30.e0_dp/3328.e0_dp
+ real(dp),parameter :: J621=36.e0_dp/3328.e0_dp
+ real(dp),parameter :: J622=48.e0_dp/3328.e0_dp
+ real(dp),parameter :: J623=96.e0_dp/3328.e0_dp
+ real(dp),parameter :: J630=30.e0_dp/3328.e0_dp
+ real(dp),parameter :: J631=40.e0_dp/3328.e0_dp
+ real(dp),parameter :: J632=80.e0_dp/3328.e0_dp
+ real(dp),parameter :: J640=35.e0_dp/3328.e0_dp
+ real(dp),parameter :: J641=70.e0_dp/3328.e0_dp
+ real(dp),parameter :: J650=63.e0_dp/3328.e0_dp
  
- parameter (J700=231.e0_dp/15360.e0_dp)
- parameter (J701=252.e0_dp/15360.e0_dp)
- parameter (J702=280.e0_dp/15360.e0_dp)
- parameter (J703=320.e0_dp/15360.e0_dp)
- parameter (J704=384.e0_dp/15360.e0_dp)
- parameter (J705=512.e0_dp/15360.e0_dp)
- parameter (J706=1024.e0_dp/15360.e0_dp)
- parameter (J710=126.e0_dp/15360.e0_dp)
- parameter (J711=140.e0_dp/15360.e0_dp)
- parameter (J712=160.e0_dp/15360.e0_dp)
- parameter (J713=192.e0_dp/15360.e0_dp)
- parameter (J714=256.e0_dp/15360.e0_dp)
- parameter (J715=512.e0_dp/15360.e0_dp)
- parameter (J720=105.e0_dp/15360.e0_dp)
- parameter (J721=120.e0_dp/15360.e0_dp)
- parameter (J722=144.e0_dp/15360.e0_dp)
- parameter (J723=192.e0_dp/15360.e0_dp)
- parameter (J724=384.e0_dp/15360.e0_dp)
- parameter (J730=100.e0_dp/15360.e0_dp)
- parameter (J731=120.e0_dp/15360.e0_dp)
- parameter (J732=160.e0_dp/15360.e0_dp)
- parameter (J733=320.e0_dp/15360.e0_dp)
- parameter (J740=105.e0_dp/15360.e0_dp)
- parameter (J741=140.e0_dp/15360.e0_dp)
- parameter (J742=280.e0_dp/15360.e0_dp)
- parameter (J750=126.e0_dp/15360.e0_dp)
- parameter (J751=252.e0_dp/15360.e0_dp)
- parameter (J760=231.e0_dp/15360.e0_dp)
+ real(dp),parameter :: J700=231.e0_dp/15360.e0_dp
+ real(dp),parameter :: J701=252.e0_dp/15360.e0_dp
+ real(dp),parameter :: J702=280.e0_dp/15360.e0_dp
+ real(dp),parameter :: J703=320.e0_dp/15360.e0_dp
+ real(dp),parameter :: J704=384.e0_dp/15360.e0_dp
+ real(dp),parameter :: J705=512.e0_dp/15360.e0_dp
+ real(dp),parameter :: J706=1024.e0_dp/15360.e0_dp
+ real(dp),parameter :: J710=126.e0_dp/15360.e0_dp
+ real(dp),parameter :: J711=140.e0_dp/15360.e0_dp
+ real(dp),parameter :: J712=160.e0_dp/15360.e0_dp
+ real(dp),parameter :: J713=192.e0_dp/15360.e0_dp
+ real(dp),parameter :: J714=256.e0_dp/15360.e0_dp
+ real(dp),parameter :: J715=512.e0_dp/15360.e0_dp
+ real(dp),parameter :: J720=105.e0_dp/15360.e0_dp
+ real(dp),parameter :: J721=120.e0_dp/15360.e0_dp
+ real(dp),parameter :: J722=144.e0_dp/15360.e0_dp
+ real(dp),parameter :: J723=192.e0_dp/15360.e0_dp
+ real(dp),parameter :: J724=384.e0_dp/15360.e0_dp
+ real(dp),parameter :: J730=100.e0_dp/15360.e0_dp
+ real(dp),parameter :: J731=120.e0_dp/15360.e0_dp
+ real(dp),parameter :: J732=160.e0_dp/15360.e0_dp
+ real(dp),parameter :: J733=320.e0_dp/15360.e0_dp
+ real(dp),parameter :: J740=105.e0_dp/15360.e0_dp
+ real(dp),parameter :: J741=140.e0_dp/15360.e0_dp
+ real(dp),parameter :: J742=280.e0_dp/15360.e0_dp
+ real(dp),parameter :: J750=126.e0_dp/15360.e0_dp
+ real(dp),parameter :: J751=252.e0_dp/15360.e0_dp
+ real(dp),parameter :: J760=231.e0_dp/15360.e0_dp
  
- parameter (J800=429.e0_dp/34816.e0_dp)
- parameter (J801=462.e0_dp/34816.e0_dp)
- parameter (J802=504.e0_dp/34816.e0_dp)
- parameter (J803=560.e0_dp/34816.e0_dp)
- parameter (J804=640.e0_dp/34816.e0_dp)
- parameter (J805=768.e0_dp/34816.e0_dp)
- parameter (J806=1024.e0_dp/34816.e0_dp)
- parameter (J807=2048.e0_dp/34816.e0_dp)
- parameter (J810=231.e0_dp/34816.e0_dp)
- parameter (J811=252.e0_dp/34816.e0_dp)
- parameter (J812=280.e0_dp/34816.e0_dp)
- parameter (J813=320.e0_dp/34816.e0_dp)
- parameter (J814=384.e0_dp/34816.e0_dp)
- parameter (J815=512.e0_dp/34816.e0_dp)
- parameter (J816=1024.e0_dp/34816.e0_dp)
- parameter (J820=189.e0_dp/34816.e0_dp)
- parameter (J821=210.e0_dp/34816.e0_dp)
- parameter (J822=240.e0_dp/34816.e0_dp)
- parameter (J823=288.e0_dp/34816.e0_dp)
- parameter (J824=284.e0_dp/34816.e0_dp)
- parameter (J825=768.e0_dp/34816.e0_dp)
- parameter (J830=175.e0_dp/34816.e0_dp)
- parameter (J831=200.e0_dp/34816.e0_dp)
- parameter (J832=240.e0_dp/34816.e0_dp)
- parameter (J833=320.e0_dp/34816.e0_dp)
- parameter (J834=640.e0_dp/34816.e0_dp)
- parameter (J840=175.e0_dp/34816.e0_dp)
- parameter (J841=210.e0_dp/34816.e0_dp)
- parameter (J842=280.e0_dp/34816.e0_dp)
- parameter (J843=560.e0_dp/34816.e0_dp)
- parameter (J850=189.e0_dp/34816.e0_dp)
- parameter (J851=252.e0_dp/34816.e0_dp)
- parameter (J852=504.e0_dp/34816.e0_dp)
- parameter (J860=231.e0_dp/34816.e0_dp)
- parameter (J861=462.e0_dp/34816.e0_dp)
- parameter (J870=429.e0_dp/34816.e0_dp)
+ real(dp),parameter :: J800=429.e0_dp/34816.e0_dp
+ real(dp),parameter :: J801=462.e0_dp/34816.e0_dp
+ real(dp),parameter :: J802=504.e0_dp/34816.e0_dp
+ real(dp),parameter :: J803=560.e0_dp/34816.e0_dp
+ real(dp),parameter :: J804=640.e0_dp/34816.e0_dp
+ real(dp),parameter :: J805=768.e0_dp/34816.e0_dp
+ real(dp),parameter :: J806=1024.e0_dp/34816.e0_dp
+ real(dp),parameter :: J807=2048.e0_dp/34816.e0_dp
+ real(dp),parameter :: J810=231.e0_dp/34816.e0_dp
+ real(dp),parameter :: J811=252.e0_dp/34816.e0_dp
+ real(dp),parameter :: J812=280.e0_dp/34816.e0_dp
+ real(dp),parameter :: J813=320.e0_dp/34816.e0_dp
+ real(dp),parameter :: J814=384.e0_dp/34816.e0_dp
+ real(dp),parameter :: J815=512.e0_dp/34816.e0_dp
+ real(dp),parameter :: J816=1024.e0_dp/34816.e0_dp
+ real(dp),parameter :: J820=189.e0_dp/34816.e0_dp
+ real(dp),parameter :: J821=210.e0_dp/34816.e0_dp
+ real(dp),parameter :: J822=240.e0_dp/34816.e0_dp
+ real(dp),parameter :: J823=288.e0_dp/34816.e0_dp
+ real(dp),parameter :: J824=284.e0_dp/34816.e0_dp
+ real(dp),parameter :: J825=768.e0_dp/34816.e0_dp
+ real(dp),parameter :: J830=175.e0_dp/34816.e0_dp
+ real(dp),parameter :: J831=200.e0_dp/34816.e0_dp
+ real(dp),parameter :: J832=240.e0_dp/34816.e0_dp
+ real(dp),parameter :: J833=320.e0_dp/34816.e0_dp
+ real(dp),parameter :: J834=640.e0_dp/34816.e0_dp
+ real(dp),parameter :: J840=175.e0_dp/34816.e0_dp
+ real(dp),parameter :: J841=210.e0_dp/34816.e0_dp
+ real(dp),parameter :: J842=280.e0_dp/34816.e0_dp
+ real(dp),parameter :: J843=560.e0_dp/34816.e0_dp
+ real(dp),parameter :: J850=189.e0_dp/34816.e0_dp
+ real(dp),parameter :: J851=252.e0_dp/34816.e0_dp
+ real(dp),parameter :: J852=504.e0_dp/34816.e0_dp
+ real(dp),parameter :: J860=231.e0_dp/34816.e0_dp
+ real(dp),parameter :: J861=462.e0_dp/34816.e0_dp
+ real(dp),parameter :: J870=429.e0_dp/34816.e0_dp
  
- parameter (J900=6435.e0_dp/622592.e0_dp)
- parameter (J901=6864.e0_dp/622592.e0_dp)
- parameter (J902=7392.e0_dp/622592.e0_dp)
- parameter (J903=8064.e0_dp/622592.e0_dp)
- parameter (J904=8960.e0_dp/622592.e0_dp)
- parameter (J905=10240.e0_dp/622592.e0_dp)
- parameter (J906=12288.e0_dp/622592.e0_dp)
- parameter (J907=16384.e0_dp/622592.e0_dp)
- parameter (J908=32768.e0_dp/622592.e0_dp)
- parameter (J910=3432.e0_dp/622592.e0_dp)
- parameter (J911=3696.e0_dp/622592.e0_dp)
- parameter (J912=4032.e0_dp/622592.e0_dp)
- parameter (J913=4480.e0_dp/622592.e0_dp)
- parameter (J914=5120.e0_dp/622592.e0_dp)
- parameter (J915=6144.e0_dp/622592.e0_dp)
- parameter (J916=8192.e0_dp/622592.e0_dp)
- parameter (J917=16384.e0_dp/622592.e0_dp)
- parameter (J920=2772.e0_dp/622592.e0_dp)
- parameter (J921=3024.e0_dp/622592.e0_dp)
- parameter (J922=3360.e0_dp/622592.e0_dp)
- parameter (J923=3840.e0_dp/622592.e0_dp)
- parameter (J924=4608.e0_dp/622592.e0_dp)
- parameter (J925=6144.e0_dp/622592.e0_dp)
- parameter (J926=12288.e0_dp/622592.e0_dp)
- parameter (J930=2520.e0_dp/622592.e0_dp)
- parameter (J931=2800.e0_dp/622592.e0_dp)
- parameter (J932=3200.e0_dp/622592.e0_dp)
- parameter (J933=3840.e0_dp/622592.e0_dp)
- parameter (J934=5120.e0_dp/622592.e0_dp)
- parameter (J935=10240.e0_dp/622592.e0_dp)
- parameter (J940=2450.e0_dp/622592.e0_dp)
- parameter (J941=2800.e0_dp/622592.e0_dp)
- parameter (J942=3360.e0_dp/622592.e0_dp)
- parameter (J943=4480.e0_dp/622592.e0_dp)
- parameter (J944=8960.e0_dp/622592.e0_dp)
- parameter (J950=2520.e0_dp/622592.e0_dp)
- parameter (J951=3024.e0_dp/622592.e0_dp)
- parameter (J952=4032.e0_dp/622592.e0_dp)
- parameter (J953=8064.e0_dp/622592.e0_dp)
- parameter (J960=2772.e0_dp/622592.e0_dp)
- parameter (J961=3696.e0_dp/622592.e0_dp)
- parameter (J962=7392.e0_dp/622592.e0_dp)
- parameter (J970=3432.e0_dp/622592.e0_dp)
- parameter (J971=6864.e0_dp/622592.e0_dp)
- parameter (J980=6435.e0_dp/622592.e0_dp)
+ real(dp),parameter :: J900=6435.e0_dp/622592.e0_dp
+ real(dp),parameter :: J901=6864.e0_dp/622592.e0_dp
+ real(dp),parameter :: J902=7392.e0_dp/622592.e0_dp
+ real(dp),parameter :: J903=8064.e0_dp/622592.e0_dp
+ real(dp),parameter :: J904=8960.e0_dp/622592.e0_dp
+ real(dp),parameter :: J905=10240.e0_dp/622592.e0_dp
+ real(dp),parameter :: J906=12288.e0_dp/622592.e0_dp
+ real(dp),parameter :: J907=16384.e0_dp/622592.e0_dp
+ real(dp),parameter :: J908=32768.e0_dp/622592.e0_dp
+ real(dp),parameter :: J910=3432.e0_dp/622592.e0_dp
+ real(dp),parameter :: J911=3696.e0_dp/622592.e0_dp
+ real(dp),parameter :: J912=4032.e0_dp/622592.e0_dp
+ real(dp),parameter :: J913=4480.e0_dp/622592.e0_dp
+ real(dp),parameter :: J914=5120.e0_dp/622592.e0_dp
+ real(dp),parameter :: J915=6144.e0_dp/622592.e0_dp
+ real(dp),parameter :: J916=8192.e0_dp/622592.e0_dp
+ real(dp),parameter :: J917=16384.e0_dp/622592.e0_dp
+ real(dp),parameter :: J920=2772.e0_dp/622592.e0_dp
+ real(dp),parameter :: J921=3024.e0_dp/622592.e0_dp
+ real(dp),parameter :: J922=3360.e0_dp/622592.e0_dp
+ real(dp),parameter :: J923=3840.e0_dp/622592.e0_dp
+ real(dp),parameter :: J924=4608.e0_dp/622592.e0_dp
+ real(dp),parameter :: J925=6144.e0_dp/622592.e0_dp
+ real(dp),parameter :: J926=12288.e0_dp/622592.e0_dp
+ real(dp),parameter :: J930=2520.e0_dp/622592.e0_dp
+ real(dp),parameter :: J931=2800.e0_dp/622592.e0_dp
+ real(dp),parameter :: J932=3200.e0_dp/622592.e0_dp
+ real(dp),parameter :: J933=3840.e0_dp/622592.e0_dp
+ real(dp),parameter :: J934=5120.e0_dp/622592.e0_dp
+ real(dp),parameter :: J935=10240.e0_dp/622592.e0_dp
+ real(dp),parameter :: J940=2450.e0_dp/622592.e0_dp
+ real(dp),parameter :: J941=2800.e0_dp/622592.e0_dp
+ real(dp),parameter :: J942=3360.e0_dp/622592.e0_dp
+ real(dp),parameter :: J943=4480.e0_dp/622592.e0_dp
+ real(dp),parameter :: J944=8960.e0_dp/622592.e0_dp
+ real(dp),parameter :: J950=2520.e0_dp/622592.e0_dp
+ real(dp),parameter :: J951=3024.e0_dp/622592.e0_dp
+ real(dp),parameter :: J952=4032.e0_dp/622592.e0_dp
+ real(dp),parameter :: J953=8064.e0_dp/622592.e0_dp
+ real(dp),parameter :: J960=2772.e0_dp/622592.e0_dp
+ real(dp),parameter :: J961=3696.e0_dp/622592.e0_dp
+ real(dp),parameter :: J962=7392.e0_dp/622592.e0_dp
+ real(dp),parameter :: J970=3432.e0_dp/622592.e0_dp
+ real(dp),parameter :: J971=6864.e0_dp/622592.e0_dp
+ real(dp),parameter :: J980=6435.e0_dp/622592.e0_dp
  
- parameter (JA00=12155.e0_dp/1376256.e0_dp)
- parameter (JA01=12870.e0_dp/1376256.e0_dp)
- parameter (JA02=13728.e0_dp/1376256.e0_dp)
- parameter (JA03=14784.e0_dp/1376256.e0_dp)
- parameter (JA04=16128.e0_dp/1376256.e0_dp)
- parameter (JA05=17920.e0_dp/1376256.e0_dp)
- parameter (JA06=20480.e0_dp/1376256.e0_dp)
- parameter (JA07=24576.e0_dp/1376256.e0_dp)
- parameter (JA08=32768.e0_dp/1376256.e0_dp)
- parameter (JA09=65536.e0_dp/1376256.e0_dp)
- parameter (JA10=6435.e0_dp/1376256.e0_dp)
- parameter (JA11=6864.e0_dp/1376256.e0_dp)
- parameter (JA12=7392.e0_dp/1376256.e0_dp)
- parameter (JA13=8064.e0_dp/1376256.e0_dp)
- parameter (JA14=8960.e0_dp/1376256.e0_dp)
- parameter (JA15=10240.e0_dp/1376256.e0_dp)
- parameter (JA16=12288.e0_dp/1376256.e0_dp)
- parameter (JA17=16384.e0_dp/1376256.e0_dp)
- parameter (JA18=32768.e0_dp/1376256.e0_dp)
- parameter (JA20=5148.e0_dp/1376256.e0_dp)
- parameter (JA21=5544.e0_dp/1376256.e0_dp)
- parameter (JA22=6048.e0_dp/1376256.e0_dp)
- parameter (JA23=6720.e0_dp/1376256.e0_dp)
- parameter (JA24=7680.e0_dp/1376256.e0_dp)
- parameter (JA25=9216.e0_dp/1376256.e0_dp)
- parameter (JA26=12288.e0_dp/1376256.e0_dp)
- parameter (JA27=24576.e0_dp/1376256.e0_dp)
- parameter (JA30=4620.e0_dp/1376256.e0_dp)
- parameter (JA31=5040.e0_dp/1376256.e0_dp)
- parameter (JA32=5600.e0_dp/1376256.e0_dp)
- parameter (JA33=6400.e0_dp/1376256.e0_dp)
- parameter (JA34=7680.e0_dp/1376256.e0_dp)
- parameter (JA35=10240.e0_dp/1376256.e0_dp)
- parameter (JA36=20480.e0_dp/1376256.e0_dp)
- parameter (JA40=4410.e0_dp/1376256.e0_dp)
- parameter (JA41=4900.e0_dp/1376256.e0_dp)
- parameter (JA42=5600.e0_dp/1376256.e0_dp)
- parameter (JA43=6720.e0_dp/1376256.e0_dp)
- parameter (JA44=8960.e0_dp/1376256.e0_dp)
- parameter (JA45=17920.e0_dp/1376256.e0_dp)
- parameter (JA50=4410.e0_dp/1376256.e0_dp)
- parameter (JA51=5040.e0_dp/1376256.e0_dp)
- parameter (JA52=6048.e0_dp/1376256.e0_dp)
- parameter (JA53=8064.e0_dp/1376256.e0_dp)
- parameter (JA54=16128.e0_dp/1376256.e0_dp)
- parameter (JA60=4620.e0_dp/1376256.e0_dp)
- parameter (JA61=5544.e0_dp/1376256.e0_dp)
- parameter (JA62=7392.e0_dp/1376256.e0_dp)
- parameter (JA63=14784.e0_dp/1376256.e0_dp)
- parameter (JA70=5148.e0_dp/1376256.e0_dp)
- parameter (JA71=6864.e0_dp/1376256.e0_dp)
- parameter (JA72=13728.e0_dp/1376256.e0_dp)
- parameter (JA80=6435.e0_dp/1376256.e0_dp)
- parameter (JA81=12870.e0_dp/1376256.e0_dp)
- parameter (JA90=12155.e0_dp/1376256.e0_dp)
+ real(dp),parameter :: JA00=12155.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA01=12870.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA02=13728.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA03=14784.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA04=16128.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA05=17920.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA06=20480.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA07=24576.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA08=32768.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA09=65536.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA10=6435.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA11=6864.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA12=7392.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA13=8064.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA14=8960.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA15=10240.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA16=12288.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA17=16384.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA18=32768.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA20=5148.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA21=5544.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA22=6048.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA23=6720.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA24=7680.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA25=9216.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA26=12288.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA27=24576.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA30=4620.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA31=5040.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA32=5600.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA33=6400.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA34=7680.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA35=10240.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA36=20480.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA40=4410.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA41=4900.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA42=5600.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA43=6720.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA44=8960.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA45=17920.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA50=4410.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA51=5040.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA52=6048.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA53=8064.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA54=16128.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA60=4620.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA61=5544.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA62=7392.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA63=14784.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA70=5148.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA71=6864.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA72=13728.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA80=6435.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA81=12870.e0_dp/1376256.e0_dp
+ real(dp),parameter :: JA90=12155.e0_dp/1376256.e0_dp
  
  ! write(*,"(a20,1p3e10.2)") "(serj) y,n,m=",y,n,m
  
@@ -1311,21 +1315,21 @@ contains
  real(dp),intent(in) :: t,h !!SJT
  real(dp) :: z,y,x !!SJT
  real(dp) a,r,ri,hold,rold,riold
- real(dp) A3,A5,A7,A9,A11,A13,A15,A17,A19,A21,A23,A25
+ !real(dp) A3,A5,A7,A9,A11,A13,A15,A17,A19,A21,A23,A25
  !data hold/1.d0/, rold/1.d0/,riold/1.d0/ !!SJT: disable for thread safety
  !save hold,rold,riold !!SJT: disable for thread safety
- parameter (A3=1.e0_dp/3.e0_dp)
- parameter (A5=1.e0_dp/5.e0_dp)
- parameter (A7=1.e0_dp/7.e0_dp)
- parameter (A9=1.e0_dp/9.e0_dp)
- parameter (A11=1.e0_dp/11.e0_dp)
- parameter (A13=1.e0_dp/13.e0_dp)
- parameter (A15=1.e0_dp/15.e0_dp)
- parameter (A17=1.e0_dp/17.e0_dp)
- parameter (A19=1.e0_dp/19.e0_dp)
- parameter (A21=1.e0_dp/21.e0_dp)
- parameter (A23=1.e0_dp/23.e0_dp)
- parameter (A25=1.e0_dp/25.e0_dp)
+ real(dp),parameter :: A3=1.e0_dp/3.e0_dp
+ real(dp),parameter :: A5=1.e0_dp/5.e0_dp
+ real(dp),parameter :: A7=1.e0_dp/7.e0_dp
+ real(dp),parameter :: A9=1.e0_dp/9.e0_dp
+ real(dp),parameter :: A11=1.e0_dp/11.e0_dp
+ real(dp),parameter :: A13=1.e0_dp/13.e0_dp
+ real(dp),parameter :: A15=1.e0_dp/15.e0_dp
+ real(dp),parameter :: A17=1.e0_dp/17.e0_dp
+ real(dp),parameter :: A19=1.e0_dp/19.e0_dp
+ real(dp),parameter :: A21=1.e0_dp/21.e0_dp
+ real(dp),parameter :: A23=1.e0_dp/23.e0_dp
+ real(dp),parameter :: A25=1.e0_dp/25.e0_dp
  !!!!!SJT: replace data statment with manual value assignment for thread safety
  hold=1.e0_dp; rold=1.e0_dp; riold=1.e0_dp
  !!!!!SJT: end replace data statment with manual value assignment for thread safety
@@ -1569,18 +1573,19 @@ contains
  real(qp),intent(in) :: nc0
  real(qp),intent(out) :: celb,celd,celj !!SJT
  logical flag
- integer(isp) IMAX,i,is,ie
+ !integer(isp) IMAX,i,is,ie !!SJT: OG
+ integer(isp) i,is,ie
  !parameter (IMAX=40) ! OG
- parameter (IMAX=40_isp)  ! SJT: adjustement in max # of iterations for quadruple precision
+ integer(isp),parameter :: IMAX=40_isp  ! SJT: adjustement in max # of iterations for quadruple precision
  real(qp) y(0_isp:IMAX),x(0_isp:IMAX),c(0_isp:IMAX),d(0_isp:IMAX),a(0_isp:IMAX)
  real(qp) mc,mc0,nc,m,n,celk,yi,ye,dj,m1,kc0,temp !!SJT
  real(qp),intent(in) :: mc0_qp !!SJT
  real(qp) :: mc_qp !!SJT
- real(qp) PIHALF,EPS,THIRD
- parameter (PIHALF=1.570796326794896619231321691639751442099_qp)
+ !real(qp) PIHALF,EPS,THIRD
+ real(qp),parameter :: PIHALF=1.570796326794896619231321691639751442099_qp
  !parameter (EPS=1.11e-16_qp) ! SJT: OG value
- parameter (EPS=1.e-34_qp) ! SJT: adjusted for quadruple precision (roughly half of machine epsilon)
- parameter (THIRD=1.e0_qp/3.e0_qp)
+ real(qp),parameter :: EPS=1.e-34_qp ! SJT: adjusted for quadruple precision (roughly half of machine epsilon)
+ real(qp),parameter :: THIRD=1.e0_qp/3.e0_qp
  real(qp) B(IMAX)
  !logical first /.TRUE./  !!!SJT: note that logical variable first is .true. at the start of each routine call
  !save B,first !!SJT: disable for thread safety
@@ -1703,52 +1708,52 @@ contains
  real(qp),intent(in) :: mc_qp !!SJT
  !
  real(qp),parameter :: EPS=1.e-34_qp  !1.11e-16_qp ! SJT: adjusted for quadruple precision (~half of machine epsilon) 
- real(qp) PIQ,PIHALF!,PI,PIINV !!SJT: removed unused parameters
- parameter (PIQ=0.78539816339744830961566084581988_qp)
- parameter (PIHALF=1.5707963267948966192313216916398_qp)
+ !real(qp) PIQ,PIHALF!,PI,PIINV !!SJT: removed unused parameters
+ real(qp),parameter :: PIQ=0.78539816339744830961566084581988_qp
+ real(qp),parameter :: PIHALF=1.5707963267948966192313216916398_qp
  !parameter (PI=3.1415926535897932384626433832795d0)
  !parameter (PIINV=0.31830988618379067153776752674503d0)
  real(qp) mcold,elbold,eldold
  !save mcold,elbold,eldold !!SJT: disable for thread safety -- variables are initialized at start of each celbd call
- real(qp) Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16
- parameter (Q1=1._qp/16._qp,Q2=1._qp/32._qp,Q3=21._qp/1024._qp)
- parameter (Q4=31._qp/2048._qp,Q5=6257._qp/524288._qp)
- parameter (Q6=10293._qp/1048576._qp,Q7=279025._qp/33554432._qp)
- parameter (Q8=483127._qp/67108864._qp)
- parameter (Q9=435506703._qp/68719476736._qp)
- parameter (Q10=776957575._qp/137438953472._qp)
- parameter (Q11=22417045555._qp/4398046511104._qp)
- parameter (Q12=40784671953._qp/8796093022208._qp)
- parameter (Q13=9569130097211._qp/2251799813685248._qp)
- parameter (Q14=17652604545791._qp/4503599627370496._qp)
- parameter (Q15=523910972020563._qp/144115188075855872._qp)
- parameter (Q16=976501268709949._qp/288230376151711744._qp)
- real(qp) K1,K2,K3,K4,K5,K6,K7
- parameter (K1=1._qp/4._qp)
- parameter (K2=9._qp/64._qp)
- parameter (K3=25._qp/256._qp)
- parameter (K4=1225._qp/16384._qp)
- parameter (K5=3969._qp/65536._qp)
- parameter (K6=53361._qp/1048576._qp)
- parameter (K7=184041._qp/4194304._qp)
- real(qp) B1,B2,B3,B4,B5,B6,B7,B8
- parameter (B1=1._qp/2._qp)
- parameter (B2=1._qp/16._qp)
- parameter (B3=3._qp/128._qp)
- parameter (B4=25._qp/2048._qp)
- parameter (B5=245._qp/32768._qp)
- parameter (B6=1323._qp/262144._qp)
- parameter (B7=7623._qp/2097152._qp)
- parameter (B8=184041._qp/67108864._qp)
- real(qp) D1,D2,D3,D4,D5,D6,D7,D8
- parameter (D1=1._qp/2._qp)
- parameter (D2=3._qp/16._qp)
- parameter (D3=15._qp/128._qp)
- parameter (D4=175._qp/2048._qp)
- parameter (D5=2205._qp/32768._qp)
- parameter (D6=14553._qp/262144._qp)
- parameter (D7=99099._qp/2097152._qp)
- parameter (D8=2760615._qp/67108864._qp)
+ !real(qp) Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16
+ real(qp),parameter :: Q1=1._qp/16._qp,Q2=1._qp/32._qp,Q3=21._qp/1024._qp
+ real(qp),parameter :: Q4=31._qp/2048._qp,Q5=6257._qp/524288._qp
+ real(qp),parameter :: Q6=10293._qp/1048576._qp,Q7=279025._qp/33554432._qp
+ real(qp),parameter :: Q8=483127._qp/67108864._qp
+ real(qp),parameter :: Q9=435506703._qp/68719476736._qp
+ real(qp),parameter :: Q10=776957575._qp/137438953472._qp
+ real(qp),parameter :: Q11=22417045555._qp/4398046511104._qp
+ real(qp),parameter :: Q12=40784671953._qp/8796093022208._qp
+ real(qp),parameter :: Q13=9569130097211._qp/2251799813685248._qp
+ real(qp),parameter :: Q14=17652604545791._qp/4503599627370496._qp
+ real(qp),parameter :: Q15=523910972020563._qp/144115188075855872._qp
+ real(qp),parameter :: Q16=976501268709949._qp/288230376151711744._qp
+ !real(qp) K1,K2,K3,K4,K5,K6,K7
+ real(qp),parameter :: K1=1._qp/4._qp
+ real(qp),parameter :: K2=9._qp/64._qp
+ real(qp),parameter :: K3=25._qp/256._qp
+ real(qp),parameter :: K4=1225._qp/16384._qp
+ real(qp),parameter :: K5=3969._qp/65536._qp
+ real(qp),parameter :: K6=53361._qp/1048576._qp
+ real(qp),parameter :: K7=184041._qp/4194304._qp
+ !real(qp) B1,B2,B3,B4,B5,B6,B7,B8
+ real(qp),parameter :: B1=1._qp/2._qp
+ real(qp),parameter :: B2=1._qp/16._qp
+ real(qp),parameter :: B3=3._qp/128._qp
+ real(qp),parameter :: B4=25._qp/2048._qp
+ real(qp),parameter :: B5=245._qp/32768._qp
+ real(qp),parameter :: B6=1323._qp/262144._qp
+ real(qp),parameter :: B7=7623._qp/2097152._qp
+ real(qp),parameter :: B8=184041._qp/67108864._qp
+ !real(qp) D1,D2,D3,D4,D5,D6,D7,D8
+ real(qp),parameter :: D1=1._qp/2._qp
+ real(qp),parameter :: D2=3._qp/16._qp
+ real(qp),parameter :: D3=15._qp/128._qp
+ real(qp),parameter :: D4=175._qp/2048._qp
+ real(qp),parameter :: D5=2205._qp/32768._qp
+ real(qp),parameter :: D6=14553._qp/262144._qp
+ real(qp),parameter :: D7=99099._qp/2097152._qp
+ real(qp),parameter :: D8=2760615._qp/67108864._qp
  real(qp) logq2,dkkc,dddc,dele,delb,elk1
  !logical first/.TRUE./    !!!SJT: note that logical variable first is always .true. at the start of each routine call
  logical first !!SJT: initialization within declaration not allowed due to thread safety
@@ -2195,69 +2200,71 @@ contains
  real(qp),intent(in) :: y,m !!SJT
  real(qp),intent(out) :: b,d !!SJT
  !
- real(qp) F1,F2,F3,F4
- real(qp) F10,F20,F21,F30,F31,F40,F41,F42
- real(qp) F5,F50,F51,F52,F6,F60,F61,F62,F63
- real(qp) F7,F70,F71,F72,F73,F8,F80,F81,F82,F83,F84
- real(qp) F9,F90,F91,F92,F93,F94
- real(qp) FA,FA0,FA1,FA2,FA3,FA4,FA5
- real(qp) FB,FB0,FB1,FB2,FB3,FB4,FB5
- parameter (F10=1._qp/6._qp)
- parameter (F20=3._qp/40._qp)
- parameter (F21=2._qp/40._qp)
- parameter (F30=5._qp/112._qp)
- parameter (F31=3._qp/112._qp)
- parameter (F40=35._qp/1152._qp)
- parameter (F41=20._qp/1152._qp)
- parameter (F42=18._qp/1152._qp)
- parameter (F50=63._qp/2816._qp)
- parameter (F51=35._qp/2816._qp)
- parameter (F52=30._qp/2816._qp)
- parameter (F60=231._qp/13312._qp)
- parameter (F61=126._qp/13312._qp)
- parameter (F62=105._qp/13312._qp)
- parameter (F63=100._qp/13312._qp)
- parameter (F70=429._qp/30720._qp)
- parameter (F71=231._qp/30720._qp)
- parameter (F72=189._qp/30720._qp)
- parameter (F73=175._qp/30720._qp)
- parameter (F80=6435._qp/557056._qp)
- parameter (F81=3432._qp/557056._qp)
- parameter (F82=2722._qp/557056._qp)
- parameter (F83=2520._qp/557056._qp)
- parameter (F84=2450._qp/557056._qp)
- parameter (F90=12155._qp/1245184._qp)
- parameter (F91=6435._qp/1245184._qp)
- parameter (F92=5148._qp/1245184._qp)
- parameter (F93=4620._qp/1245184._qp)
- parameter (F94=4410._qp/1245184._qp)
- parameter (FA0=46189._qp/5505024._qp)
- parameter (FA1=24310._qp/5505024._qp)
- parameter (FA2=19305._qp/5505024._qp)
- parameter (FA3=17160._qp/5505024._qp)
- parameter (FA4=16170._qp/5505024._qp)
- parameter (FA5=15876._qp/5505024._qp)
- parameter (FB0=88179._qp/12058624._qp)
- parameter (FB1=46189._qp/12058624._qp)
- parameter (FB2=36465._qp/12058624._qp)
- parameter (FB3=32175._qp/12058624._qp)
- parameter (FB4=30030._qp/12058624._qp)
- parameter (FB5=29106._qp/12058624._qp)
- real(qp) A1,A2,A3,A4,A5,A6,A7,A8,A9,AA,AB
- parameter (A1=3._qp/5._qp)
- parameter (A2=5._qp/7._qp)
- parameter (A3=7._qp/9._qp)
- parameter (A4=9._qp/11._qp)
- parameter (A5=11._qp/13._qp)
- parameter (A6=13._qp/15._qp)
- parameter (A7=15._qp/17._qp)
- parameter (A8=17._qp/19._qp)
- parameter (A9=19._qp/21._qp)
- parameter (AA=21._qp/23._qp)
- parameter (AB=23._qp/25._qp)
+ !real(qp) F1,F2,F3,F4 !!SJT: OG
+ real(qp) F1,F2,F3,F4,F5,F6,F7,F8,F9,FA,FB !!SJT: non-parameter variables
+ !real(qp) F10,F20,F21,F30,F31,F40,F41,F42
+ !real(qp) F5,F50,F51,F52,F6,F60,F61,F62,F63
+ !real(qp) F7,F70,F71,F72,F73,F8,F80,F81,F82,F83,F84
+ !real(qp) F9,F90,F91,F92,F93,F94
+ !real(qp) FA,FA0,FA1,FA2,FA3,FA4,FA5
+ !real(qp) FB,FB0,FB1,FB2,FB3,FB4,FB5
+ real(qp),parameter :: F10=1._qp/6._qp
+ real(qp),parameter :: F20=3._qp/40._qp
+ real(qp),parameter :: F21=2._qp/40._qp
+ real(qp),parameter :: F30=5._qp/112._qp
+ real(qp),parameter :: F31=3._qp/112._qp
+ real(qp),parameter :: F40=35._qp/1152._qp
+ real(qp),parameter :: F41=20._qp/1152._qp
+ real(qp),parameter :: F42=18._qp/1152._qp
+ real(qp),parameter :: F50=63._qp/2816._qp
+ real(qp),parameter :: F51=35._qp/2816._qp
+ real(qp),parameter :: F52=30._qp/2816._qp
+ real(qp),parameter :: F60=231._qp/13312._qp
+ real(qp),parameter :: F61=126._qp/13312._qp
+ real(qp),parameter :: F62=105._qp/13312._qp
+ real(qp),parameter :: F63=100._qp/13312._qp
+ real(qp),parameter :: F70=429._qp/30720._qp
+ real(qp),parameter :: F71=231._qp/30720._qp
+ real(qp),parameter :: F72=189._qp/30720._qp
+ real(qp),parameter :: F73=175._qp/30720._qp
+ real(qp),parameter :: F80=6435._qp/557056._qp
+ real(qp),parameter :: F81=3432._qp/557056._qp
+ real(qp),parameter :: F82=2722._qp/557056._qp
+ real(qp),parameter :: F83=2520._qp/557056._qp
+ real(qp),parameter :: F84=2450._qp/557056._qp
+ real(qp),parameter :: F90=12155._qp/1245184._qp
+ real(qp),parameter :: F91=6435._qp/1245184._qp
+ real(qp),parameter :: F92=5148._qp/1245184._qp
+ real(qp),parameter :: F93=4620._qp/1245184._qp
+ real(qp),parameter :: F94=4410._qp/1245184._qp
+ real(qp),parameter :: FA0=46189._qp/5505024._qp
+ real(qp),parameter :: FA1=24310._qp/5505024._qp
+ real(qp),parameter :: FA2=19305._qp/5505024._qp
+ real(qp),parameter :: FA3=17160._qp/5505024._qp
+ real(qp),parameter :: FA4=16170._qp/5505024._qp
+ real(qp),parameter :: FA5=15876._qp/5505024._qp
+ real(qp),parameter :: FB0=88179._qp/12058624._qp
+ real(qp),parameter :: FB1=46189._qp/12058624._qp
+ real(qp),parameter :: FB2=36465._qp/12058624._qp
+ real(qp),parameter :: FB3=32175._qp/12058624._qp
+ real(qp),parameter :: FB4=30030._qp/12058624._qp
+ real(qp),parameter :: FB5=29106._qp/12058624._qp
+ !real(qp) A1,A2,A3,A4,A5,A6,A7,A8,A9,AA,AB
+ real(qp),parameter :: A1=3._qp/5._qp
+ real(qp),parameter :: A2=5._qp/7._qp
+ real(qp),parameter :: A3=7._qp/9._qp
+ real(qp),parameter :: A4=9._qp/11._qp
+ real(qp),parameter :: A5=11._qp/13._qp
+ real(qp),parameter :: A6=13._qp/15._qp
+ real(qp),parameter :: A7=15._qp/17._qp
+ real(qp),parameter :: A8=17._qp/19._qp
+ real(qp),parameter :: A9=19._qp/21._qp
+ real(qp),parameter :: AA=21._qp/23._qp
+ real(qp),parameter :: AB=23._qp/25._qp
  real(qp) B1,B2,B3,B4,B5,B6,B7,B8,B9,BA,BB
- real(qp) D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB
- parameter (D0=1._qp/3._qp)
+ !real(qp) D0,D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB !!SJT: OG
+ real(qp) D1,D2,D3,D4,D5,D6,D7,D8,D9,DA,DB !!SJT: non-parameter variables
+ real(qp),parameter :: D0=1._qp/3._qp
  !
  !        write(*,*) "(serbd) y,m=",y,m
  F1=F10+m*F10
@@ -2317,260 +2324,260 @@ contains
  
  real(qp) J1,J2,J3,J4,J5,J6,J7,J8,J9,JA
  
- real(qp) J100,J200,J201,J210,J300,J301,J302,J310,J311,J320
- real(qp) J400,J401,J402,J403,J410,J411,J412,J420,J421,J430
- real(qp) J500,J501,J502,J503,J504,J510,J511,J512,J513,J520
- real(qp) J521,J522,J530,J531,J540
- real(qp) J600,J601,J602,J603,J604,J605,J610,J611,J612,J613,J614
- real(qp) J620,J621,J622,J623,J630,J631,J632,J640,J641,J650
- real(qp) J700,J701,J702,J703,J704,J705,J706
- real(qp) J710,J711,J712,J713,J714,J715,J720,J721,J722,J723,J724
- real(qp) J730,J731,J732,J733,J740,J741,J742,J750,J751,J760
- real(qp) J800,J801,J802,J803,J804,J805,J806,J807
- real(qp) J810,J811,J812,J813,J814,J815,J816
- real(qp) J820,J821,J822,J823,J824,J825,J830,J831,J832,J833,J834
- real(qp) J840,J841,J842,J843,J850,J851,J852,J860,J861,J870
- real(qp) J900,J901,J902,J903,J904,J905,J906,J907,J908
- real(qp) J910,J911,J912,J913,J914,J915,J916,J917
- real(qp) J920,J921,J922,J923,J924,J925,J926
- real(qp) J930,J931,J932,J933,J934,J935,J940,J941,J942,J943,J944
- real(qp) J950,J951,J952,J953,J960,J961,J962,J970,J971,J980
- real(qp) JA00,JA01,JA02,JA03,JA04,JA05,JA06,JA07,JA08,JA09
- real(qp) JA10,JA11,JA12,JA13,JA14,JA15,JA16,JA17,JA18
- real(qp) JA20,JA21,JA22,JA23,JA24,JA25,JA26,JA27
- real(qp) JA30,JA31,JA32,JA33,JA34,JA35,JA36
- real(qp) JA40,JA41,JA42,JA43,JA44,JA45,JA50,JA51,JA52,JA53,JA54
- real(qp) JA60,JA61,JA62,JA63,JA70,JA71,JA72,JA80,JA81,JA90
+ !real(qp) J100,J200,J201,J210,J300,J301,J302,J310,J311,J320
+ !real(qp) J400,J401,J402,J403,J410,J411,J412,J420,J421,J430
+ !real(qp) J500,J501,J502,J503,J504,J510,J511,J512,J513,J520
+ !real(qp) J521,J522,J530,J531,J540
+ !real(qp) J600,J601,J602,J603,J604,J605,J610,J611,J612,J613,J614
+ !real(qp) J620,J621,J622,J623,J630,J631,J632,J640,J641,J650
+ !real(qp) J700,J701,J702,J703,J704,J705,J706
+ !real(qp) J710,J711,J712,J713,J714,J715,J720,J721,J722,J723,J724
+ !real(qp) J730,J731,J732,J733,J740,J741,J742,J750,J751,J760
+ !real(qp) J800,J801,J802,J803,J804,J805,J806,J807
+ !real(qp) J810,J811,J812,J813,J814,J815,J816
+ !real(qp) J820,J821,J822,J823,J824,J825,J830,J831,J832,J833,J834
+ !real(qp) J840,J841,J842,J843,J850,J851,J852,J860,J861,J870
+ !real(qp) J900,J901,J902,J903,J904,J905,J906,J907,J908
+ !real(qp) J910,J911,J912,J913,J914,J915,J916,J917
+ !real(qp) J920,J921,J922,J923,J924,J925,J926
+ !real(qp) J930,J931,J932,J933,J934,J935,J940,J941,J942,J943,J944
+ !real(qp) J950,J951,J952,J953,J960,J961,J962,J970,J971,J980
+ !real(qp) JA00,JA01,JA02,JA03,JA04,JA05,JA06,JA07,JA08,JA09
+ !real(qp) JA10,JA11,JA12,JA13,JA14,JA15,JA16,JA17,JA18
+ !real(qp) JA20,JA21,JA22,JA23,JA24,JA25,JA26,JA27
+ !real(qp) JA30,JA31,JA32,JA33,JA34,JA35,JA36
+ !real(qp) JA40,JA41,JA42,JA43,JA44,JA45,JA50,JA51,JA52,JA53,JA54
+ !real(qp) JA60,JA61,JA62,JA63,JA70,JA71,JA72,JA80,JA81,JA90
  
- parameter (J100=1._qp/3._qp)
+ real(qp),parameter :: J100=1._qp/3._qp
  
- parameter (J200=1._qp/10._qp)
- parameter (J201=2._qp/10._qp)
- parameter (J210=1._qp/10._qp)
+ real(qp),parameter :: J200=1._qp/10._qp
+ real(qp),parameter :: J201=2._qp/10._qp
+ real(qp),parameter :: J210=1._qp/10._qp
  
- parameter (J300=3._qp/56._qp)
- parameter (J301=4._qp/56._qp)
- parameter (J302=8._qp/56._qp)
- parameter (J310=2._qp/56._qp)
- parameter (J311=4._qp/56._qp)
- parameter (J320=3._qp/56._qp)
+ real(qp),parameter :: J300=3._qp/56._qp
+ real(qp),parameter :: J301=4._qp/56._qp
+ real(qp),parameter :: J302=8._qp/56._qp
+ real(qp),parameter :: J310=2._qp/56._qp
+ real(qp),parameter :: J311=4._qp/56._qp
+ real(qp),parameter :: J320=3._qp/56._qp
  
- parameter (J400=5._qp/144._qp)
- parameter (J401=6._qp/144._qp)
- parameter (J402=8._qp/144._qp)
- parameter (J403=16._qp/144._qp)
- parameter (J410=3._qp/144._qp)
- parameter (J411=4._qp/144._qp)
- parameter (J412=8._qp/144._qp)
- parameter (J420=3._qp/144._qp)
- parameter (J421=6._qp/144._qp)
- parameter (J430=5._qp/144._qp)
+ real(qp),parameter :: J400=5._qp/144._qp
+ real(qp),parameter :: J401=6._qp/144._qp
+ real(qp),parameter :: J402=8._qp/144._qp
+ real(qp),parameter :: J403=16._qp/144._qp
+ real(qp),parameter :: J410=3._qp/144._qp
+ real(qp),parameter :: J411=4._qp/144._qp
+ real(qp),parameter :: J412=8._qp/144._qp
+ real(qp),parameter :: J420=3._qp/144._qp
+ real(qp),parameter :: J421=6._qp/144._qp
+ real(qp),parameter :: J430=5._qp/144._qp
  
- parameter (J500=35._qp/1408._qp)
- parameter (J501=40._qp/1408._qp)
- parameter (J502=48._qp/1408._qp)
- parameter (J503=64._qp/1408._qp)
- parameter (J504=128._qp/1408._qp)
- parameter (J510=20._qp/1408._qp)
- parameter (J511=24._qp/1408._qp)
- parameter (J512=32._qp/1408._qp)
- parameter (J513=64._qp/1408._qp)
- parameter (J520=18._qp/1408._qp)
- parameter (J521=24._qp/1408._qp)
- parameter (J522=48._qp/1408._qp)
- parameter (J530=20._qp/1408._qp)
- parameter (J531=40._qp/1408._qp)
- parameter (J540=35._qp/1408._qp)
+ real(qp),parameter :: J500=35._qp/1408._qp
+ real(qp),parameter :: J501=40._qp/1408._qp
+ real(qp),parameter :: J502=48._qp/1408._qp
+ real(qp),parameter :: J503=64._qp/1408._qp
+ real(qp),parameter :: J504=128._qp/1408._qp
+ real(qp),parameter :: J510=20._qp/1408._qp
+ real(qp),parameter :: J511=24._qp/1408._qp
+ real(qp),parameter :: J512=32._qp/1408._qp
+ real(qp),parameter :: J513=64._qp/1408._qp
+ real(qp),parameter :: J520=18._qp/1408._qp
+ real(qp),parameter :: J521=24._qp/1408._qp
+ real(qp),parameter :: J522=48._qp/1408._qp
+ real(qp),parameter :: J530=20._qp/1408._qp
+ real(qp),parameter :: J531=40._qp/1408._qp
+ real(qp),parameter :: J540=35._qp/1408._qp
  
- parameter (J600=63._qp/3328._qp)
- parameter (J601=70._qp/3328._qp)
- parameter (J602=80._qp/3328._qp)
- parameter (J603=96._qp/3328._qp)
- parameter (J604=128._qp/3328._qp)
- parameter (J605=256._qp/3328._qp)
- parameter (J610=35._qp/3328._qp)
- parameter (J611=40._qp/3328._qp)
- parameter (J612=48._qp/3328._qp)
- parameter (J613=64._qp/3328._qp)
- parameter (J614=128._qp/3328._qp)
- parameter (J620=30._qp/3328._qp)
- parameter (J621=36._qp/3328._qp)
- parameter (J622=48._qp/3328._qp)
- parameter (J623=96._qp/3328._qp)
- parameter (J630=30._qp/3328._qp)
- parameter (J631=40._qp/3328._qp)
- parameter (J632=80._qp/3328._qp)
- parameter (J640=35._qp/3328._qp)
- parameter (J641=70._qp/3328._qp)
- parameter (J650=63._qp/3328._qp)
+ real(qp),parameter :: J600=63._qp/3328._qp
+ real(qp),parameter :: J601=70._qp/3328._qp
+ real(qp),parameter :: J602=80._qp/3328._qp
+ real(qp),parameter :: J603=96._qp/3328._qp
+ real(qp),parameter :: J604=128._qp/3328._qp
+ real(qp),parameter :: J605=256._qp/3328._qp
+ real(qp),parameter :: J610=35._qp/3328._qp
+ real(qp),parameter :: J611=40._qp/3328._qp
+ real(qp),parameter :: J612=48._qp/3328._qp
+ real(qp),parameter :: J613=64._qp/3328._qp
+ real(qp),parameter :: J614=128._qp/3328._qp
+ real(qp),parameter :: J620=30._qp/3328._qp
+ real(qp),parameter :: J621=36._qp/3328._qp
+ real(qp),parameter :: J622=48._qp/3328._qp
+ real(qp),parameter :: J623=96._qp/3328._qp
+ real(qp),parameter :: J630=30._qp/3328._qp
+ real(qp),parameter :: J631=40._qp/3328._qp
+ real(qp),parameter :: J632=80._qp/3328._qp
+ real(qp),parameter :: J640=35._qp/3328._qp
+ real(qp),parameter :: J641=70._qp/3328._qp
+ real(qp),parameter :: J650=63._qp/3328._qp
  
- parameter (J700=231._qp/15360._qp)
- parameter (J701=252._qp/15360._qp)
- parameter (J702=280._qp/15360._qp)
- parameter (J703=320._qp/15360._qp)
- parameter (J704=384._qp/15360._qp)
- parameter (J705=512._qp/15360._qp)
- parameter (J706=1024._qp/15360._qp)
- parameter (J710=126._qp/15360._qp)
- parameter (J711=140._qp/15360._qp)
- parameter (J712=160._qp/15360._qp)
- parameter (J713=192._qp/15360._qp)
- parameter (J714=256._qp/15360._qp)
- parameter (J715=512._qp/15360._qp)
- parameter (J720=105._qp/15360._qp)
- parameter (J721=120._qp/15360._qp)
- parameter (J722=144._qp/15360._qp)
- parameter (J723=192._qp/15360._qp)
- parameter (J724=384._qp/15360._qp)
- parameter (J730=100._qp/15360._qp)
- parameter (J731=120._qp/15360._qp)
- parameter (J732=160._qp/15360._qp)
- parameter (J733=320._qp/15360._qp)
- parameter (J740=105._qp/15360._qp)
- parameter (J741=140._qp/15360._qp)
- parameter (J742=280._qp/15360._qp)
- parameter (J750=126._qp/15360._qp)
- parameter (J751=252._qp/15360._qp)
- parameter (J760=231._qp/15360._qp)
+ real(qp),parameter :: J700=231._qp/15360._qp
+ real(qp),parameter :: J701=252._qp/15360._qp
+ real(qp),parameter :: J702=280._qp/15360._qp
+ real(qp),parameter :: J703=320._qp/15360._qp
+ real(qp),parameter :: J704=384._qp/15360._qp
+ real(qp),parameter :: J705=512._qp/15360._qp
+ real(qp),parameter :: J706=1024._qp/15360._qp
+ real(qp),parameter :: J710=126._qp/15360._qp
+ real(qp),parameter :: J711=140._qp/15360._qp
+ real(qp),parameter :: J712=160._qp/15360._qp
+ real(qp),parameter :: J713=192._qp/15360._qp
+ real(qp),parameter :: J714=256._qp/15360._qp
+ real(qp),parameter :: J715=512._qp/15360._qp
+ real(qp),parameter :: J720=105._qp/15360._qp
+ real(qp),parameter :: J721=120._qp/15360._qp
+ real(qp),parameter :: J722=144._qp/15360._qp
+ real(qp),parameter :: J723=192._qp/15360._qp
+ real(qp),parameter :: J724=384._qp/15360._qp
+ real(qp),parameter :: J730=100._qp/15360._qp
+ real(qp),parameter :: J731=120._qp/15360._qp
+ real(qp),parameter :: J732=160._qp/15360._qp
+ real(qp),parameter :: J733=320._qp/15360._qp
+ real(qp),parameter :: J740=105._qp/15360._qp
+ real(qp),parameter :: J741=140._qp/15360._qp
+ real(qp),parameter :: J742=280._qp/15360._qp
+ real(qp),parameter :: J750=126._qp/15360._qp
+ real(qp),parameter :: J751=252._qp/15360._qp
+ real(qp),parameter :: J760=231._qp/15360._qp
  
- parameter (J800=429._qp/34816._qp)
- parameter (J801=462._qp/34816._qp)
- parameter (J802=504._qp/34816._qp)
- parameter (J803=560._qp/34816._qp)
- parameter (J804=640._qp/34816._qp)
- parameter (J805=768._qp/34816._qp)
- parameter (J806=1024._qp/34816._qp)
- parameter (J807=2048._qp/34816._qp)
- parameter (J810=231._qp/34816._qp)
- parameter (J811=252._qp/34816._qp)
- parameter (J812=280._qp/34816._qp)
- parameter (J813=320._qp/34816._qp)
- parameter (J814=384._qp/34816._qp)
- parameter (J815=512._qp/34816._qp)
- parameter (J816=1024._qp/34816._qp)
- parameter (J820=189._qp/34816._qp)
- parameter (J821=210._qp/34816._qp)
- parameter (J822=240._qp/34816._qp)
- parameter (J823=288._qp/34816._qp)
- parameter (J824=284._qp/34816._qp)
- parameter (J825=768._qp/34816._qp)
- parameter (J830=175._qp/34816._qp)
- parameter (J831=200._qp/34816._qp)
- parameter (J832=240._qp/34816._qp)
- parameter (J833=320._qp/34816._qp)
- parameter (J834=640._qp/34816._qp)
- parameter (J840=175._qp/34816._qp)
- parameter (J841=210._qp/34816._qp)
- parameter (J842=280._qp/34816._qp)
- parameter (J843=560._qp/34816._qp)
- parameter (J850=189._qp/34816._qp)
- parameter (J851=252._qp/34816._qp)
- parameter (J852=504._qp/34816._qp)
- parameter (J860=231._qp/34816._qp)
- parameter (J861=462._qp/34816._qp)
- parameter (J870=429._qp/34816._qp)
+ real(qp),parameter :: J800=429._qp/34816._qp
+ real(qp),parameter :: J801=462._qp/34816._qp
+ real(qp),parameter :: J802=504._qp/34816._qp
+ real(qp),parameter :: J803=560._qp/34816._qp
+ real(qp),parameter :: J804=640._qp/34816._qp
+ real(qp),parameter :: J805=768._qp/34816._qp
+ real(qp),parameter :: J806=1024._qp/34816._qp
+ real(qp),parameter :: J807=2048._qp/34816._qp
+ real(qp),parameter :: J810=231._qp/34816._qp
+ real(qp),parameter :: J811=252._qp/34816._qp
+ real(qp),parameter :: J812=280._qp/34816._qp
+ real(qp),parameter :: J813=320._qp/34816._qp
+ real(qp),parameter :: J814=384._qp/34816._qp
+ real(qp),parameter :: J815=512._qp/34816._qp
+ real(qp),parameter :: J816=1024._qp/34816._qp
+ real(qp),parameter :: J820=189._qp/34816._qp
+ real(qp),parameter :: J821=210._qp/34816._qp
+ real(qp),parameter :: J822=240._qp/34816._qp
+ real(qp),parameter :: J823=288._qp/34816._qp
+ real(qp),parameter :: J824=284._qp/34816._qp
+ real(qp),parameter :: J825=768._qp/34816._qp
+ real(qp),parameter :: J830=175._qp/34816._qp
+ real(qp),parameter :: J831=200._qp/34816._qp
+ real(qp),parameter :: J832=240._qp/34816._qp
+ real(qp),parameter :: J833=320._qp/34816._qp
+ real(qp),parameter :: J834=640._qp/34816._qp
+ real(qp),parameter :: J840=175._qp/34816._qp
+ real(qp),parameter :: J841=210._qp/34816._qp
+ real(qp),parameter :: J842=280._qp/34816._qp
+ real(qp),parameter :: J843=560._qp/34816._qp
+ real(qp),parameter :: J850=189._qp/34816._qp
+ real(qp),parameter :: J851=252._qp/34816._qp
+ real(qp),parameter :: J852=504._qp/34816._qp
+ real(qp),parameter :: J860=231._qp/34816._qp
+ real(qp),parameter :: J861=462._qp/34816._qp
+ real(qp),parameter :: J870=429._qp/34816._qp
  
- parameter (J900=6435._qp/622592._qp)
- parameter (J901=6864._qp/622592._qp)
- parameter (J902=7392._qp/622592._qp)
- parameter (J903=8064._qp/622592._qp)
- parameter (J904=8960._qp/622592._qp)
- parameter (J905=10240._qp/622592._qp)
- parameter (J906=12288._qp/622592._qp)
- parameter (J907=16384._qp/622592._qp)
- parameter (J908=32768._qp/622592._qp)
- parameter (J910=3432._qp/622592._qp)
- parameter (J911=3696._qp/622592._qp)
- parameter (J912=4032._qp/622592._qp)
- parameter (J913=4480._qp/622592._qp)
- parameter (J914=5120._qp/622592._qp)
- parameter (J915=6144._qp/622592._qp)
- parameter (J916=8192._qp/622592._qp)
- parameter (J917=16384._qp/622592._qp)
- parameter (J920=2772._qp/622592._qp)
- parameter (J921=3024._qp/622592._qp)
- parameter (J922=3360._qp/622592._qp)
- parameter (J923=3840._qp/622592._qp)
- parameter (J924=4608._qp/622592._qp)
- parameter (J925=6144._qp/622592._qp)
- parameter (J926=12288._qp/622592._qp)
- parameter (J930=2520._qp/622592._qp)
- parameter (J931=2800._qp/622592._qp)
- parameter (J932=3200._qp/622592._qp)
- parameter (J933=3840._qp/622592._qp)
- parameter (J934=5120._qp/622592._qp)
- parameter (J935=10240._qp/622592._qp)
- parameter (J940=2450._qp/622592._qp)
- parameter (J941=2800._qp/622592._qp)
- parameter (J942=3360._qp/622592._qp)
- parameter (J943=4480._qp/622592._qp)
- parameter (J944=8960._qp/622592._qp)
- parameter (J950=2520._qp/622592._qp)
- parameter (J951=3024._qp/622592._qp)
- parameter (J952=4032._qp/622592._qp)
- parameter (J953=8064._qp/622592._qp)
- parameter (J960=2772._qp/622592._qp)
- parameter (J961=3696._qp/622592._qp)
- parameter (J962=7392._qp/622592._qp)
- parameter (J970=3432._qp/622592._qp)
- parameter (J971=6864._qp/622592._qp)
- parameter (J980=6435._qp/622592._qp)
+ real(qp),parameter :: J900=6435._qp/622592._qp
+ real(qp),parameter :: J901=6864._qp/622592._qp
+ real(qp),parameter :: J902=7392._qp/622592._qp
+ real(qp),parameter :: J903=8064._qp/622592._qp
+ real(qp),parameter :: J904=8960._qp/622592._qp
+ real(qp),parameter :: J905=10240._qp/622592._qp
+ real(qp),parameter :: J906=12288._qp/622592._qp
+ real(qp),parameter :: J907=16384._qp/622592._qp
+ real(qp),parameter :: J908=32768._qp/622592._qp
+ real(qp),parameter :: J910=3432._qp/622592._qp
+ real(qp),parameter :: J911=3696._qp/622592._qp
+ real(qp),parameter :: J912=4032._qp/622592._qp
+ real(qp),parameter :: J913=4480._qp/622592._qp
+ real(qp),parameter :: J914=5120._qp/622592._qp
+ real(qp),parameter :: J915=6144._qp/622592._qp
+ real(qp),parameter :: J916=8192._qp/622592._qp
+ real(qp),parameter :: J917=16384._qp/622592._qp
+ real(qp),parameter :: J920=2772._qp/622592._qp
+ real(qp),parameter :: J921=3024._qp/622592._qp
+ real(qp),parameter :: J922=3360._qp/622592._qp
+ real(qp),parameter :: J923=3840._qp/622592._qp
+ real(qp),parameter :: J924=4608._qp/622592._qp
+ real(qp),parameter :: J925=6144._qp/622592._qp
+ real(qp),parameter :: J926=12288._qp/622592._qp
+ real(qp),parameter :: J930=2520._qp/622592._qp
+ real(qp),parameter :: J931=2800._qp/622592._qp
+ real(qp),parameter :: J932=3200._qp/622592._qp
+ real(qp),parameter :: J933=3840._qp/622592._qp
+ real(qp),parameter :: J934=5120._qp/622592._qp
+ real(qp),parameter :: J935=10240._qp/622592._qp
+ real(qp),parameter :: J940=2450._qp/622592._qp
+ real(qp),parameter :: J941=2800._qp/622592._qp
+ real(qp),parameter :: J942=3360._qp/622592._qp
+ real(qp),parameter :: J943=4480._qp/622592._qp
+ real(qp),parameter :: J944=8960._qp/622592._qp
+ real(qp),parameter :: J950=2520._qp/622592._qp
+ real(qp),parameter :: J951=3024._qp/622592._qp
+ real(qp),parameter :: J952=4032._qp/622592._qp
+ real(qp),parameter :: J953=8064._qp/622592._qp
+ real(qp),parameter :: J960=2772._qp/622592._qp
+ real(qp),parameter :: J961=3696._qp/622592._qp
+ real(qp),parameter :: J962=7392._qp/622592._qp
+ real(qp),parameter :: J970=3432._qp/622592._qp
+ real(qp),parameter :: J971=6864._qp/622592._qp
+ real(qp),parameter :: J980=6435._qp/622592._qp
  
- parameter (JA00=12155._qp/1376256._qp)
- parameter (JA01=12870._qp/1376256._qp)
- parameter (JA02=13728._qp/1376256._qp)
- parameter (JA03=14784._qp/1376256._qp)
- parameter (JA04=16128._qp/1376256._qp)
- parameter (JA05=17920._qp/1376256._qp)
- parameter (JA06=20480._qp/1376256._qp)
- parameter (JA07=24576._qp/1376256._qp)
- parameter (JA08=32768._qp/1376256._qp)
- parameter (JA09=65536._qp/1376256._qp)
- parameter (JA10=6435._qp/1376256._qp)
- parameter (JA11=6864._qp/1376256._qp)
- parameter (JA12=7392._qp/1376256._qp)
- parameter (JA13=8064._qp/1376256._qp)
- parameter (JA14=8960._qp/1376256._qp)
- parameter (JA15=10240._qp/1376256._qp)
- parameter (JA16=12288._qp/1376256._qp)
- parameter (JA17=16384._qp/1376256._qp)
- parameter (JA18=32768._qp/1376256._qp)
- parameter (JA20=5148._qp/1376256._qp)
- parameter (JA21=5544._qp/1376256._qp)
- parameter (JA22=6048._qp/1376256._qp)
- parameter (JA23=6720._qp/1376256._qp)
- parameter (JA24=7680._qp/1376256._qp)
- parameter (JA25=9216._qp/1376256._qp)
- parameter (JA26=12288._qp/1376256._qp)
- parameter (JA27=24576._qp/1376256._qp)
- parameter (JA30=4620._qp/1376256._qp)
- parameter (JA31=5040._qp/1376256._qp)
- parameter (JA32=5600._qp/1376256._qp)
- parameter (JA33=6400._qp/1376256._qp)
- parameter (JA34=7680._qp/1376256._qp)
- parameter (JA35=10240._qp/1376256._qp)
- parameter (JA36=20480._qp/1376256._qp)
- parameter (JA40=4410._qp/1376256._qp)
- parameter (JA41=4900._qp/1376256._qp)
- parameter (JA42=5600._qp/1376256._qp)
- parameter (JA43=6720._qp/1376256._qp)
- parameter (JA44=8960._qp/1376256._qp)
- parameter (JA45=17920._qp/1376256._qp)
- parameter (JA50=4410._qp/1376256._qp)
- parameter (JA51=5040._qp/1376256._qp)
- parameter (JA52=6048._qp/1376256._qp)
- parameter (JA53=8064._qp/1376256._qp)
- parameter (JA54=16128._qp/1376256._qp)
- parameter (JA60=4620._qp/1376256._qp)
- parameter (JA61=5544._qp/1376256._qp)
- parameter (JA62=7392._qp/1376256._qp)
- parameter (JA63=14784._qp/1376256._qp)
- parameter (JA70=5148._qp/1376256._qp)
- parameter (JA71=6864._qp/1376256._qp)
- parameter (JA72=13728._qp/1376256._qp)
- parameter (JA80=6435._qp/1376256._qp)
- parameter (JA81=12870._qp/1376256._qp)
- parameter (JA90=12155._qp/1376256._qp)
+ real(qp),parameter :: JA00=12155._qp/1376256._qp
+ real(qp),parameter :: JA01=12870._qp/1376256._qp
+ real(qp),parameter :: JA02=13728._qp/1376256._qp
+ real(qp),parameter :: JA03=14784._qp/1376256._qp
+ real(qp),parameter :: JA04=16128._qp/1376256._qp
+ real(qp),parameter :: JA05=17920._qp/1376256._qp
+ real(qp),parameter :: JA06=20480._qp/1376256._qp
+ real(qp),parameter :: JA07=24576._qp/1376256._qp
+ real(qp),parameter :: JA08=32768._qp/1376256._qp
+ real(qp),parameter :: JA09=65536._qp/1376256._qp
+ real(qp),parameter :: JA10=6435._qp/1376256._qp
+ real(qp),parameter :: JA11=6864._qp/1376256._qp
+ real(qp),parameter :: JA12=7392._qp/1376256._qp
+ real(qp),parameter :: JA13=8064._qp/1376256._qp
+ real(qp),parameter :: JA14=8960._qp/1376256._qp
+ real(qp),parameter :: JA15=10240._qp/1376256._qp
+ real(qp),parameter :: JA16=12288._qp/1376256._qp
+ real(qp),parameter :: JA17=16384._qp/1376256._qp
+ real(qp),parameter :: JA18=32768._qp/1376256._qp
+ real(qp),parameter :: JA20=5148._qp/1376256._qp
+ real(qp),parameter :: JA21=5544._qp/1376256._qp
+ real(qp),parameter :: JA22=6048._qp/1376256._qp
+ real(qp),parameter :: JA23=6720._qp/1376256._qp
+ real(qp),parameter :: JA24=7680._qp/1376256._qp
+ real(qp),parameter :: JA25=9216._qp/1376256._qp
+ real(qp),parameter :: JA26=12288._qp/1376256._qp
+ real(qp),parameter :: JA27=24576._qp/1376256._qp
+ real(qp),parameter :: JA30=4620._qp/1376256._qp
+ real(qp),parameter :: JA31=5040._qp/1376256._qp
+ real(qp),parameter :: JA32=5600._qp/1376256._qp
+ real(qp),parameter :: JA33=6400._qp/1376256._qp
+ real(qp),parameter :: JA34=7680._qp/1376256._qp
+ real(qp),parameter :: JA35=10240._qp/1376256._qp
+ real(qp),parameter :: JA36=20480._qp/1376256._qp
+ real(qp),parameter :: JA40=4410._qp/1376256._qp
+ real(qp),parameter :: JA41=4900._qp/1376256._qp
+ real(qp),parameter :: JA42=5600._qp/1376256._qp
+ real(qp),parameter :: JA43=6720._qp/1376256._qp
+ real(qp),parameter :: JA44=8960._qp/1376256._qp
+ real(qp),parameter :: JA45=17920._qp/1376256._qp
+ real(qp),parameter :: JA50=4410._qp/1376256._qp
+ real(qp),parameter :: JA51=5040._qp/1376256._qp
+ real(qp),parameter :: JA52=6048._qp/1376256._qp
+ real(qp),parameter :: JA53=8064._qp/1376256._qp
+ real(qp),parameter :: JA54=16128._qp/1376256._qp
+ real(qp),parameter :: JA60=4620._qp/1376256._qp
+ real(qp),parameter :: JA61=5544._qp/1376256._qp
+ real(qp),parameter :: JA62=7392._qp/1376256._qp
+ real(qp),parameter :: JA63=14784._qp/1376256._qp
+ real(qp),parameter :: JA70=5148._qp/1376256._qp
+ real(qp),parameter :: JA71=6864._qp/1376256._qp
+ real(qp),parameter :: JA72=13728._qp/1376256._qp
+ real(qp),parameter :: JA80=6435._qp/1376256._qp
+ real(qp),parameter :: JA81=12870._qp/1376256._qp
+ real(qp),parameter :: JA90=12155._qp/1376256._qp
  
  ! write(*,"(a20,1p3e10.2)") "(serj) y,n,m=",y,n,m
  
@@ -2679,21 +2686,21 @@ contains
  real(qp),intent(in) :: t,h !!SJT
  real(qp) :: z,y,x !!SJT
  real(qp) a,r,ri,hold,rold,riold
- real(qp) A3,A5,A7,A9,A11,A13,A15,A17,A19,A21,A23,A25
+ !real(qp) A3,A5,A7,A9,A11,A13,A15,A17,A19,A21,A23,A25
  !data hold/1.d0/, rold/1.d0/,riold/1.d0/ !!SJT: disable for thread safety
  !save hold,rold,riold !!SJT: disable for thread safety
- parameter (A3=1._qp/3._qp)
- parameter (A5=1._qp/5._qp)
- parameter (A7=1._qp/7._qp)
- parameter (A9=1._qp/9._qp)
- parameter (A11=1._qp/11._qp)
- parameter (A13=1._qp/13._qp)
- parameter (A15=1._qp/15._qp)
- parameter (A17=1._qp/17._qp)
- parameter (A19=1._qp/19._qp)
- parameter (A21=1._qp/21._qp)
- parameter (A23=1._qp/23._qp)
- parameter (A25=1._qp/25._qp)
+ real(qp),parameter :: A3=1._qp/3._qp
+ real(qp),parameter :: A5=1._qp/5._qp
+ real(qp),parameter :: A7=1._qp/7._qp
+ real(qp),parameter :: A9=1._qp/9._qp
+ real(qp),parameter :: A11=1._qp/11._qp
+ real(qp),parameter :: A13=1._qp/13._qp
+ real(qp),parameter :: A15=1._qp/15._qp
+ real(qp),parameter :: A17=1._qp/17._qp
+ real(qp),parameter :: A19=1._qp/19._qp
+ real(qp),parameter :: A21=1._qp/21._qp
+ real(qp),parameter :: A23=1._qp/23._qp
+ real(qp),parameter :: A25=1._qp/25._qp
  !!!!!SJT: replace data statment with manual value assignment for thread safety
  hold=1._qp; rold=1._qp; riold=1._qp
  !!!!!SJT: end replace data statment with manual value assignment for thread safety
