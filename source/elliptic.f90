@@ -404,7 +404,6 @@ contains
  if ((0._dp.le.phi).and.(phi.le.piio2)) then !!standard amplitude range
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi,m,F,E)
  else !!amplitude outside of standard range
-  call complete_elliptic_integrals(m,Fc,Ec)
   N0=phi/pii
   !N=nint(N0,isp) !!integer multiplier -- possible overflow for large phi
   N=nint(N0,idp) !!integer multiplier -- double precision integer to handle large phi
@@ -418,8 +417,14 @@ contains
   end if
  
   call incomplete_elliptic_integrals_standard_amp_large_parameter(phi_std,m,F,E)
-  F=2_isp*N*Fc+i_sign*F
-  E=2_isp*N*Ec+i_sign*E
+  if (N.eq.0_idp) then ! slightly cheaper and correctly handles case for F where m --> 1
+   F=i_sign*F
+   E=i_sign*E
+  else
+   call complete_elliptic_integrals(m,Fc,Ec)
+   F=2_isp*N*Fc+i_sign*F
+   E=2_isp*N*Ec+i_sign*E
+  end if
  end if
  
  end subroutine incomplete_elliptic_integrals
