@@ -14,6 +14,7 @@
 !!!! -added intent(in) and intent(out) to argument declarations 
 !!!! -replaced tab characters with spaces
 !!!! -removed unused variables
+!!!! -modernized syntax for parameter variable declarations
 !!!! -in the code comments, "OG" is short for "Original code" and "SJT" indicates a modification
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 module xgscd_routines
@@ -130,10 +131,10 @@ contains
      real(dp) :: x !!SJT
      real(dp),intent(in) :: u !!SJT
      real(dp),intent(out) :: s,c,d !!SJT
-     real(dp) B10,B11,B20,B21,B22,m,mc,uA,uT,u0,v,a,b,y,z,my,mc2,m2,xz,w !!SJT
+     real(dp) m,mc,uA,uT,u0,v,a,b,y,z,my,mc2,m2,xz,w !!SJT
      integer(isp) n,j,i
-     parameter (B10=1.e0_dp/24.e0_dp,B11=1.e0_dp/6.e0_dp,B20=1.e0_dp/720.e0_dp)
-     parameter (B21=11.e0_dp/180.e0_dp,B22=1.e0_dp/45.e0_dp)
+     real(dp),parameter :: B10=1.e0_dp/24.e0_dp,B11=1.e0_dp/6.e0_dp,B20=1.e0_dp/720.e0_dp !!SJT
+     real(dp),parameter :: B21=11.e0_dp/180.e0_dp,B22=1.e0_dp/45.e0_dp !!SJT
      real(qp),intent(in) :: mc_qp !!SJT
      !m=1.d0-mc; uA=1.76269d0+mc*1.16357d0; uT=5.217d-3-m*2.143d-3; u0=u !!SJT: original
      m=real(1.0_qp-mc_qp,dp); mc=real(mc_qp,dp) !!SJT
@@ -188,17 +189,16 @@ contains
          !real(dp) :: kc !!SJT
          real(qp),intent(in) :: mc_qp !!SJT
  !c
-         real(dp) D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14
-         parameter (D1=1.e0_dp/16.e0_dp,D2=1.e0_dp/32.e0_dp,D3=21.e0_dp/1024.e0_dp)
-         parameter (D4=31.e0_dp/2048.e0_dp,D5=6257.e0_dp/524288.e0_dp)
-         parameter (D6=10293.e0_dp/1048576.e0_dp,D7=279025.e0_dp/33554432.e0_dp)
-         parameter (D8=483127.e0_dp/67108864.e0_dp)
-         parameter (D9=435506703.e0_dp/68719476736.e0_dp)
-         parameter (D10=776957575.e0_dp/137438953472.e0_dp)
-         parameter (D11=22417045555.e0_dp/4398046511104.e0_dp)
-         parameter (D12=40784671953.e0_dp/8796093022208.e0_dp)
-         parameter (D13=9569130097211.e0_dp/2251799813685248.e0_dp)
-         parameter (D14=17652604545791.e0_dp/4503599627370496.e0_dp)
+         real(dp),parameter :: D1=1.e0_dp/16.e0_dp,D2=1.e0_dp/32.e0_dp,D3=21.e0_dp/1024.e0_dp !!SJT  
+         real(dp),parameter :: D4=31.e0_dp/2048.e0_dp,D5=6257.e0_dp/524288.e0_dp              !!SJT 
+         real(dp),parameter :: D6=10293.e0_dp/1048576.e0_dp,D7=279025.e0_dp/33554432.e0_dp    !!SJT  
+         real(dp),parameter :: D8=483127.e0_dp/67108864.e0_dp                                 !!SJT  
+         real(dp),parameter :: D9=435506703.e0_dp/68719476736.e0_dp                           !!SJT 
+         real(dp),parameter :: D10=776957575.e0_dp/137438953472.e0_dp                         !!SJT 
+         real(dp),parameter :: D11=22417045555.e0_dp/4398046511104.e0_dp                      !!SJT 
+         real(dp),parameter :: D12=40784671953.e0_dp/8796093022208.e0_dp                      !!SJT 
+         real(dp),parameter :: D13=9569130097211.e0_dp/2251799813685248.e0_dp                 !!SJT 
+         real(dp),parameter :: D14=17652604545791.e0_dp/4503599627370496.e0_dp                !!SJT 
  !c
          !logical first/.TRUE./ !!SJT: note that logical variable first is .true. at the start of each routine call
          !save first,mcold,PIHALF,PIINV,elkold,TINY !!SJT: disabled for thread safety
