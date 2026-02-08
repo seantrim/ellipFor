@@ -118,7 +118,7 @@ contains
  !!!!SJT: computes the complete elliptic integrals of first and second kind given parameter m
  !!!!SJT: assumes m>=0 (returns NaN otherwise)
  !!!!SJT: allows m>1 by applying the reciprocal-modulus transformation for complete elliptic integrals
- use,intrinsic :: ieee_arithmetic,only: ieee_value,ieee_quiet_nan
+ use,intrinsic :: ieee_arithmetic,only: ieee_value,ieee_quiet_nan,ieee_positive_inf
  
  !!input
  real(dp),intent(in) :: m         !!elliptic characteristic and parameter
@@ -137,6 +137,7 @@ contains
  real(dp) :: bc_temp,dc_temp,jc_temp          !!associated complete elliptic integrals
  real(qp) :: m_qp,mc_qp,mr_qp,mrc_qp          !!quad precision variables
  real(dp) :: nan                              !!NaN value
+ real(dp) :: pos_inf                          !!positive infinity
  
  n=0._dp !!arbitrary characteristic value -- integrals of the third kind are not used
  
@@ -165,6 +166,10 @@ contains
   !!express Im[Ec] in terms of bc_rc to reduce error near m=1
   !!note: used Fc_rc=bc_rc+dc_rc, Ec_rc=bc_rc+(1-mrc)*dc_rc, 1-mrc=1/m
   Fc=cmplx(Fc_r,-Fc_rc,dp)/k; Ec=cmplx(bc_r,-mc*bc_rc,dp)/k
+ else if (m.eq.1._dp) then ! special values
+  pos_inf = ieee_value(0._dp,ieee_positive_inf) ! +Inf
+  Fc=cmplx(pos_inf,pos_inf,dp)                  ! complex infinity: no ieee value so using (+Inf,+Inf)
+  Ec=cmplx(1._dp,0._dp,dp)                      ! unity
  else if (m.ge.0._dp) then
   call complete_elliptic_integrals_standard_input_range(n,real(m,qp),Fc_temp,Ec_temp,Pc_temp,bc_temp,dc_temp,jc_temp)
   Fc=cmplx(Fc_temp,0._dp,dp); Ec=cmplx(Ec_temp,0._dp,dp)

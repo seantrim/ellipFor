@@ -115,11 +115,11 @@ contains
   ! test K(1)=Infinity and E(1)=1
   m=1._dp
   call complete_elliptic_integrals(m,Fc,Ec)
-  print '(a27)', " *** Test K(1)=Infinity ***"
-  print '(a43)', " Note: the definition from SageMath is used"
-  print '(a15,a1,f18.16,a1,f18.16,a1)', " EllipFor K(1)=","(",Fc%re               ,",",Fc%im,")"
-  print '(a15,a1,a18,a1,f18.16,a1)'   , " Exact    K(1)=","(","          Infinity",",",0._dp,")"
-  call verify_complex_values(Fc,cmplx(positive_inf,0._dp,dp),tol,.true.,verified) 
+  print '(a36)', " *** Test K(1)= Complex Infinity ***"
+  print '(a54)', " Note: using [+Inf,+Inf] to represent complex infinity"
+  print '(a15,a1,f18.16,a1,f18.16,a1)', " EllipFor K(1)=","(",Fc%re               ,",",               Fc%im,")"
+  print '(a15,a1,a18,a1,a18,a1)'      , " Exact    K(1)=","(","          Infinity",",","          Infinity",")"
+  call verify_complex_values(Fc,cmplx(positive_inf,positive_inf,dp),tol,.true.,verified) 
   if (.not.verified) all_tests_passed=.false. ! if test fails, set test flag accordingly
   print '(a1)', " "
   print '(a20)', " *** Test E(1)=1 ***"
@@ -133,11 +133,11 @@ contains
   phi=pii/2._dp
   m=1._dp
   call incomplete_elliptic_integrals(phi,m,Fi,Ei)
-  print '(a32)', " *** Test F(pi/2|1)=Infinity ***"
-  print '(a43)', " Note: the definition from SageMath is used"
-  print '(a20,a1,f18.16,a1,f18.16,a1)', " EllipFor F(pi/2|1)=","(",Fi%re               ,",",Fi%im,")"
-  print '(a20,a1,a18,a1,f18.16,a1)'   , " Exact    F(pi/2|1)=","(","          Infinity",",",0._dp,")"
-  call verify_complex_values(Fi,cmplx(positive_inf,0._dp,dp),tol,.true.,verified) 
+  print '(a41)', " *** Test F(pi/2|1)= Complex Infinity ***"
+  print '(a54)', " Note: using [+Inf,+Inf] to represent complex infinity"
+  print '(a20,a1,f18.16,a1,f18.16,a1)', " EllipFor F(pi/2|1)=","(",Fi%re               ,",",               Fi%im,")"
+  print '(a20,a1,a18,a1,a18,a1)'      , " Exact    F(pi/2|1)=","(","          Infinity",",","          Infinity",")"
+  call verify_complex_values(Fi,cmplx(positive_inf,positive_inf,dp),tol,.true.,verified) 
   if (.not.verified) all_tests_passed=.false. ! if test fails, set test flag accordingly
   print '(a1)', " "
   print '(a25)', " *** Test E(pi/2|1)=1 ***"
@@ -410,9 +410,9 @@ contains
   pos_infinity_ref=positive_infinity_test(z_ref%im) ! check for positive infinity in reference value
   neg_infinity_ref=negative_infinity_test(z_ref%im) ! check for negative infinity in reference value
   if (pos_infinity_ref) then       ! if reference value is +Infinity 
-   verify_real_part=positive_infinity_test(z%im)
+   verify_imag_part=positive_infinity_test(z%im)
   else if (neg_infinity_ref) then  ! if reference value is -Infinity
-   verify_real_part=negative_infinity_test(z%im)
+   verify_imag_part=negative_infinity_test(z%im)
   else if (z_ref%im.eq.0._dp) then ! absolute difference if reference value is zero
    if (abs(z%im-z_ref%im).lt.abs(tol)) verify_imag_part=.true.
   else                             ! relative difference otherwise
