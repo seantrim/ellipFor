@@ -1,4 +1,4 @@
-# ellipFor [![DOI](https://zenodo.org/badge/710577422.svg)](https://zenodo.org/doi/10.5281/zenodo.10071175)
+# ellipFor [![DOI](https://zenodo.org/badge/710577422.svg)](https://zenodo.org/doi/10.5281/zenodo.10071175) [![ellipFor Online](https://img.shields.io/badge/app-ellipFor_Online-blue)](https://apps.seantrim.com/ellipFor)
 
 Fortran software for the evaluation of Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameters.
 
