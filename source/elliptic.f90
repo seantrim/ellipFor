@@ -42,9 +42,11 @@ contains
   u_temp=k*u
   call Jacobi_elliptic_functions_complex_argument_standard_parameter(u_temp,mr,sn_temp,cn_temp,dn_temp)
   sn=sn_temp/k; dn=cn_temp; cn=dn_temp
- else if (m.ge.0._dp) then
+ else if (m.gt.0._dp) then
   m_qp=real(m,qp)
   call Jacobi_elliptic_functions_complex_argument_standard_parameter(u,m_qp,sn,cn,dn)
+ else if (m.eq.0._dp) then ! special case of m=0
+  sn=sin(u); cn=cos(u); dn=1._dp
  else ! m < 0 not currently supported -- returning NaN values
   nan=ieee_value(0._dp,ieee_quiet_nan)
   sn=cmplx(nan,nan,dp); cn=cmplx(nan,nan,dp); dn=cmplx(nan,nan,dp) 
