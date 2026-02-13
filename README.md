@@ -3,7 +3,7 @@
 Fortran software for the evaluation of Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameters.
 
 ## Contents
-1. [Background](#background)
+1. [Background](#background-)
 2. [Variable Definitions](#variable-definitions)
 3. [File Description](#file-description)
     1. [ellipFor/](#ellipfor)
@@ -59,7 +59,6 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 * Sample executable for the [standalone](#standalone) driver program based on `ellipFor/source/ellipFor_test_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
-* gfortran 14.2.0 was used
   
 `ellipFor_test_driver.dat`
 
@@ -75,7 +74,6 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 * Sample executable for the test material driver program based on `ellipFor/source/test_material_driver.f90`
 * Results from building ellipFor using GNU Make via `ellipFor/source/Makefile` in the terminal
-* gfortran 14.2.0 was used
 
 `error_complete.dat`
 
@@ -230,6 +228,10 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
         * Resolve any related compiler errors
         * Verify that the arguments of subroutine calls correspond to the correct values and data types 
 3. Run the code executable (`other_code`) as usual
+
+### Online App
+
+Try using ellipFor right from your browser. Simply navigate to the [ellipFor Online](https://apps.seantrim.com/ellipFor) app to get started!
 
 ## Legal
 
