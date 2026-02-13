@@ -16,10 +16,9 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
     2. [With Another Code](#with-another-code)
 6. [Legal](#legal)
 
-## Background
+## Background [![ellipFor Article](https://img.shields.io/badge/Article_DOI-TOMS_Algorithm_1054-blue)](https://doi.org/10.1145/3709136)
 
-This repository contains files and data for the ellipFor library supporting the article "Algorithm xxx: ellipFor, a Fortran software library for Legendre elliptic
-integrals and Jacobi elliptic functions with generalized input arguments" by S.J. Trim and R.J. Spiteri.
+This repository contains files and data for the ellipFor library supporting the article "Algorithm 1054: ellipFor, a Fortran Software Library for Legendre Elliptic Integrals and Jacobi Elliptic Functions with Generalized Input Arguments" by S.J. Trim and R.J. Spiteri.
 
 ## Variable Definitions
 * $m$ = parameter
