@@ -6,6 +6,9 @@
 # The appropriate script must be run in the terminal prior to using GNU Make
 # e.g., source /opt/intel/oneapi/setvars.sh
 
+# define directory containing ellipFor modules
+mod_dir := ellipFor_modules
+
 # GNU Fortran
 gfortran: FC = gfortran
 gfortran: FOPTS = -flto -O3 -std=f2018
@@ -28,28 +31,28 @@ ifx:
 	echo $(FC) $(FOPTS)
 
 test_material_driver: kind_parameters.o xelbdj2_all_routines.o xgscd_routines.o elliptic.o elliptic.mod test_material_driver.o kind_parameters.mod elliptic.mod xelbdj2_all_routines.mod xgscd_routines.mod
-	$(FC) -o test_material_driver $(FOPTS) test_material_driver.f90 kind_parameters.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 elliptic.f90
+	$(FC) -o test_material_driver $(FOPTS) test_material_driver.f90 $(mod_dir)/kind_parameters.f90 $(mod_dir)/xelbdj2_all_routines.f90 $(mod_dir)/xgscd_routines.f90 $(mod_dir)/elliptic.f90
 
 test_material_driver.o: test_material_driver.f90 kind_parameters.mod elliptic.mod
 	$(FC) -c $(FOPTS) test_material_driver.f90
 
 ellipFor_test_driver: kind_parameters.o xelbdj2_all_routines.o xgscd_routines.o elliptic.o elliptic.mod ellipFor_test_driver.o kind_parameters.mod elliptic.mod xelbdj2_all_routines.mod xgscd_routines.mod
-	$(FC) -o ellipFor_test_driver $(FOPTS) ellipFor_test_driver.f90 kind_parameters.f90 xelbdj2_all_routines.f90 xgscd_routines.f90 elliptic.f90
+	$(FC) -o ellipFor_test_driver $(FOPTS) ellipFor_test_driver.f90 $(mod_dir)/kind_parameters.f90 $(mod_dir)/xelbdj2_all_routines.f90 $(mod_dir)/xgscd_routines.f90 $(mod_dir)/elliptic.f90
 
 ellipFor_test_driver.o: ellipFor_test_driver.f90 kind_parameters.mod elliptic.mod
 	$(FC) -c $(FOPTS) ellipFor_test_driver.f90
 
-elliptic.o elliptic.mod: elliptic.f90 kind_parameters.mod xelbdj2_all_routines.mod xgscd_routines.mod
-	$(FC) -c $(FOPTS) elliptic.f90
+elliptic.o elliptic.mod: $(mod_dir)/elliptic.f90 kind_parameters.mod xelbdj2_all_routines.mod xgscd_routines.mod
+	$(FC) -c $(FOPTS) $(mod_dir)/elliptic.f90
 
-xgscd_routines.o xgscd_routines.mod: xgscd_routines.f90 kind_parameters.mod
-	$(FC) -c $(FOPTS) xgscd_routines.f90
+xgscd_routines.o xgscd_routines.mod: $(mod_dir)/xgscd_routines.f90 kind_parameters.mod
+	$(FC) -c $(FOPTS) $(mod_dir)/xgscd_routines.f90
 
-xelbdj2_all_routines.o xelbdj2_all_routines.mod: xelbdj2_all_routines.f90 kind_parameters.mod
-	$(FC) -c $(FOPTS) xelbdj2_all_routines.f90
+xelbdj2_all_routines.o xelbdj2_all_routines.mod: $(mod_dir)/xelbdj2_all_routines.f90 kind_parameters.mod
+	$(FC) -c $(FOPTS) $(mod_dir)/xelbdj2_all_routines.f90
 
-kind_parameters.o kind_parameters.mod: kind_parameters.f90
-	$(FC) -c $(FOPTS) kind_parameters.f90
+kind_parameters.o kind_parameters.mod: $(mod_dir)/kind_parameters.f90
+	$(FC) -c $(FOPTS) $(mod_dir)/kind_parameters.f90
 
 clean:
 	rm -f *.mod *.o
