@@ -7,8 +7,9 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 2. [Variable Definitions](#variable-definitions)
 3. [File Description](#file-description)
     1. [ellipFor/](#ellipfor)
-    2. [ellipFor/source/](#ellipforsource)
-    3. [ellipFor/source/expected_data/](#ellipforsourceexpected_data)
+    2. [ellipFor/source/](#ellipformodules)
+    3. [ellipFor/source/](#ellipforsource)
+    4. [ellipFor/source/expected_data/](#ellipforsourceexpected_data)
 4. [Main ellipFor Subroutines](#main-ellipfor-subroutines)
 5. [How to Use](#how-to-use)
     1. [Standalone](#standalone)
@@ -44,28 +45,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 
 * This documentation file (written in Markdown)
 
-### `ellipFor/source/`
-`kind_parameters.f90`
-
-* Contains a module with portable kind parameters imported from the `iso_fortran_env` module
-
-`elliptic.f90`
-
-* Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
-* Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90`
-
-`xelbdj2_all_routines.f90`
-
-* Contains module procedures for the evaluation of associated elliptic integrals of the first, second, and third kinds
-* Assumes standard input parameter ranges
-* Adapted from routines by Toshio Fukushima (see [Legal](#legal))
-
-`xgscd_routines.f90`
-
-* Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
-* Assumes standard input parameter ranges
-* Adapted from routines by Toshio Fukushima (see [Legal](#legal))
- 
+### `ellipFor/source/` 
 `Makefile`
 
 * Makefile for building the [standalone](#standalone) version of ellipFor using gfortran or ifx
@@ -115,6 +95,28 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 * Output file produced by executing `ellipFor/source/test_material_driver`
 * Contains relative error data compared to CAS for $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$
 * Used in section 6.3 in the article (see [Background](#background))
+
+### `ellipFor/source/ellipFor_modules/`
+`kind_parameters.f90`
+
+* Contains a module with portable kind parameters imported from the `iso_fortran_env` module
+
+`elliptic.f90`
+
+* Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
+* Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90`
+
+`xelbdj2_all_routines.f90`
+
+* Contains module procedures for the evaluation of associated elliptic integrals of the first, second, and third kinds
+* Assumes standard input parameter ranges
+* Adapted from routines by Toshio Fukushima (see [Legal](#legal))
+
+`xgscd_routines.f90`
+
+* Contains module procedures for the evaluation of the Jacobi elliptic functions sn, cn, and dn
+* Assumes standard input parameter ranges
+* Adapted from routines by Toshio Fukushima (see [Legal](#legal))
 
 ### `ellipFor/source/expected_data/`
 `CAS_complete.dat`
