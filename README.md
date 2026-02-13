@@ -14,6 +14,7 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
 5. [How to Use](#how-to-use)
     1. [Standalone](#standalone)
     2. [With Another Code](#with-another-code)
+    3. [Online App](#online-app)
 6. [Legal](#legal)
 
 ## Background [![ellipFor Article](https://img.shields.io/badge/Article_DOI-TOMS_Algorithm_1054-blue)](https://doi.org/10.1145/3709136)
