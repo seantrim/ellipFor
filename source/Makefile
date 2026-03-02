@@ -10,25 +10,21 @@
 mod_dir := ellipFor_modules
 
 # GNU Fortran
-gfortran: FC = gfortran
-gfortran: FOPTS = -flto -O3 -std=f2018
+gfortran: FC := gfortran
+gfortran: FOPTS := -flto -O3 -std=f2018
 gfortran: ellipFor_test_driver test_material_driver
-gfortran:
-	echo $(FC) $(FOPTS)
 
 # GNU Fortran Debug Mode
-gfortran_debug: FC = gfortran
-gfortran_debug: FOPTS = -Wall -std=f2018 -ffree-line-length-132 -g -fbacktrace -ffpe-trap='invalid,overflow,zero,underflow' -fbounds-check
+gfortran_debug: FC := gfortran
+gfortran_debug: FOPTS := -Wall -std=f2018 -ffree-line-length-132 -g -fbacktrace -ffpe-trap='invalid,overflow,zero,underflow' -fbounds-check
 gfortran_debug: ellipFor_test_driver test_material_driver
-gfortran_debug:
-	echo $(FC) $(FOPTS)
 
 # Intel Fortran
-ifx: FC = ifx
-ifx: FOPTS = -ipo -O3
+ifx: FC := ifx
+ifx: FOPTS := -ipo -O3 -fp-model strict
 ifx: ellipFor_test_driver test_material_driver
-ifx:
-	echo $(FC) $(FOPTS)
+
+# Note: Fortran module file names must be lowercase in GNU Make rules
 
 test_material_driver: kind_parameters.o xelbdj2_all_routines.o xgscd_routines.o elliptic.o elliptic.mod test_material_driver.o kind_parameters.mod elliptic.mod xelbdj2_all_routines.mod xgscd_routines.mod
 	$(FC) -o test_material_driver $(FOPTS) test_material_driver.f90 $(mod_dir)/kind_parameters.f90 $(mod_dir)/xelbdj2_all_routines.f90 $(mod_dir)/xgscd_routines.f90 $(mod_dir)/elliptic.f90
