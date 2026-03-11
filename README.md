@@ -219,9 +219,10 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
 #### Fortran
 
 1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code (referred to as `other_code.f90` in the following examples) where necessary
-    * Examples of how to call the subroutines are shown in `ellipFor/source/ellipFor_test_driver.f90`  
+    * Examples of how to call the subroutines are shown in `ellipFor/source/ellipFor_test_driver.f90`
+    * Verify that the arguments of subroutine calls correspond to the correct values and data types
 2. Link the f90 files from the `ellipFor/source/ellipFor_modules/` folder named `kind_parameters.f90`, `xelbdj2_all_routines.f90`, `xgscd_routines.f90`, and `elliptic.f90` to the source for the other code
-    * `ellipFor/source/Makefile` can be used as a template to build `other_code.f90` with the ellipFor libraries and build the executable
+    * `ellipFor/source/Makefile` can be used as a template to compile `other_code.f90` with the ellipFor modules and build the executable
         * substitute references to `ellipFor_test_driver` with `other_code` in a copy of the `Makefile` provided
         * customize as desired (e.g., compiler options, etc.)
     * use `$ make gfortran` or `$ make ifx` in the terminal to build the executable `other_code` with the desired compiler
@@ -231,7 +232,6 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
     * GNU Make 4.3 or later is recommended   
     * Warning: Duplicate variable/routine names may occur
         * Resolve any related compiler errors
-        * Verify that the arguments of subroutine calls correspond to the correct values and data types 
 3. Run the code executable (`other_code`) as usual
 
 ## Legal
