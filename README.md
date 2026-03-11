@@ -102,7 +102,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 `elliptic.f90`
 
 * Contains module procedures that evaluate Legendre elliptic integrals and Jacobi elliptic functions for generalized input parameter ranges
-* Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90`
+* Input ranges were generalized by combining transformations with calls to routines from `ellipFor/source/ellipFor_modules/xelbdj2_all_routines.f90` and `ellipFor/source/ellipFor_modules/xgscd_routines.f90`
 
 `xelbdj2_all_routines.f90`
 
@@ -179,7 +179,7 @@ Headings that follow indicate directories in the ellipFor repository. CAS (Compu
 * Input: `u` = $u \in \mathbb{C}$, and `m` = $m \in \mathbb{R}$ with $m \geq 0$
 * Output: `sn` = $\text{sn}(u|m) \in \mathbb{C}$, `cn` = $\text{cn}(u|m) \in \mathbb{C}$, and `dn` = $\text{dn}(u|m) \in \mathbb{C}$
 
-All subroutine arguments are of double precision type (`kind=real64` from the `iso_fortran_env` intrinsic module). Note that the source code for the above routines is in `ellipFor/source/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
+All subroutine arguments are of double precision type (`kind=real64` from the `iso_fortran_env` intrinsic module). Note that the source code for the above routines is in `ellipFor/source/ellipFor_modules/elliptic.f90` and examples for calling the subroutines are in `ellipFor/source/ellipFor_test_driver.f90`. 
 
 ## How to Use
 
@@ -216,7 +216,7 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
 
 1. Insert calls to the subroutines for Legendre elliptic integrals and Jacobi elliptic functions within the source of the other code (referred to as `other_code.f90` in the following examples) where necessary
     * Examples of how to call the subroutines are shown in `ellipFor/source/ellipFor_test_driver.f90`  
-2. Link the f90 files from the `ellipFor/source` folder named `kind_parameters.f90`, `xelbdj2_all_routines.f90`, `xgscd_routines.f90`, and `elliptic.f90` to the source for the other code
+2. Link the f90 files from the `ellipFor/source/ellipFor_modules/` folder named `kind_parameters.f90`, `xelbdj2_all_routines.f90`, `xgscd_routines.f90`, and `elliptic.f90` to the source for the other code
     * `ellipFor/source/Makefile` can be used as a template to build `other_code.f90` with the ellipFor libraries and build the executable
         * substitute references to `ellipFor_test_driver` with `other_code` in a copy of the `Makefile` provided
         * customize as desired (e.g., compiler options, etc.)
@@ -238,6 +238,6 @@ Try using ellipFor right from your browser. Simply navigate to the [ellipFor Onl
 
 This repository is subject to the GPLv3 license (`ellipFor/LICENSE`).
 
-The routines contained within `ellipFor/source/xelbdj2_all_routines.f90` and `ellipFor/source/xgscd_routines.f90` are adapted from routines by Toshio Fukushima available under the CC BY-SA 4.0 license. Original versions of these routines can be found at http://dx.doi.org/10.13140/RG.2.2.27011.66085 and https://www.researchgate.net/publication/233903220_xgscdtxt_Fortran_program_package_to_compute_the_Jacobian_elliptic_functions_snum_cnum_dnum.
+The routines contained within `ellipFor/source/ellipFor_modules/xelbdj2_all_routines.f90` and `ellipFor/source/ellipFor_modules/xgscd_routines.f90` are adapted from routines by Toshio Fukushima available under the CC BY-SA 4.0 license. Original versions of these routines can be found at http://dx.doi.org/10.13140/RG.2.2.27011.66085 and https://www.researchgate.net/publication/233903220_xgscdtxt_Fortran_program_package_to_compute_the_Jacobian_elliptic_functions_snum_cnum_dnum.
 
 Some initial software testing in the development phase was performed using the Wolfram Language 14.1.0 Engine Community Edition. The production version of ellipFor does not utilize the Wolfram Language Engine. 
