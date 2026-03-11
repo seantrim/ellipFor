@@ -12,9 +12,9 @@ Fortran software for the evaluation of Legendre elliptic integrals and Jacobi el
     4. [ellipFor/source/expected_data/](#ellipforsourceexpected_data)
 4. [Main ellipFor Subroutines](#main-ellipfor-subroutines)
 5. [How to Use](#how-to-use)
-    1. [Standalone](#standalone)
-    2. [With Another Code](#with-another-code)
-    3. [Online App](#online-app)
+    1. [Online App](#online-app)
+    2. [Standalone](#standalone)
+    3. [With Another Code](#with-another-code)
 6. [Legal](#legal)
 
 ## Background [![ellipFor Article](https://img.shields.io/badge/Article_DOI-TOMS_Algorithm_1054-blue)](https://doi.org/10.1145/3709136)
@@ -183,6 +183,10 @@ All subroutine arguments are of double precision type (`kind=real64` from the `i
 
 ## How to Use
 
+### Online App
+
+Try using ellipFor right from your browser. Simply navigate to the [ellipFor Online](https://apps.seantrim.com/ellipFor) app to get started!
+
 ### Standalone
 
 Can be used to generate values for $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|m)$, $\text{cn}(u|m)$, and $\text{dn}(u|m)$ using the driver program `ellipFor/source/ellipFor_test_driver.f90`.
@@ -229,10 +233,6 @@ Can be used to calculate $K(m)$, $E(m)$, $F(\phi|m)$, $E(\phi|m)$, $\text{sn}(u|
         * Resolve any related compiler errors
         * Verify that the arguments of subroutine calls correspond to the correct values and data types 
 3. Run the code executable (`other_code`) as usual
-
-### Online App
-
-Try using ellipFor right from your browser. Simply navigate to the [ellipFor Online](https://apps.seantrim.com/ellipFor) app to get started!
 
 ## Legal
 
